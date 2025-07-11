@@ -17,8 +17,10 @@ interface CostarTaskProps {
   isReplayMode?: boolean;
 }
 
-const CostarTaskComponent = React.forwardRef<{ handleStatusUpdate: (data: any) => void }, CostarTaskProps>(({ steps = [], onDownload, isTaskCompleted = false, files, isReplayMode = false }, ref) => {
-  console.log("Costar task component rendered with steps: ", steps);
+const CostarTaskComponent = React.forwardRef<
+  { handleStatusUpdate: (data: any) => void },
+  CostarTaskProps
+>(({ steps = [], onDownload, isTaskCompleted = false, files, isReplayMode = false }, ref) => {
   // State for VM view management
   const [showVMView, setShowVMView] = useState(false);
   const [browserStreamUrl, setBrowserStreamUrl] = useState<string | null>(null);
@@ -102,12 +104,30 @@ const CostarTaskComponent = React.forwardRef<{ handleStatusUpdate: (data: any) =
     <div className="relative w-full h-full flex flex-col">
       <div className="flex-1 w-full flex items-center justify-center overflow-hidden">
         {viewMode === "swiper" ? (
-          <motion.div className="w-full" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
             <CardDeckSwiper />
           </motion.div>
         ) : (
-          <motion.div className="w-full" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-            <CompletedTask onDownload={onDownload} taskTitle="Task" completionTime="3 minutes" filesGenerated={steps.length} files={files} />
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <CompletedTask
+              onDownload={onDownload}
+              taskTitle="Task"
+              completionTime="3 minutes"
+              filesGenerated={steps.length}
+              files={files}
+            />
           </motion.div>
         )}
       </div>
@@ -134,11 +154,18 @@ const CostarTaskComponent = React.forwardRef<{ handleStatusUpdate: (data: any) =
 
             {/* Click to expand hint */}
             <div className="absolute top-2 left-2 z-10">
-              <div className="px-2 py-1 bg-black/50 backdrop-blur-sm rounded text-white text-xs">Click to expand</div>
+              <div className="px-2 py-1 bg-black/50 backdrop-blur-sm rounded text-white text-xs">
+                Click to expand
+              </div>
             </div>
 
             <div className="w-full h-full">
-              <iframe src={browserStreamUrl} className="w-full h-full border-0 pointer-events-none" title="Browser Stream" allow="camera; microphone; display-capture" />
+              <iframe
+                src={browserStreamUrl}
+                className="w-full h-full border-0 pointer-events-none"
+                title="Browser Stream"
+                allow="camera; microphone; display-capture"
+              />
             </div>
           </motion.div>
 
@@ -171,9 +198,22 @@ const CostarTaskComponent = React.forwardRef<{ handleStatusUpdate: (data: any) =
                       onClick={(e) => e.stopPropagation()}
                     >
                       {/* Close button */}
-                      <button onClick={handleCloseVMModal} className="absolute top-4 right-4 z-10 p-2 bg-black/70 hover:bg-black/90 rounded-full text-white transition-colors">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      <button
+                        onClick={handleCloseVMModal}
+                        className="absolute top-4 right-4 z-10 p-2 bg-black/70 hover:bg-black/90 rounded-full text-white transition-colors"
+                      >
+                        <svg
+                          className="w-6 h-6"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M6 18L18 6M6 6l12 12"
+                          />
                         </svg>
                       </button>
 
@@ -187,7 +227,12 @@ const CostarTaskComponent = React.forwardRef<{ handleStatusUpdate: (data: any) =
 
                       {/* Large iframe */}
                       <div className="w-full h-full">
-                        <iframe src={browserStreamUrl} className="w-full h-full border-0 pointer-events-none" title="Browser Stream - Large View" allow="camera; microphone; display-capture" />
+                        <iframe
+                          src={browserStreamUrl}
+                          className="w-full h-full border-0 pointer-events-none"
+                          title="Browser Stream - Large View"
+                          allow="camera; microphone; display-capture"
+                        />
                       </div>
                     </motion.div>
                   </motion.div>

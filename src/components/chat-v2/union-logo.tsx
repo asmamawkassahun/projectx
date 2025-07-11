@@ -1,22 +1,6 @@
-export default function UnionLogo({
-  className = "h-5",
-}: {
-  className?: string;
-}) {
-  const handleLogoClick = () => {
-    window.location.href = "/chat-v2";
-  };
-
+export default function UnionLogo({ className = "h-5" }: { className?: string }) {
   return (
-    <svg
-      width="125"
-      height="22"
-      viewBox="0 0 125 22"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={`${className} cursor-pointer hover:opacity-80 transition-opacity`}
-      onClick={handleLogoClick}
-    >
+    <svg width="125" height="22" viewBox="0 0 125 22" fill="none" xmlns="http://www.w3.org/2000/svg" className={`${className} cursor-pointer hover:opacity-80 transition-opacity`}>
       <path
         fill-rule="evenodd"
         clip-rule="evenodd"

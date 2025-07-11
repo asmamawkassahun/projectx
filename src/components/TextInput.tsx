@@ -26,7 +26,7 @@ const TextInput: React.FC<TextInputProps> = ({
   sessionStatus = "active",
 }) => {
   const [message, setMessage] = useState("");
-  const [showInput, setShowInput] = useState(true);
+  const [showTextInput, setShowTextInput] = useState(false);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isComposing, setIsComposing] = useState(false);
@@ -65,6 +65,11 @@ const TextInput: React.FC<TextInputProps> = ({
       e.preventDefault();
       handleSendMessage();
     }
+    if (e.key === "Escape") {
+      e.preventDefault();
+      setMessage(""); // Clear the message on Escape
+      setShowTextInput(false); // Hide the text input
+    }
   };
 
   // Auto-resize textarea as user types
@@ -80,15 +85,19 @@ const TextInput: React.FC<TextInputProps> = ({
     textarea.style.height = `${newHeight}px`;
   };
 
-  if (!showInput) {
-    return (
-      <div className="w-full flex justify-center gap-[14px]">
-        <Button onClick={() => setShowInput(true)} variant="primary" size="md" aria-label="Open text input">
-          <KeyboardIcon />
-        </Button>
-      </div>
-    );
-  }
+  useEffect(() => {
+    const handleAnyKey = (e: globalThis.KeyboardEvent) => {
+      if (e.key === "Escape") return;
+      textareaRef.current?.focus();
+      setShowTextInput(true);
+    };
+    window.addEventListener("keydown", handleAnyKey);
+    return () => {
+      window.removeEventListener("keydown", handleAnyKey);
+    };
+  }, []);
+
+  if (!showTextInput) return <></>;
 
   return (
     <div className="">
@@ -136,7 +145,7 @@ const TextInput: React.FC<TextInputProps> = ({
         </div>
       )}
 
-      <div className="flex w-full items-center">
+      <form className="flex w-full items-center">
         <textarea
           ref={textareaRef}
           id="prompt-textarea"
@@ -168,7 +177,7 @@ const TextInput: React.FC<TextInputProps> = ({
             <path d="M21 15l-5-5L5 21" />
           </svg>
         </button>
-      </div>
+      </form>
     </div>
   );
 };
