@@ -1,11 +1,11 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { SkeletonDemo } from "@/components/uiComponents/SampleSkeleton";
+import LinksListWithLoading from "@/components/uiComponents/ItemListWithLoading";
 import React from "react";
 
 const page = () => {
   return (
     <div>
-      <SkeletonDemo />
+      <LinksListWithLoading />
     </div>
   );
 };
