@@ -8,15 +8,16 @@ import { toast } from "react-hot-toast";
 import UnionLogo from "./union-logo";
 import { PusherEventType, pusherManager } from "@/lib/pusher";
 import AgentChat from "./agent-chat";
-import TaskHeader from "./task-header";
-import TaskStatus from "./task-status";
-import TaskPlanner from "./task-planner";
+import TaskHeader from "../task/task-header";
+import TaskStatus from "../task/task-status";
+import TaskPlanner from "../task/task-planner";
 import CostarTask from "./costar-task";
 import UnifiedToolHandler from "./unified-tool-handler";
 import { File } from "@/types";
 import { LiveAPIProvider } from "@/contexts/LiveAPIContext";
 import { useCombinedReplay } from "@/hooks/useCombinedReplay";
 import { useCreateConversation } from "@/hooks/use-gemini-api";
+import Navbar from "../Navbar";
 
 type ViewMode = "planner" | "execution";
 
@@ -42,7 +43,9 @@ export default function UnifiedAgent() {
   }, []);
 
   const [sessionId, setSessionId] = useState<string | null>(null);
-  const [connectionStatus, setConnectionStatus] = useState<"connected" | "disconnected" | "connecting">("connecting");
+  const [connectionStatus, setConnectionStatus] = useState<
+    "connected" | "disconnected" | "connecting"
+  >("connecting");
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [taskUuid, setTaskUuid] = useState<string | null>(null);
 
@@ -60,7 +63,9 @@ export default function UnifiedAgent() {
   >(null);
   const [acknowledgmentMessage, setAcknowledgmentMessage] = useState<string>("");
   const [hasReceivedLiveStatus, setHasReceivedLiveStatus] = useState(false);
-  const [currentLiveStatusParts, setCurrentLiveStatusParts] = useState<Array<{ text: string; style: string }>>([]);
+  const [currentLiveStatusParts, setCurrentLiveStatusParts] = useState<
+    Array<{ text: string; style: string }>
+  >([]);
 
   // Files state for completed tasks
   const [completedFiles, setCompletedFiles] = useState<File[]>([]);
@@ -312,7 +317,11 @@ export default function UnifiedAgent() {
           // Add messages to chat during replay
           if (agentChatRef.current) {
             const role = event.data.role === "user" ? "user" : "model";
-            agentChatRef.current.handleVoiceTranscript(role, event.data.content, event.data.created_at);
+            agentChatRef.current.handleVoiceTranscript(
+              role,
+              event.data.content,
+              event.data.created_at
+            );
           }
           break;
         case "in_chat_updates":
@@ -342,7 +351,13 @@ export default function UnifiedAgent() {
           console.log(`Unknown event type during replay: ${event.eventType}`);
       }
     },
-    [handleStatusUpdate, handleCompleteEvent, handleErrorEvent, handleAgentStoppedEvent, handleTaskCreated]
+    [
+      handleStatusUpdate,
+      handleCompleteEvent,
+      handleErrorEvent,
+      handleAgentStoppedEvent,
+      handleTaskCreated,
+    ]
   );
 
   // Handle audio errors from replay
@@ -479,17 +494,19 @@ export default function UnifiedAgent() {
   return (
     <LiveAPIProvider apiKey={API_KEY}>
       {/* Initialize tool handler without wrapping components */}
-      <UnifiedToolHandler conversationId={conversationId} sessionId={sessionId} taskUuid={taskUuid} />
+      <UnifiedToolHandler
+        conversationId={conversationId}
+        sessionId={sessionId}
+        taskUuid={taskUuid}
+      />
 
       {/* Main container with flex layout - prevent body scroll with useEffect */}
       <div className="fixed inset-0 flex flex-col overflow-hidden">
         {/* Always visible header - fixed to top */}
         <header className="fixed top-0 left-0 right-0 p-4 z-50 flex-shrink-0">
+          <Navbar />
           <div className="relative w-full grid grid-cols-3 items-start">
             {/* Left column - Logo */}
-            <div className="flex justify-start">
-              <UnionLogo />
-            </div>
 
             {/* Center column - Task header and status */}
             <div className="flex justify-center">
@@ -517,28 +534,31 @@ export default function UnifiedAgent() {
                 </motion.div>
               )}
 
-              {showTaskView && taskStatus !== "completed" && taskStatus !== "failed" && steps.length > 0 && (
-                <motion.div
-                  className="w-full max-w-md pointer-events-none"
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ delay: 0.4, duration: 0.4, ease: "easeOut" }}
-                >
-                  <div className="flex flex-col items-center pointer-events-auto">
-                    <TaskHeader currentStep={currentStep} steps={steps} />
-                    <TaskStatus
-                      viewMode={viewMode}
-                      isLoading={isLoading}
-                      currentStep={currentStep}
-                      steps={steps}
-                      acknowledgmentMessage={acknowledgmentMessage}
-                      hasReceivedLiveStatus={hasReceivedLiveStatus}
-                      currentLiveStatusParts={currentLiveStatusParts}
-                    />
-                  </div>
-                </motion.div>
-              )}
+              {showTaskView &&
+                taskStatus !== "completed" &&
+                taskStatus !== "failed" &&
+                steps.length > 0 && (
+                  <motion.div
+                    className="w-full max-w-md pointer-events-none"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ delay: 0.4, duration: 0.4, ease: "easeOut" }}
+                  >
+                    <div className="flex flex-col items-center pointer-events-auto">
+                      <TaskHeader currentStep={currentStep} steps={steps} />
+                      <TaskStatus
+                        viewMode={viewMode}
+                        isLoading={isLoading}
+                        currentStep={currentStep}
+                        steps={steps}
+                        acknowledgmentMessage={acknowledgmentMessage}
+                        hasReceivedLiveStatus={hasReceivedLiveStatus}
+                        currentLiveStatusParts={currentLiveStatusParts}
+                      />
+                    </div>
+                  </motion.div>
+                )}
             </div>
 
             {/* Right column - Minimal replay progress */}
@@ -564,7 +584,11 @@ export default function UnifiedAgent() {
                       className="p-1 hover:bg-[#1e1e1e]/10 rounded transition-colors"
                       title="Pause"
                     >
-                      <svg className="w-4 h-4 text-[#1e1e1e]/60" fill="currentColor" viewBox="0 0 20 20">
+                      <svg
+                        className="w-4 h-4 text-[#1e1e1e]/60"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
                         <path
                           fillRule="evenodd"
                           d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
@@ -577,7 +601,11 @@ export default function UnifiedAgent() {
                       className="p-1 hover:bg-[#1e1e1e]/10 rounded transition-colors"
                       title="Jump to End"
                     >
-                      <svg className="w-4 h-4 text-[#1e1e1e]/60" fill="currentColor" viewBox="0 0 20 20">
+                      <svg
+                        className="w-4 h-4 text-[#1e1e1e]/60"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
                         <path
                           fillRule="evenodd"
                           d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z"
@@ -624,7 +652,11 @@ export default function UnifiedAgent() {
                     className="group relative"
                   >
                     <div className="w-24 h-24 bg-[#1e1e1e] hover:bg-[#1e1e1e]/90 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-105">
-                      <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 20 20">
+                      <svg
+                        className="w-10 h-10 text-white ml-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
                         <path
                           fillRule="evenodd"
                           d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
@@ -693,7 +725,7 @@ export default function UnifiedAgent() {
                   damping: 30,
                   duration: 0.6,
                 }}
-                className="absolute inset-0 bg-gradient-to-b from-white to-gray-100 flex flex-col items-center z-30 backdrop-blur-sm"
+                className="absolute inset-0 bg-black from-white to-gray-100 flex flex-col items-center z-30 backdrop-blur-sm"
               >
                 {/* Main content area */}
                 <motion.div
@@ -712,7 +744,7 @@ export default function UnifiedAgent() {
                         exit={{ opacity: 0, scale: 0.9, y: -20 }}
                         transition={{ duration: 0.4, ease: "easeOut" }}
                       >
-                        <div className="bg-white rounded-lg shadow-lg p-8 max-w-md mx-4">
+                        <div className="rounded-lg shadow-lg p-8 max-w-md mx-4">
                           <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <svg
                               className="w-8 h-8 text-orange-600"
@@ -747,7 +779,10 @@ export default function UnifiedAgent() {
                         transition={{ duration: 0.4, ease: "easeOut" }}
                       >
                         {steps.length > 0 ? (
-                          <TaskPlanner steps={steps.map((stepObj) => stepObj.step)} setViewMode={setViewMode} />
+                          <TaskPlanner
+                            steps={steps.map((stepObj) => stepObj.step)}
+                            setViewMode={setViewMode}
+                          />
                         ) : (
                           <div className="flex flex-col items-center justify-center h-full">
                             <div className="text-center">
