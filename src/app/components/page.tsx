@@ -1,6 +1,8 @@
 import { ThemeToggle } from "@/components/common_components/ThemeToggle";
 import { Skeleton } from "@/components/ui/skeleton";
+import IngredientsCard from "@/components/ui_components/loading/IngridentLoading";
 import LinksListWithLoading from "@/components/ui_components/loading/ItemListWithLoading";
+import VideoCard from "@/components/ui_components/loading/VideoCardLoading";
 import VideoSkeleton from "@/components/ui_components/video_component/VideoSkeleton";
 import ArchivingTaskFilesComponent from "@/components/uiComponents/ArchivingTaskFilesComponent";
 import ArchivingTaskFilesSkeleton from "@/components/uiComponents/ArchivingTaskFilesSkeleton";
@@ -18,16 +20,19 @@ const page = () => {
       <div className="flex w-full justify-end items-center mx-auto">
         <ThemeToggle />
       </div>
-      <LinksListWithLoading />
-      <VideoSkeleton />
-      <GeneratedClipsComponent />
-      <GeneratedClipsSkeletonComponent />
-      <GeneratedAudioComponent />
-      <GeneratedAudioSkeleton />
-      <SingleCombinedVideoComponent />
-      <SingleCombineVideoSkeleton />
-      <ArchivingTaskFilesComponent />
-      <ArchivingTaskFilesSkeleton />
+      <div className="flex flex-col items-center w-full ">
+        <LinksListWithLoading />
+        <IngredientsCard />
+        <VideoCard />
+        <GeneratedClipsComponent />
+        <GeneratedClipsSkeletonComponent />
+        <GeneratedAudioComponent />
+        <GeneratedAudioSkeleton />
+        <SingleCombinedVideoComponent />
+        <SingleCombineVideoSkeleton />
+        <ArchivingTaskFilesComponent />
+        <ArchivingTaskFilesSkeleton />
+      </div>
     </div>
   );
 };
