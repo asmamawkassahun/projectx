@@ -1,5 +1,6 @@
 import { ThemeToggle } from "@/components/common_components/ThemeToggle";
 import { Skeleton } from "@/components/ui/skeleton";
+import IngredientsCard from "@/components/ui_components/loading/IngridentLoading";
 import LinksListWithLoading from "@/components/ui_components/loading/ItemListWithLoading";
 import VideoSkeleton from "@/components/ui_components/video_component/VideoSkeleton";
 import React from "react";
@@ -10,8 +11,11 @@ const page = () => {
       <div className="flex w-full justify-end items-center mx-auto">
         <ThemeToggle />
       </div>
-      <LinksListWithLoading />
-      <VideoSkeleton />
+      <div className="flex flex-col items-center w-full ">
+        <LinksListWithLoading />
+        <IngredientsCard />
+        <VideoSkeleton />
+      </div>
     </div>
   );
 };

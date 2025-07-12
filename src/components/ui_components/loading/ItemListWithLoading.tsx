@@ -5,9 +5,23 @@ import ListItemSkeleton from "../link_list_item_component/ListItemSkeleton";
 import ListItemComponent from "../link_list_item_component/ListItemComponent";
 import { ShadCnButton } from "../../ui/shadcnButton";
 import { LinkItem } from "@/types/linkItems";
+import { BrowserCardSkeleton } from "../link_list_item_component/BrowserCardSkeleton";
+import { BrowserCardContent } from "../link_list_item_component/BrowserCardContent";
+import { dummyRecipes, Recipe } from "@/lib/data";
 
 export default function LinksListWithLoading() {
   const [isLoading, setIsLoading] = useState(true);
+
+  const [data, setData] = useState<Recipe[]>([]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setData(dummyRecipes);
+      setIsLoading(false);
+    }, 2000); // Simulate a 2-second loading time
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     // Simulate loading time
@@ -65,12 +79,19 @@ export default function LinksListWithLoading() {
   ];
 
   return (
-    <div className="min-h-screen p-8 bg-background text-foreground flex flex-col sm:flex-row  items-center justify-center space-y-10 space-x-10">
-      {isLoading ? (
-        <ListItemSkeleton />
-      ) : (
-        <ListItemComponent linkItems={linkItems} />
-      )}
+    <div className="min-h-screen p-8 bg-background text-foreground flex flex-col sm:flex-row  space-y-10 space-x-10">
+      <div className="flex flex-col space-y-4">
+        {isLoading ? (
+          <ListItemSkeleton />
+        ) : (
+          <ListItemComponent linkItems={linkItems} />
+        )}
+        {isLoading ? (
+          <BrowserCardSkeleton />
+        ) : (
+          <BrowserCardContent recipes={data} />
+        )}
+      </div>
 
       <ShadCnButton onClick={resetLoading}>reset</ShadCnButton>
     </div>
