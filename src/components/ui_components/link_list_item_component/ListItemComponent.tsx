@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/collapsible";
 
 import { cn } from "@/lib/utils";
-import { ShadCnButton } from "../ui/shadcnButton";
+import { ShadCnButton } from "../../ui/shadcnButton";
 import Image from "next/image";
 interface LinkItem {
   id: string;
@@ -81,18 +81,18 @@ const ListItemComponent = () => {
         {linkItems.map((item) => (
           <div
             key={item.id}
-            className="bg-white/10 dark:bg-black/10 rounded-3xl px-[1.125rem] py-4"
-          >
+            className={cn(
+              "bg-white/10 dark:bg-black/10 px-[1.125rem] py-2 transition-all duration-200",
+              openItems.has(item.id) ? "rounded-3xl" : "rounded-3xl"
+            )}>
             <Collapsible
               open={openItems.has(item.id)}
               onOpenChange={() => toggleItem(item.id)}
-              className="w-full"
-            >
+              className="w-full">
               <CollapsibleTrigger asChild>
                 <ShadCnButton
                   variant="ghost"
-                  className="w-full text-left hover:bg-transparent p-0 flex items-center justify-between space-x-3"
-                >
+                  className="w-full text-left hover:bg-transparent p-0 flex items-center justify-between space-x-3">
                   {/* Left side - Icon and Question (with proper truncation) */}
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <ChevronDown
@@ -126,12 +126,11 @@ const ListItemComponent = () => {
                   </div>
                 ) : (
                   item.content?.type === "images" && (
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 ">
                       {item.content.images.map((image, imgIndex) => (
                         <div
                           key={imgIndex}
-                          className="relative rounded-3xl overflow-hidden aspect-video"
-                        >
+                          className="relative rounded-3xl overflow-hidden  aspect-[197.33/160]">
                           <Image
                             src={"/placeholder1.svg"}
                             alt={image.alt}

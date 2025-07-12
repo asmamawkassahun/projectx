@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import ListItemSkeleton from "./ListItemSkeleton";
-import ListItemComponent from "./ListItemComponent";
-import { ShadCnButton } from "../ui/shadcnButton";
+import ListItemSkeleton from "../link_list_item_component/ListItemSkeleton";
+import ListItemComponent from "../link_list_item_component/ListItemComponent";
+import { ShadCnButton } from "../../ui/shadcnButton";
 
 export default function LinksListWithLoading() {
   const [isLoading, setIsLoading] = useState(true);
