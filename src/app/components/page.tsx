@@ -2,7 +2,16 @@ import { ThemeToggle } from "@/components/common_components/ThemeToggle";
 import { Skeleton } from "@/components/ui/skeleton";
 import IngredientsCard from "@/components/ui_components/loading/IngridentLoading";
 import LinksListWithLoading from "@/components/ui_components/loading/ItemListWithLoading";
+import VideoCard from "@/components/ui_components/loading/VideoCardLoading";
 import VideoSkeleton from "@/components/ui_components/video_component/VideoSkeleton";
+import ArchivingTaskFilesComponent from "@/components/uiComponents/ArchivingTaskFilesComponent";
+import ArchivingTaskFilesSkeleton from "@/components/uiComponents/ArchivingTaskFilesSkeleton";
+import GeneratedAudioComponent from "@/components/uiComponents/GeneratedAudioComponent";
+import GeneratedAudioSkeleton from "@/components/uiComponents/GeneratedAudioSkeleton";
+import GeneratedClipsComponent from "@/components/uiComponents/GeneratedClipsComponent";
+import GeneratedClipsSkeletonComponent from "@/components/uiComponents/GeneratedClipsSkeletonComponent";
+import SingleCombinedVideoComponent from "@/components/uiComponents/SingleCombinedVideoCompnent";
+import SingleCombineVideoSkeleton from "@/components/uiComponents/SingleCombineVideoSkeleton";
 import React from "react";
 
 const page = () => {
@@ -14,7 +23,15 @@ const page = () => {
       <div className="flex flex-col items-center w-full ">
         <LinksListWithLoading />
         <IngredientsCard />
-        <VideoSkeleton />
+        <VideoCard />
+        <GeneratedClipsComponent />
+        <GeneratedClipsSkeletonComponent />
+        <GeneratedAudioComponent />
+        <GeneratedAudioSkeleton />
+        <SingleCombinedVideoComponent />
+        <SingleCombineVideoSkeleton />
+        <ArchivingTaskFilesComponent />
+        <ArchivingTaskFilesSkeleton />
       </div>
     </div>
   );

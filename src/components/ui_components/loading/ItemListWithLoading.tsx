@@ -79,7 +79,7 @@ export default function LinksListWithLoading() {
   ];
 
   return (
-    <div className="min-h-screen p-8 bg-background text-foreground flex flex-col sm:flex-row  space-y-10 space-x-10">
+    <div className="p-8 bg-background text-foreground flex flex-col sm:flex-row  space-y-10 space-x-10">
       <div className="flex flex-col space-y-4">
         {isLoading ? (
           <ListItemSkeleton />

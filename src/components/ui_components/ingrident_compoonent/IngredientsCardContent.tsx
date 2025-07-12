@@ -11,7 +11,7 @@ export function IngredientsCardContent({
 }: IngredientsCardContentProps) {
   return (
     <div className="w-full max-w-[35.75rem] space-y-6 bg-background">
-      <h2 className="text-lg font-semibold mb-4 text-foreground">
+      <h2 className="text-xl font-semibold leading-[135%] text-foreground">
         Ingredients
       </h2>
       <div className="space-y-4">

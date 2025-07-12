@@ -1,21 +1,19 @@
 "use client";
 
-import {
-  dummyIngredients,
-  IngredientCategory,
-} from "@/lib/data/dummyIngredients ";
+import { dummyVideos, Video } from "@/lib/data/dummyVideos";
 import { useState, useEffect } from "react";
-import { IngredientsCardSkeleton } from "../ingrident_compoonent/IngredientsCardSkeleton";
-import { IngredientsCardContent } from "../ingrident_compoonent/IngredientsCardContent";
+import VideoSkeleton from "../video_component/VideoSkeleton";
+import { VideoCardContent } from "../video_component/VideoContent";
 import { ShadCnButton } from "@/components/ui/shadcnButton";
 
-export default function IngredientsCard() {
+export default function VideoCard() {
   const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<IngredientCategory[]>([]);
+  const [data, setData] = useState<Video[]>([]);
+  const totalVideos = 9; // As per the image
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setData(dummyIngredients);
+      setData(dummyVideos);
       setIsLoading(false);
     }, 2000); // Simulate a 2-second loading time
 
@@ -30,13 +28,12 @@ export default function IngredientsCard() {
   };
 
   return (
-    <div className="w-full justify-center flex bg-background">
+    <div className="w-full flex min-h-screen justify-center bg-background p-4">
       {isLoading ? (
-        <IngredientsCardSkeleton />
+        <VideoSkeleton />
       ) : (
-        <IngredientsCardContent ingredients={data} />
+        <VideoCardContent videos={data} totalVideos={totalVideos} />
       )}
-
       <ShadCnButton onClick={resetLoading}>reset</ShadCnButton>
     </div>
   );
