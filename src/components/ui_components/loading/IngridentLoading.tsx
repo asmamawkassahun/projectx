@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { IngredientsCardSkeleton } from "../ingrident_compoonent/IngredientsCardSkeleton";
 import { IngredientsCardContent } from "../ingrident_compoonent/IngredientsCardContent";
 import { ShadCnButton } from "@/components/ui/shadcnButton";
+import { RefreshCcw } from "lucide-react";
 
 export default function IngredientsCard() {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,7 +38,9 @@ export default function IngredientsCard() {
         <IngredientsCardContent ingredients={data} />
       )}
 
-      <ShadCnButton onClick={resetLoading}>reset</ShadCnButton>
+      <ShadCnButton onClick={resetLoading} className="w-8  h-8 rounded-full">
+        <RefreshCcw className="w-6 h-6" />
+      </ShadCnButton>
     </div>
   );
 }
