@@ -25,7 +25,7 @@ export default function LinksListWithLoading() {
   };
 
   return (
-    <div className="min-h-screen bg-black p-8 flex flex-col items-center justify-center space-y-5">
+    <div className="min-h-screen p-8 bg-background text-foreground flex flex-col items-center justify-center space-y-5">
       {isLoading ? <ListItemSkeleton /> : <ListItemComponent />}
 
       <ShadCnButton onClick={resetLoading}>reset</ShadCnButton>
