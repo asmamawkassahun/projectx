@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ChevronDown, ExternalLink, Play } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
@@ -25,6 +24,11 @@ const ListItemComponent = ({ linkItems }: ListItemComponentProps) => {
       newOpenItems.add(id);
     }
     setOpenItems(newOpenItems);
+  };
+
+  const handleExternalLinkClick = (url: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -71,10 +75,19 @@ const ListItemComponent = ({ linkItems }: ListItemComponentProps) => {
                     <span className="text-xs font-medium  whitespace-nowrap">
                       {item.source}
                     </span>
-                    <ExternalLink
-                      onClick={(e) => e.stopPropagation()}
-                      className="h-3.5 w-3.5 "
-                    />
+                    <div
+                      onClick={(event) =>
+                        handleExternalLinkClick(item.url, event)
+                      }
+                      aria-label={`Open external link for ${item.question}`}
+                    >
+                      <ExternalLink
+                        onClick={(event) =>
+                          handleExternalLinkClick(item.url, event)
+                        }
+                        className="h-3.5 w-3.5 "
+                      />
+                    </div>
                   </div>
                 </ShadCnButton>
               </CollapsibleTrigger>

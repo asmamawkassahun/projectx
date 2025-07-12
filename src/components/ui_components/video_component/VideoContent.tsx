@@ -72,8 +72,7 @@ export function VideoCardContent({
         ))}
       </div>
       <ShadCnButton
-        variant="link"
-        className="text-xs font-semibold text-foreground rounded-full px-3 py-2.5 dark:bg-[#1a1a1a] bg-black/10"
+        className="text-xs font-semibold text-foreground rounded-full hover:bg-transparent px-3 py-2.5 dark:bg-[#1a1a1a] bg-black/10"
       >
         See more
       </ShadCnButton>

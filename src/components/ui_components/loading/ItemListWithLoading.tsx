@@ -8,6 +8,8 @@ import { LinkItem } from "@/types/linkItems";
 import { BrowserCardSkeleton } from "../link_list_item_component/BrowserCardSkeleton";
 import { BrowserCardContent } from "../link_list_item_component/BrowserCardContent";
 import { dummyRecipes, Recipe } from "@/lib/data";
+import { RefreshCcw } from "lucide-react";
+import { linkItems } from "@/lib/data/dummyLinkItems";
 
 export default function LinksListWithLoading() {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,44 +41,6 @@ export default function LinksListWithLoading() {
     }, 2000);
   };
 
-  const linkItems: LinkItem[] = [
-    {
-      id: "1",
-      question: "What Is Calamansi?",
-      source: "foodnetwork",
-      content:
-        "Calamansi is a citrus fruit native to the Philippines and other parts of Southeast Asia. It's small, round, and has a thin green or orange skin when ripe.",
-    },
-    {
-      id: "2",
-      question: "What Is Calamansi And How Do You Cook With It?",
-      source: "rezelkealoha",
-      content: {
-        type: "images",
-        images: [
-          {
-            src: "/placeholder1.svg?height=120&width=120",
-            alt: "Calamansi dish 1",
-          },
-          {
-            src: "/placeholder1.svg?height=120&width=120",
-            alt: "Calamansi dish 2",
-          },
-          {
-            src: "/placeholder1.svg?height=120&width=120",
-            alt: "Calamansi dish 3",
-          },
-        ],
-      },
-    },
-    {
-      id: "3",
-      question: "Harvested a lot of calamansi(Philippine lemon or lime) this ",
-      source: "reddit",
-      content:
-        "Many people harvest calamansi and use them for juice, preserves, or cooking. They can be stored in the refrigerator or processed into juice concentrate.",
-    },
-  ];
 
   return (
     <div className="p-8 bg-background text-foreground flex flex-col sm:flex-row  space-y-10 space-x-10">
@@ -93,7 +57,9 @@ export default function LinksListWithLoading() {
         )}
       </div>
 
-      <ShadCnButton onClick={resetLoading}>reset</ShadCnButton>
+      <ShadCnButton onClick={resetLoading} className="w-8  h-8 rounded-full">
+        <RefreshCcw className="w-6 h-6" />
+      </ShadCnButton>
     </div>
   );
 }

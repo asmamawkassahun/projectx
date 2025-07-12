@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import VideoSkeleton from "../video_component/VideoSkeleton";
 import { VideoCardContent } from "../video_component/VideoContent";
 import { ShadCnButton } from "@/components/ui/shadcnButton";
+import { RefreshCcw } from "lucide-react";
 
 export default function VideoCard() {
   const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +35,9 @@ export default function VideoCard() {
       ) : (
         <VideoCardContent videos={data} totalVideos={totalVideos} />
       )}
-      <ShadCnButton onClick={resetLoading}>reset</ShadCnButton>
+      <ShadCnButton onClick={resetLoading} className="w-8  h-8 rounded-full">
+        <RefreshCcw className="w-6 h-6" />
+      </ShadCnButton>{" "}
     </div>
   );
 }

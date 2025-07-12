@@ -35,10 +35,7 @@ export function IngredientsCardContent({
           </Card>
         ))}
       </div>
-      <ShadCnButton
-        variant="link"
-        className="text-xs font-semibold text-foreground rounded-full px-3 py-2.5 dark:bg-[#1a1a1a] bg-black/10"
-      >
+      <ShadCnButton className="text-xs font-semibold text-foreground hover:bg-transparent rounded-full px-3 py-2.5 dark:bg-[#1a1a1a] bg-black/10">
         See more
       </ShadCnButton>
     </div>
