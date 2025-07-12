@@ -1,6 +1,7 @@
 import { ThemeToggle } from "@/components/common_components/ThemeToggle";
 import { Skeleton } from "@/components/ui/skeleton";
 import LinksListWithLoading from "@/components/ui_components/loading/ItemListWithLoading";
+import VideoSkeleton from "@/components/ui_components/video_component/VideoSkeleton";
 import React from "react";
 
 const page = () => {
@@ -10,6 +11,7 @@ const page = () => {
         <ThemeToggle />
       </div>
       <LinksListWithLoading />
+      <VideoSkeleton />
     </div>
   );
 };
