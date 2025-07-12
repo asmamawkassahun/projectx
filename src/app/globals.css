@@ -7,8 +7,8 @@
 /* Root variables - light mode */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    --background: 0 0% 100%; /* HSL for white */
+    --foreground: 0 0% 0%; /* HSL for black */
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
@@ -38,8 +38,8 @@
     --chart-5: 27 87% 67%;
   }
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 0 0% 0%; /* HSL for black */
+    --foreground: 0 0% 100%; /* HSL for white */
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 3.9%;
@@ -76,8 +76,8 @@
 /* Dark mode variables */
 @layer base {
   .dark {
-    --background: 224 71.4% 4.1%;
-    --foreground: 210 20% 98%;
+    --background: 0 0% 0%; /* HSL for black */
+    --foreground: 0 0% 100%; /* HSL for white */
     --card: 224 71.4% 4.1%;
     --card-foreground: 210 20% 98%;
     --popover: 224 71.4% 4.1%;
@@ -100,7 +100,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-hex: #0a0a0a;
+    --background-hex: #000000;
     --foreground-hex: #ededed;
   }
 }

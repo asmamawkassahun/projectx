@@ -71,8 +71,8 @@ const ListItemComponent = () => {
   };
 
   return (
-    <div className="w-full md:w-[43.0625rem] space-y-4 bg-black">
-      <div className="flex items-center justify-between w-20 text-white text-sm font-semibold">
+    <div className="w-full md:w-[43.0625rem] space-y-4 bg-background text-foreground">
+      <div className="flex items-center justify-between w-20  text-sm font-semibold">
         <span>Links</span>
         <span>{linkItems.length}</span>
       </div>
@@ -82,38 +82,41 @@ const ListItemComponent = () => {
           <div
             key={item.id}
             className={cn(
-              "bg-white/10 dark:bg-black/10 px-[1.125rem] py-2 transition-all duration-200",
+              "dark:bg-[#1a1a1a] bg-black/10  px-[1.125rem] py-2 transition-all duration-200",
               openItems.has(item.id) ? "rounded-3xl" : "rounded-3xl"
-            )}>
+            )}
+          >
             <Collapsible
               open={openItems.has(item.id)}
               onOpenChange={() => toggleItem(item.id)}
-              className="w-full">
+              className="w-full"
+            >
               <CollapsibleTrigger asChild>
                 <ShadCnButton
                   variant="ghost"
-                  className="w-full text-left hover:bg-transparent p-0 flex items-center justify-between space-x-3">
+                  className="w-full text-left hover:bg-transparent p-0 flex items-center justify-between space-x-3"
+                >
                   {/* Left side - Icon and Question (with proper truncation) */}
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <ChevronDown
                       className={cn(
-                        "h-4 w-4 text-white transition-transform duration-200 flex-shrink-0",
+                        "h-4 w-4  transition-transform duration-200 flex-shrink-0",
                         openItems.has(item.id) && "rotate-180"
                       )}
                     />
-                    <span className="text-white font-semibold text-base flex-1 truncate min-w-0">
+                    <span className=" font-semibold text-base flex-1 truncate min-w-0">
                       {item.question}
                     </span>
                   </div>
 
                   {/* Right side - Source and External Link */}
                   <div className="flex items-center gap-2 flex-shrink-0">
-                    <span className="text-xs font-medium text-white whitespace-nowrap">
+                    <span className="text-xs font-medium  whitespace-nowrap">
                       {item.source}
                     </span>
                     <ExternalLink
                       onClick={(e) => e.stopPropagation()}
-                      className="h-3.5 w-3.5 text-white"
+                      className="h-3.5 w-3.5 "
                     />
                   </div>
                 </ShadCnButton>
@@ -130,7 +133,8 @@ const ListItemComponent = () => {
                       {item.content.images.map((image, imgIndex) => (
                         <div
                           key={imgIndex}
-                          className="relative rounded-3xl overflow-hidden  aspect-[197.33/160]">
+                          className="relative rounded-3xl overflow-hidden  aspect-[197.33/160]"
+                        >
                           <Image
                             src={"/placeholder1.svg"}
                             alt={image.alt}

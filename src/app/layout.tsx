@@ -34,7 +34,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${montserrat.variable} font-sans bg-black text-white`}
+        className={`${inter.variable} ${montserrat.variable} font-sans bg-background text-foreground`}
       >
         <ThemeProvider
           attribute="class"
