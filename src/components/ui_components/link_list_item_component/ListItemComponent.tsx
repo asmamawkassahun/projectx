@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ChevronDown, ExternalLink, Play } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
@@ -12,52 +11,9 @@ import {
 import { cn } from "@/lib/utils";
 import { ShadCnButton } from "../../ui/shadcnButton";
 import Image from "next/image";
-interface LinkItem {
-  id: string;
-  question: string;
-  source: string;
-  content?: string | { type: "images"; images: { src: string; alt: string }[] };
-}
+import { ListItemComponentProps } from "@/types/linkItems";
 
-const linkItems: LinkItem[] = [
-  {
-    id: "1",
-    question: "What Is Calamansi?",
-    source: "foodnetwork",
-    content:
-      "Calamansi is a citrus fruit native to the Philippines and other parts of Southeast Asia. It's small, round, and has a thin green or orange skin when ripe.",
-  },
-  {
-    id: "2",
-    question: "What Is Calamansi And How Do You Cook With It?",
-    source: "rezelkealoha",
-    content: {
-      type: "images",
-      images: [
-        {
-          src: "/placeholder1.svg?height=120&width=120",
-          alt: "Calamansi dish 1",
-        },
-        {
-          src: "/placeholder1.svg?height=120&width=120",
-          alt: "Calamansi dish 2",
-        },
-        {
-          src: "/placeholder1.svg?height=120&width=120",
-          alt: "Calamansi dish 3",
-        },
-      ],
-    },
-  },
-  {
-    id: "3",
-    question: "Harvested a lot of calamansi(Philippine lemon or lime) this ",
-    source: "reddit",
-    content:
-      "Many people harvest calamansi and use them for juice, preserves, or cooking. They can be stored in the refrigerator or processed into juice concentrate.",
-  },
-];
-const ListItemComponent = () => {
+const ListItemComponent = ({ linkItems }: ListItemComponentProps) => {
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
 
   const toggleItem = (id: string) => {
@@ -68,6 +24,11 @@ const ListItemComponent = () => {
       newOpenItems.add(id);
     }
     setOpenItems(newOpenItems);
+  };
+
+  const handleExternalLinkClick = (url: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -114,17 +75,26 @@ const ListItemComponent = () => {
                     <span className="text-xs font-medium  whitespace-nowrap">
                       {item.source}
                     </span>
-                    <ExternalLink
-                      onClick={(e) => e.stopPropagation()}
-                      className="h-3.5 w-3.5 "
-                    />
+                    <div
+                      onClick={(event) =>
+                        handleExternalLinkClick(item.url, event)
+                      }
+                      aria-label={`Open external link for ${item.question}`}
+                    >
+                      <ExternalLink
+                        onClick={(event) =>
+                          handleExternalLinkClick(item.url, event)
+                        }
+                        className="h-3.5 w-3.5 "
+                      />
+                    </div>
                   </div>
                 </ShadCnButton>
               </CollapsibleTrigger>
 
               <CollapsibleContent className="pl-[1.875rem] pr-4 py-4">
                 {typeof item.content === "string" ? (
-                  <div className="text-white font-medium text-sm leading-relaxed">
+                  <div className="font-medium text-sm leading-relaxed">
                     {item.content}
                   </div>
                 ) : (
@@ -142,9 +112,11 @@ const ListItemComponent = () => {
                             objectFit="cover"
                             className="rounded-3xl"
                           />
-                          <div className="absolute bottom-2 left-2 bg-black/50 rounded-full px-3 py-1 flex items-center gap-1 text-white text-sm">
-                            <Play className="h-4 w-4 fill-white" />
-                            <span>Play</span>
+                          <div className="absolute bottom-2 left-2 bg-white/40  dark:bg-black/40 backdrop-blur-lg rounded-full px-2.5 space-x-3 py-2 flex items-center  text-sm">
+                            <Play className="h-4 w-4 fill-foreground" />
+                            <span className="text-foreground text-sm font-semibold">
+                              Play
+                            </span>
                           </div>
                         </div>
                       ))}

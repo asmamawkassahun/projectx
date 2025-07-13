@@ -1,19 +1,11 @@
 import { ThemeToggle } from "@/components/common_components/ThemeToggle";
-import { Skeleton } from "@/components/ui/skeleton";
+import IngredientsCard from "@/components/ui_components/loading/IngridentLoading";
 import LinksListWithLoading from "@/components/ui_components/loading/ItemListWithLoading";
-import VideoSkeleton from "@/components/ui_components/video_component/VideoSkeleton";
-import ArchivingTaskFilesComponent from "@/components/uiComponents/ArchivingTaskFilesComponent";
-import ArchivingTaskFilesSkeleton from "@/components/uiComponents/ArchivingTaskFilesSkeleton";
+import VideoCard from "@/components/ui_components/loading/VideoCardLoading";
 import ArchivingTaskFilesWithLoading from "@/components/uiComponents/ArchivingTaskFilesWithLoading";
-import GeneratedAudioComponent from "@/components/uiComponents/GeneratedAudioComponent";
-import GeneratedAudioSkeleton from "@/components/uiComponents/GeneratedAudioSkeleton";
 import GeneratedAudioWithLoading from "@/components/uiComponents/GeneratedAudioWithLoading";
-import GeneratedClipsComponent from "@/components/uiComponents/GeneratedClipsComponent";
-import GeneratedClipsSkeletonComponent from "@/components/uiComponents/GeneratedClipsSkeletonComponent";
 import GeneratedClipsWithLoading from "@/components/uiComponents/GeneratedClipsWithLoading";
-import SingleCombinedVideoComponent from "@/components/uiComponents/SingleCombinedVideoCompnent";
 import SingleCombinedVideoWithLoading from "@/components/uiComponents/SingleCombinedVideoWithLoading";
-import SingleCombineVideoSkeleton from "@/components/uiComponents/SingleCombineVideoSkeleton";
 import React from "react";
 
 const page = () => {
@@ -22,12 +14,15 @@ const page = () => {
       <div className="flex w-full justify-end items-center mx-auto">
         <ThemeToggle />
       </div>
-      <LinksListWithLoading />
-      <VideoSkeleton />
-      <GeneratedClipsWithLoading />
-      <GeneratedAudioWithLoading />
-      <SingleCombinedVideoWithLoading />
-      <ArchivingTaskFilesWithLoading />
+      <div className="flex flex-col items-center w-full ">
+        <LinksListWithLoading />
+        <IngredientsCard />
+        <VideoCard />
+        <GeneratedClipsWithLoading />
+        <GeneratedAudioWithLoading />
+        <SingleCombinedVideoWithLoading />
+        <ArchivingTaskFilesWithLoading /> 
+      </div>
     </div>
   );
 };
