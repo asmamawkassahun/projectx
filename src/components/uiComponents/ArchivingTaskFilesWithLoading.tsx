@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import ArchivingTaskFilesSkeleton from "./ArchivingTaskFilesSkeleton";
 import ArchivingTaskFilesComponent from "./ArchivingTaskFilesComponent";
 import { ShadCnButton } from "../ui/shadcnButton";
+import { RefreshCcw } from "lucide-react";
 
 export default function ArchivingTaskFilesWithLoading() {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,9 +24,11 @@ export default function ArchivingTaskFilesWithLoading() {
   };
 
   return (
-    <div className="min-h-screen p-8 bg-background text-foreground flex flex-col items-center justify-center space-y-5">
+    <div className="w-full flex min-h-screen justify-center bg-background p-4">
       {isLoading ? <ArchivingTaskFilesSkeleton /> : <ArchivingTaskFilesComponent />}
-      <ShadCnButton onClick={resetLoading}>reset</ShadCnButton>
+      <ShadCnButton onClick={resetLoading} className="w-8  h-8 rounded-full">
+        <RefreshCcw className="w-6 h-6" />
+      </ShadCnButton>{" "}
     </div>
   );
 }

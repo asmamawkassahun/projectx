@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import GeneratedAudioSkeleton from "./GeneratedAudioSkeleton";
 import GeneratedAudioComponent from "./GeneratedAudioComponent";
 import { ShadCnButton } from "../ui/shadcnButton";
+import { RefreshCcw } from "lucide-react";
 
 export default function GeneratedAudioWithLoading() {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,9 +24,11 @@ export default function GeneratedAudioWithLoading() {
   };
 
   return (
-    <div className="min-h-screen p-8 bg-background text-foreground flex flex-col items-center justify-center space-y-5">
+    <div className="w-full flex min-h-screen justify-center bg-background p-4">
       {isLoading ? <GeneratedAudioSkeleton /> : <GeneratedAudioComponent />}
-      <ShadCnButton onClick={resetLoading}>reset</ShadCnButton>
+      <ShadCnButton onClick={resetLoading} className="w-8  h-8 rounded-full">
+        <RefreshCcw className="w-6 h-6" />
+      </ShadCnButton>{" "}
     </div>
   );
 }
