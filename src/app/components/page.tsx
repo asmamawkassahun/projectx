@@ -4,11 +4,15 @@ import LinksListWithLoading from "@/components/ui_components/loading/ItemListWit
 import VideoSkeleton from "@/components/ui_components/video_component/VideoSkeleton";
 import ArchivingTaskFilesComponent from "@/components/uiComponents/ArchivingTaskFilesComponent";
 import ArchivingTaskFilesSkeleton from "@/components/uiComponents/ArchivingTaskFilesSkeleton";
+import ArchivingTaskFilesWithLoading from "@/components/uiComponents/ArchivingTaskFilesWithLoading";
 import GeneratedAudioComponent from "@/components/uiComponents/GeneratedAudioComponent";
 import GeneratedAudioSkeleton from "@/components/uiComponents/GeneratedAudioSkeleton";
+import GeneratedAudioWithLoading from "@/components/uiComponents/GeneratedAudioWithLoading";
 import GeneratedClipsComponent from "@/components/uiComponents/GeneratedClipsComponent";
 import GeneratedClipsSkeletonComponent from "@/components/uiComponents/GeneratedClipsSkeletonComponent";
+import GeneratedClipsWithLoading from "@/components/uiComponents/GeneratedClipsWithLoading";
 import SingleCombinedVideoComponent from "@/components/uiComponents/SingleCombinedVideoCompnent";
+import SingleCombinedVideoWithLoading from "@/components/uiComponents/SingleCombinedVideoWithLoading";
 import SingleCombineVideoSkeleton from "@/components/uiComponents/SingleCombineVideoSkeleton";
 import React from "react";
 
@@ -20,14 +24,10 @@ const page = () => {
       </div>
       <LinksListWithLoading />
       <VideoSkeleton />
-      <GeneratedClipsComponent />
-      <GeneratedClipsSkeletonComponent />
-      <GeneratedAudioComponent />
-      <GeneratedAudioSkeleton />
-      <SingleCombinedVideoComponent />
-      <SingleCombineVideoSkeleton />
-      <ArchivingTaskFilesComponent />
-      <ArchivingTaskFilesSkeleton />
+      <GeneratedClipsWithLoading />
+      <GeneratedAudioWithLoading />
+      <SingleCombinedVideoWithLoading />
+      <ArchivingTaskFilesWithLoading />
     </div>
   );
 };
