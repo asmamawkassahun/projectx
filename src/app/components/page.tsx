@@ -7,6 +7,7 @@ import GeneratedAudioWithLoading from "@/components/ui/loading/GeneratedAudioWit
 import GeneratedClipsWithLoading from "@/components/ui/loading/GeneratedClipsWithLoading";
 import SingleCombinedVideoWithLoading from "@/components/ui/loading/SingleCombinedVideoWithLoading";
 import React from "react";
+import MapCardLoading from "@/components/ui/loading/MapCardLoading";
 import ImageGridWithLoading from "@/components/ui/loading/ImageGridWithLoading";
 
 const page = () => {
@@ -16,6 +17,7 @@ const page = () => {
         <ThemeToggle />
       </div>
       <div className="flex flex-col items-center w-full ">
+        <MapCardLoading />
         <LinksListWithLoading />
         <IngredientsCard />
         <VideoCard />
