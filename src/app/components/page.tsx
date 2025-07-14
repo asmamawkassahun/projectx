@@ -9,6 +9,7 @@ import SingleCombinedVideoWithLoading from "@/components/ui/loading/SingleCombin
 import React from "react";
 import MapCardLoading from "@/components/ui/loading/MapCardLoading";
 import ImageGridWithLoading from "@/components/ui/loading/ImageGridWithLoading";
+import HotelsCardLoading from "@/components/ui/loading/HotelsCardLoading";
 
 const page = () => {
   return (
@@ -17,6 +18,7 @@ const page = () => {
         <ThemeToggle />
       </div>
       <div className="flex flex-col items-center w-full ">
+        <HotelsCardLoading />
         <MapCardLoading />
         <LinksListWithLoading />
         <IngredientsCard />
