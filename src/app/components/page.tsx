@@ -8,6 +8,7 @@ import GeneratedClipsWithLoading from "@/components/ui/loading/GeneratedClipsWit
 import SingleCombinedVideoWithLoading from "@/components/ui/loading/SingleCombinedVideoWithLoading";
 import React from "react";
 import MapCardLoading from "@/components/ui/loading/MapCardLoading";
+import ImageGridWithLoading from "@/components/ui/loading/ImageGridWithLoading";
 
 const page = () => {
   return (
@@ -24,6 +25,7 @@ const page = () => {
         <GeneratedAudioWithLoading />
         <SingleCombinedVideoWithLoading />
         <ArchivingTaskFilesWithLoading />
+        <ImageGridWithLoading />
       </div>
     </div>
   );
