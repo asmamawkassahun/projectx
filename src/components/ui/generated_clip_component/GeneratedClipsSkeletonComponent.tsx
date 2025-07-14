@@ -5,21 +5,21 @@ const GeneratedClipsSkeletonComponent = () => {
   return (
     <div className="w-[691px] h-[404px] flex flex-col gap-6 rotate-0 opacity-100 max-w-full sm:w-[691px] sm:h-[404px] p-2">
       {/* Header section (Generated clips and 7) */}
-      <div className="w-[147px] h-[32px] flex items-center justify-start gap-[10px] rotate-0 opacity-100 sm:w-[147px] sm:h-[32px]">
+      <div className="flex items-center justify-start gap-[10px] rotate-0 opacity-100 sm:w-[147px] sm:h-[32px]">
         <span
           className="h-[10px] font-sans font-semibold text-[14px] leading-[1] tracking-normal align-bottom text-gray-900 dark:text-white"
-          style={{ fontFamily: "Neue Haas Grotesk Display Pro, sans-serif" }}
+          // style={{ fontFamily: "Neue Haas Grotesk Display Pro, sans-serif" }}
         >
           Generated clips
         </span>
-        <div className="w-[32px] h-[32px] flex items-center justify-center gap-[10px] rounded-full p-[10px] opacity-100 bg-gray-100 dark:bg-white/5 sm:w-[32px] sm:h-[32px]">
+        {/* <div className="w-[32px] h-[32px] flex items-center justify-center gap-[10px] rounded-full p-[10px] opacity-100 bg-gray-100 dark:bg-white/5 sm:w-[32px] sm:h-[32px]"> */}
           <span
             className="w-[8px] h-[10px] font-sans font-semibold text-[14px] leading-[1] tracking-normal align-bottom text-gray-900 dark:text-white opacity-100"
-            style={{ fontFamily: "Neue Haas Grotesk Display Pro, sans-serif" }}
+            // style={{ fontFamily: "Neue Haas Grotesk Display Pro, sans-serif" }}
           >
             7
           </span>
-        </div>
+        {/* </div> */}
       </div>
 
       {/* Skeleton main content */}
@@ -50,15 +50,15 @@ const GeneratedClipsSkeletonComponent = () => {
                 }}
               >
                 <div className="w-4 h-4 flex items-center justify-center" style={{ position: "relative" }}>
-                  <Play className="text-foreground fill-black dark:fill-white" />
+                  <Play className="text-gray-500 dark:text-gray-400 fill-gray-500 dark:fill-gray-400" />
                 </div>
-                <div
+                {/* <div
                   className="w-[27px] h-[10px] flex items-center justify-center"
                   style={{
                     borderRadius: "8px",
                     padding: 0,
                   }}
-                >
+                > */}
                   <span
                     className="font-sans font-semibold text-[14px] leading-[1] tracking-normal align-center text-foreground opacity-60"
                     style={{
@@ -70,7 +70,7 @@ const GeneratedClipsSkeletonComponent = () => {
                   >
                     Play
                   </span>
-                </div>
+                {/* </div> */}
               </div>
             </div>
             <div className="w-[193px] h-[32px] flex flex-col gap-2 mt-4 sm:w-[193px] sm:h-[32px]"
