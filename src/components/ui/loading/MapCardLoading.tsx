@@ -50,7 +50,8 @@ const MapCardLoading = () => {
     }, 2000);
   };
 
-  const mapLocationQuery = "New York, NY"; // Example location query
+  const mapLocationQuery =
+    "https://serpapi.com/searches/6874f229b2c613fdd776d7a2/images/6e2624176fbce3cad030e768fe990f41.png%22"; // Example location query
 
   return (
     <div className="w-full flex  justify-center bg-background p-4">
