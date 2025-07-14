@@ -32,27 +32,25 @@ const SingleCombinedVideoComponent = () => {
             <div className="w-4 h-4 flex items-center justify-center" style={{ position: "relative" }}>
               <Play className="text-white fill-white" />
             </div>
-            <div
+            {/* <div
               className="w-[27px] h-[10px] flex items-center justify-center ml-1"
               style={{
                 borderRadius: "8px",
                 padding: 0,
               }}
-            >
+            > */}
               <span
-                className="font-sans font-semibold text-[14px] leading-[1] tracking-normal align-bottom text-white"
+                className="font-sans font-semibold text-[14px] leading-[1] tracking-normal align-center text-white"
                 style={{
                   fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                  width: "27px",
-                  height: "10px",
                   display: "inline-block",
                   lineHeight: "1",
-                  verticalAlign: "bottom",
+                  verticalAlign: "center",
                 }}
               >
                 Play
               </span>
-            </div>
+            {/* </div> */}
           </div>
         </div>
         <div className="w-[453px] h-[27px] flex flex-col gap-[10px] opacity-100 sm:w-[453px] sm:h-[27px]">

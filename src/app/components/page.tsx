@@ -9,6 +9,8 @@ import SingleCombinedVideoWithLoading from "@/components/ui/loading/SingleCombin
 import React from "react";
 import { FlightCardContent } from "@/components/ui/flight_card_components/FlightCardContent";
 import FlightCardWithLoading from "@/components/ui/loading/FlightCardWithLoading";
+import MapCardLoading from "@/components/ui/loading/MapCardLoading";
+import ImageGridWithLoading from "@/components/ui/loading/ImageGridWithLoading";
 
 const page = () => {
   return (
@@ -18,6 +20,7 @@ const page = () => {
       </div>
       <div className="flex flex-col items-center w-full ">
       <FlightCardWithLoading/>
+        <MapCardLoading />
         <LinksListWithLoading />
         <IngredientsCard />
         <VideoCard />
@@ -25,6 +28,7 @@ const page = () => {
         <GeneratedAudioWithLoading />
         <SingleCombinedVideoWithLoading />
         <ArchivingTaskFilesWithLoading />
+        <ImageGridWithLoading />
       </div>
     </div>
   );
