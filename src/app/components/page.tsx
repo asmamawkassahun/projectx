@@ -2,14 +2,10 @@ import { ThemeToggle } from "@/components/common_components/ThemeToggle";
 import IngredientsCard from "@/components/ui/loading/IngridentLoading";
 import LinksListWithLoading from "@/components/ui/loading/ItemListWithLoading";
 import VideoCard from "@/components/ui/loading/VideoCardLoading";
-import ArchivingTaskFilesComponent from "@/components/uiComponents/ArchivingTaskFilesComponent";
-import ArchivingTaskFilesSkeleton from "@/components/uiComponents/ArchivingTaskFilesSkeleton";
-import GeneratedAudioComponent from "@/components/uiComponents/GeneratedAudioComponent";
-import GeneratedAudioSkeleton from "@/components/uiComponents/GeneratedAudioSkeleton";
-import GeneratedClipsComponent from "@/components/uiComponents/GeneratedClipsComponent";
-import GeneratedClipsSkeletonComponent from "@/components/uiComponents/GeneratedClipsSkeletonComponent";
-import SingleCombinedVideoComponent from "@/components/uiComponents/SingleCombinedVideoCompnent";
-import SingleCombineVideoSkeleton from "@/components/uiComponents/SingleCombineVideoSkeleton";
+import ArchivingTaskFilesWithLoading from "@/components/ui/loading/ArchivingTaskFilesWithLoading";
+import GeneratedAudioWithLoading from "@/components/ui/loading/GeneratedAudioWithLoading";
+import GeneratedClipsWithLoading from "@/components/ui/loading/GeneratedClipsWithLoading";
+import SingleCombinedVideoWithLoading from "@/components/ui/loading/SingleCombinedVideoWithLoading";
 import React from "react";
 
 const page = () => {
@@ -22,14 +18,10 @@ const page = () => {
         <LinksListWithLoading />
         <IngredientsCard />
         <VideoCard />
-        <GeneratedClipsComponent />
-        <GeneratedClipsSkeletonComponent />
-        <GeneratedAudioComponent />
-        <GeneratedAudioSkeleton />
-        <SingleCombinedVideoComponent />
-        <SingleCombineVideoSkeleton />
-        <ArchivingTaskFilesComponent />
-        <ArchivingTaskFilesSkeleton />
+        <GeneratedClipsWithLoading />
+        <GeneratedAudioWithLoading />
+        <SingleCombinedVideoWithLoading />
+        <ArchivingTaskFilesWithLoading />
       </div>
     </div>
   );
