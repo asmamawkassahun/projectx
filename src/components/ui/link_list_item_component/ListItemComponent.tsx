@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/collapsible";
 
 import { cn } from "@/lib/utils";
-import { ShadCnButton } from "../../ui/shadcnButton";
+import { ShadCnButton } from "../shadcnButton";
 import Image from "next/image";
 import { ListItemComponentProps } from "@/types/linkItems";
 

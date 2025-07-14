@@ -1,7 +1,7 @@
 import { ThemeToggle } from "@/components/common_components/ThemeToggle";
-import IngredientsCard from "@/components/ui_components/loading/IngridentLoading";
-import LinksListWithLoading from "@/components/ui_components/loading/ItemListWithLoading";
-import VideoCard from "@/components/ui_components/loading/VideoCardLoading";
+import IngredientsCard from "@/components/ui/loading/IngridentLoading";
+import LinksListWithLoading from "@/components/ui/loading/ItemListWithLoading";
+import VideoCard from "@/components/ui/loading/VideoCardLoading";
 import ArchivingTaskFilesComponent from "@/components/uiComponents/ArchivingTaskFilesComponent";
 import ArchivingTaskFilesSkeleton from "@/components/uiComponents/ArchivingTaskFilesSkeleton";
 import GeneratedAudioComponent from "@/components/uiComponents/GeneratedAudioComponent";
