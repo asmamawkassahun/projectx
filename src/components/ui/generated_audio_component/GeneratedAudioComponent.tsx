@@ -44,7 +44,14 @@ const GeneratedAudioComponent = ({
                 <AudioLines className="text-foreground w-6 h-6" />
               </div>
               <div className="flex flex-col flex-1 space-y-2.5 justify-between opacity-100">
-                <h3 className="font-semibold text-base text-foreground">
+                <h3
+                  className="font-semibold text-base text-foreground truncate max-w-[8rem] sm:max-w-none"
+                  style={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}  
+                >
                   {item.title}
                 </h3>
                 <span className="font-semibold text-sm text-foreground">

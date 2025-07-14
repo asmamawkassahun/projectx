@@ -24,15 +24,16 @@ export default function GeneratedClipsWithLoading() {
   };
 
   return (
-    <div className="w-full p-8 bg-background flex justify-center">
-      {isLoading ? (
-        <GeneratedClipsSkeletonComponent />
-      ) : (
-        <GeneratedClipsComponent />
-      )}
-      <ShadCnButton onClick={resetLoading} className="w-8  h-8 rounded-full">
-        <RefreshCcw className="w-6 h-6" />
-      </ShadCnButton>{" "}
+    <div className="w-full min-h-screen bg-background flex flex-col items-center justify-center p-4 sm:p-8">
+      <div className="max-w-[691px] w-full mx-auto relative">
+        {isLoading ? <GeneratedClipsSkeletonComponent /> : <GeneratedClipsComponent />}
+        <ShadCnButton
+          onClick={resetLoading}
+          className="w-8 h-8 rounded-full absolute right-0 top-0 sm:right-[-40px] sm:top-0"
+        >
+          <RefreshCcw className="w-6 h-6" />
+        </ShadCnButton>
+      </div>
     </div>
   );
 }
