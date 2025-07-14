@@ -7,7 +7,11 @@ import GeneratedAudioWithLoading from "@/components/ui/loading/GeneratedAudioWit
 import GeneratedClipsWithLoading from "@/components/ui/loading/GeneratedClipsWithLoading";
 import SingleCombinedVideoWithLoading from "@/components/ui/loading/SingleCombinedVideoWithLoading";
 import React from "react";
+import { FlightCardContent } from "@/components/ui/flight_card_components/FlightCardContent";
+import FlightCardWithLoading from "@/components/ui/loading/FlightCardWithLoading";
+import MapCardLoading from "@/components/ui/loading/MapCardLoading";
 import ImageGridWithLoading from "@/components/ui/loading/ImageGridWithLoading";
+import HotelsCardLoading from "@/components/ui/loading/HotelsCardLoading";
 
 const page = () => {
   return (
@@ -16,6 +20,9 @@ const page = () => {
         <ThemeToggle />
       </div>
       <div className="flex flex-col items-center w-full ">
+        <HotelsCardLoading />
+        <FlightCardWithLoading />
+        <MapCardLoading />
         <LinksListWithLoading />
         <IngredientsCard />
         <VideoCard />

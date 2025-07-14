@@ -8,6 +8,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'bp720': '715px',
+         'bp630': '630px',
+  'bp680': '680px'
+      },
       fontFamily: {
         montserrat: ["var(--font-montserrat)"],
       },
