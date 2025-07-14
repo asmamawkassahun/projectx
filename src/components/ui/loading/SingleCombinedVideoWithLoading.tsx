@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import SingleCombineVideoSkeleton from "./SingleCombineVideoSkeleton";
-import SingleCombinedVideoComponent from "./SingleCombinedVideoCompnent";
-import { ShadCnButton } from "../ui/shadcnButton";
+import SingleCombineVideoSkeleton from "../single_combined_video_component/SingleCombineVideoSkeleton";
+import SingleCombinedVideoComponent from "../single_combined_video_component/SingleCombinedVideoCompnent";
+import { ShadCnButton } from "../shadcnButton";
 import { RefreshCcw } from "lucide-react";
 
 export default function SingleCombinedVideoWithLoading() {
@@ -25,7 +25,11 @@ export default function SingleCombinedVideoWithLoading() {
 
   return (
     <div className="w-full flex min-h-screen justify-center bg-background p-4">
-      {isLoading ? <SingleCombineVideoSkeleton /> : <SingleCombinedVideoComponent />}
+      {isLoading ? (
+        <SingleCombineVideoSkeleton />
+      ) : (
+        <SingleCombinedVideoComponent />
+      )}
       <ShadCnButton onClick={resetLoading} className="w-8  h-8 rounded-full">
         <RefreshCcw className="w-6 h-6" />
       </ShadCnButton>{" "}

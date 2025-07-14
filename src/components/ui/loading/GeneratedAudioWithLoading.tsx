@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import GeneratedAudioSkeleton from "./GeneratedAudioSkeleton";
-import GeneratedAudioComponent from "./GeneratedAudioComponent";
-import { ShadCnButton } from "../ui/shadcnButton";
+import GeneratedAudioSkeleton from "../generated_audio_component/GeneratedAudioSkeleton";
+import GeneratedAudioComponent from "../generated_audio_component/GeneratedAudioComponent";
+import { ShadCnButton } from "../shadcnButton";
 import { RefreshCcw } from "lucide-react";
 
 export default function GeneratedAudioWithLoading() {

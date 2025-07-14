@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import ArchivingTaskFilesSkeleton from "./ArchivingTaskFilesSkeleton";
-import ArchivingTaskFilesComponent from "./ArchivingTaskFilesComponent";
-import { ShadCnButton } from "../ui/shadcnButton";
+import ArchivingTaskFilesSkeleton from "../archive_task_components/ArchivingTaskFilesSkeleton";
+import ArchivingTaskFilesComponent from "../archive_task_components/ArchivingTaskFilesComponent";
+import { ShadCnButton } from "../shadcnButton";
 import { RefreshCcw } from "lucide-react";
 
 export default function ArchivingTaskFilesWithLoading() {
@@ -25,7 +25,11 @@ export default function ArchivingTaskFilesWithLoading() {
 
   return (
     <div className="w-full flex min-h-screen justify-center bg-background p-4">
-      {isLoading ? <ArchivingTaskFilesSkeleton /> : <ArchivingTaskFilesComponent />}
+      {isLoading ? (
+        <ArchivingTaskFilesSkeleton />
+      ) : (
+        <ArchivingTaskFilesComponent />
+      )}
       <ShadCnButton onClick={resetLoading} className="w-8  h-8 rounded-full">
         <RefreshCcw className="w-6 h-6" />
       </ShadCnButton>{" "}

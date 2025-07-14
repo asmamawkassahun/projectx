@@ -1,11 +1,11 @@
 import { ThemeToggle } from "@/components/common_components/ThemeToggle";
-import IngredientsCard from "@/components/ui_components/loading/IngridentLoading";
-import LinksListWithLoading from "@/components/ui_components/loading/ItemListWithLoading";
-import VideoCard from "@/components/ui_components/loading/VideoCardLoading";
-import ArchivingTaskFilesWithLoading from "@/components/uiComponents/ArchivingTaskFilesWithLoading";
-import GeneratedAudioWithLoading from "@/components/uiComponents/GeneratedAudioWithLoading";
-import GeneratedClipsWithLoading from "@/components/uiComponents/GeneratedClipsWithLoading";
-import SingleCombinedVideoWithLoading from "@/components/uiComponents/SingleCombinedVideoWithLoading";
+import IngredientsCard from "@/components/ui/loading/IngridentLoading";
+import LinksListWithLoading from "@/components/ui/loading/ItemListWithLoading";
+import VideoCard from "@/components/ui/loading/VideoCardLoading";
+import ArchivingTaskFilesWithLoading from "@/components/ui/loading/ArchivingTaskFilesWithLoading";
+import GeneratedAudioWithLoading from "@/components/ui/loading/GeneratedAudioWithLoading";
+import GeneratedClipsWithLoading from "@/components/ui/loading/GeneratedClipsWithLoading";
+import SingleCombinedVideoWithLoading from "@/components/ui/loading/SingleCombinedVideoWithLoading";
 import React from "react";
 
 const page = () => {
@@ -21,7 +21,7 @@ const page = () => {
         <GeneratedClipsWithLoading />
         <GeneratedAudioWithLoading />
         <SingleCombinedVideoWithLoading />
-        <ArchivingTaskFilesWithLoading /> 
+        <ArchivingTaskFilesWithLoading />
       </div>
     </div>
   );

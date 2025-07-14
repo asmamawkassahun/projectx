@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import ListItemSkeleton from "../link_list_item_component/ListItemSkeleton";
 import ListItemComponent from "../link_list_item_component/ListItemComponent";
-import { ShadCnButton } from "../../ui/shadcnButton";
+import { ShadCnButton } from "../shadcnButton";
 import { LinkItem } from "@/types/linkItems";
-import { BrowserCardSkeleton } from "../link_list_item_component/BrowserCardSkeleton";
-import { BrowserCardContent } from "../link_list_item_component/BrowserCardContent";
+import { BrowserCardSkeleton } from "../browser_card_component/BrowserCardSkeleton";
+import { BrowserCardContent } from "../browser_card_component/BrowserCardContent";
 import { dummyRecipes, Recipe } from "@/lib/data";
 import { RefreshCcw } from "lucide-react";
 import { linkItems } from "@/lib/data/dummyLinkItems";
@@ -40,7 +40,6 @@ export default function LinksListWithLoading() {
       setIsLoading(false);
     }, 2000);
   };
-
 
   return (
     <div className="p-8 bg-background text-foreground flex flex-col sm:flex-row  space-y-10 space-x-10">
