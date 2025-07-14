@@ -1,37 +1,29 @@
 import { File, ArrowDown, Folder } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import FolderIcon from "@/components/common_components/svg_icons/FolderIcons";
+import ArrowDownIcon from "@/components/common_components/svg_icons/ArrowDownIcon";
+import { useTheme } from "next-themes";
 
 const ArchivingTaskFilesSkeleton = () => {
+  const { resolvedTheme } = useTheme();
+  const iconColor = resolvedTheme === "dark" ? "#00000040" : "#ffffff40";
   return (
-    <div className="w-[335px] h-[119px] flex flex-col gap-[32px] opacity-100">
-      <div
-        className="font-sans font-bold text-[32px] leading-[1.1] tracking-normal text-gray-900 dark:text-white"
-        style={{
-          fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-          fontWeight: 700,
-        }}
-      >
+    <div className="w-full max-w-[20.938rem] flex flex-col space-y-[2rem] ">
+      <h2 className="font-bold text-[2rem] leading-[1.1] text-foreground">
         Archiving task files
-      </div>
-      <div
-        className="w-[335px] h-[64px] flex items-center justify-between rounded-[100px] opacity-100 px-4 bg-gray-100 dark:bg-white/10"
-        style={{ paddingTop: 16, paddingBottom: 16 }}
-      >
-        <div className="w-[128px] h-[32px] flex items-center gap-[10px] opacity-100">
-          {/* File icon box */}
-          <div className="flex items-center justify-center gap-[10px] opacity-100 w-8 h-8">
-            <div className=" flex items-center justify-center opacity-100 relative ">
-              <Folder className="w-6 h-6 text-foreground/40" />
-            </div>
+      </h2>
+      <div className="w-full rounded-full flex justify-between items-center p-4 dark:bg-gray-100 bg-black">
+        <div className="flex items-center space-x-2.5">
+          <div className="p-2">
+            <FolderIcon color={iconColor} />
           </div>
-          {/* File info box */}
-          <div className="w-[86px] h-[32px] flex flex-col justify-between opacity-100 gap-1">
-            <Skeleton className="w-[86px] h-[10px] rounded-[100px]" />
-            <Skeleton className="w-[39px] h-[10px] rounded-[100px]" />
+          <div className="w-[5.375rem] h-[2rem] flex flex-col justify-between opacity-100 space-y-3">
+            <Skeleton className="w-[5.375rem] h-2.5 rounded-full bg-gradient-to-r from-[#313131] to-[#202020]  dark:bg-gradient-to-r  dark:from-[#c9c9c9]  dark:to-[#dfdfdf]" />
+            <Skeleton className="w-[2.438rem] h-2.5 rounded-full bg-gradient-to-r from-[#313131] to-[#202020]  dark:bg-gradient-to-r  dark:from-[#c9c9c9]  dark:to-[#dfdfdf]" />
           </div>
         </div>
-        <div className="w-[32px] h-[32px] flex items-center justify-center rounded-full gap-[10px] opacity-100 p-[10px] bg-gray-200 dark:bg-white/20">
-          <ArrowDown className="w-[14px] h-[16px] text-gray-400 dark:text-gray-400" />
+        <div className="flex items-center justify-center rounded-full gap-[0.625rem] opacity-100  bg-white/10 dark:bg-gray-200 sm:w-[2rem] sm:h-[2rem] w-2rem h-2rem p-[0.625rem]">
+          <ArrowDownIcon className="w-[0.875rem] h-[2rem]" color={iconColor} />
         </div>
       </div>
     </div>
