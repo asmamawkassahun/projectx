@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image"
 
 interface ImageItem {
@@ -9,13 +11,18 @@ interface ImageItem {
 
 interface ImageGridProps {
   images: ImageItem[]
+  onImageClick: (index: number) => void // New prop to handle image clicks
 }
 
-export default function ImageGrid({ images }: ImageGridProps) {
+export default function ImageGrid({ images, onImageClick }: ImageGridProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5" style={{ width: "691px", height: "442px" }}>
       {images.map((image, index) => (
-        <div key={index} className="relative w-[202px] h-[134px] overflow-hidden rounded-3xl">
+        <div
+          key={index}
+          className="relative w-[202px] h-[134px] overflow-hidden rounded-3xl cursor-pointer" // Added cursor-pointer for visual feedback
+          onClick={() => onImageClick(index)} // Call the handler on click
+        >
           <Image
             src={image.src || "/placeholder.svg"}
             alt={image.alt}

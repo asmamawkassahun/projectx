@@ -6,9 +6,7 @@ export default function ImageGridSkeleton() {
       {Array.from({ length: 9 }).map((_, index) => (
         <Skeleton
           key={index}
-          className="w-[202px] h-[134px] rounded-3xl
-            bg-[linear-gradient(90deg,rgba(59,59,59,0.1)_0%,rgba(45,45,45,0.025)_100%)]
-            dark:bg-[linear-gradient(90deg,rgba(255,255,255,0.1)_0%,rgba(255,255,255,0.025)_100%)]"
+          className="w-[202px] h-[134px] rounded-3xl            bg-[linear-gradient(90deg,rgba(59,59,59,0.1)_0%,rgba(45,45,45,0.025)_100%)]            dark:bg-[linear-gradient(90deg,rgba(255,255,255,0.1)_0%,rgba(255,255,255,0.025)_100%)]"
         />
       ))}
     </div>

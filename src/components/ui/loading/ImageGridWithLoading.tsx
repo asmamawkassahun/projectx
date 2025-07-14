@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react"
 import { RefreshCcw } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
+import { ShadCnButton } from "../shadcnButton"
 import ImageGridSkeleton from "../image_grid_components/ImageGridSkeleton"
 import ImageGrid from "../image_grid_components/ImageGridComponents"
-import { ShadCnButton } from "../shadcnButton"
+import ImageCarouselModal from "../image_grid_components/ImageGridCarouselModalProps"
 
 interface ImageItem {
   src: string
@@ -28,6 +29,8 @@ const images: ImageItem[] = [
 
 export default function ImageGridWithLoading() {
   const [isLoading, setIsLoading] = useState(true)
+  const [isCarouselOpen, setIsCarouselOpen] = useState(false)
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -43,6 +46,16 @@ export default function ImageGridWithLoading() {
     }, 2000)
   }
 
+  const handleImageClick = (index: number) => {
+    setSelectedImageIndex(index)
+    setIsCarouselOpen(true)
+  }
+
+  const handleCloseCarousel = () => {
+    setIsCarouselOpen(false)
+    setSelectedImageIndex(null)
+  }
+
   return (
     // Added items-center and min-h-screen to center the card vertically on the screen.
     <div className="w-full p-8 bg-background flex justify-center items-center min-h-screen">
@@ -52,12 +65,20 @@ export default function ImageGridWithLoading() {
       >
         <CardContent className="p-0 flex flex-col gap-4">
           <h2 className="text-lg font-medium text-foreground">Images {images.length}</h2>
-          {isLoading ? <ImageGridSkeleton /> : <ImageGrid images={images} />}
+          {isLoading ? <ImageGridSkeleton /> : <ImageGrid images={images} onImageClick={handleImageClick} />}
         </CardContent>
         <ShadCnButton onClick={resetLoading} className="w-8 h-8 rounded-full self-center">
           <RefreshCcw className="w-6 h-6" />
         </ShadCnButton>
       </Card>
+
+      {/* Image Carousel Modal */}
+      <ImageCarouselModal
+        images={images}
+        initialIndex={selectedImageIndex}
+        isOpen={isCarouselOpen}
+        onClose={handleCloseCarousel}
+      />
     </div>
   )
 }
