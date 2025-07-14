@@ -1,46 +1,47 @@
-import { File, ArrowDown, Folder } from "lucide-react";
+import ArrowDownIcon from "@/components/common_components/svg_icons/ArrowDownIcon";
+import FolderIcon from "@/components/common_components/svg_icons/FolderIcons";
+import { ArchiveFile } from "@/types/archiveFile";
+import { useTheme } from "next-themes";
 
-const ArchivingTaskFilesComponent = () => {
+const dummyFiles: ArchiveFile[] = [
+  { name: "Calamansi.zip", size: "2.4 GB" },
+  { name: "ProjectDocs.tar.gz jkdnskjndfjgskldfkm", size: "1.8 GB" },
+  { name: "ArchiveData.rar", size: "3.2 GB" },
+];
+
+interface ArchivingTaskFilesComponentProps {
+  file?: ArchiveFile;
+}
+
+const ArchivingTaskFilesComponent = ({
+  file = dummyFiles[1],
+}: ArchivingTaskFilesComponentProps) => {
+  const { resolvedTheme } = useTheme();
+  const iconColor: string = resolvedTheme === "dark" ? "#000000" : "#ffffff";
+
   return (
-    <div className="w-[335px] h-[119px] flex flex-col gap-[32px] opacity-100 max-w-full sm:w-[335px] sm:h-[119px] p-2">
-      <div className="font-sans font-bold text-[32px] leading-[1.1] tracking-normal text-gray-900 dark:text-white">
+    <div className="w-full max-w-[20.938rem] flex flex-col space-y-[2rem]">
+      <h2 className="font-bold text-[2rem] leading-[1.1] text-foreground">
         Archiving task files
-      </div>
-      <div
-        className="w-[335px] h-[64px] flex items-center justify-between rounded-[100px] opacity-100 px-4 bg-black dark:bg-white sm:w-[335px] sm:h-[64px] "
-        style={{ paddingTop: 16, paddingBottom: 16 }}
-      >
-        <div className="w-[128px] h-[32px] flex items-center gap-[10px] opacity-100 sm:w-[128px] sm:h-[32px] ">
+      </h2>
+      <div className="w-full max-w-[20.938rem] flex items-center justify-between rounded-full p-4 bg-black dark:bg-white">
+        <div className="flex items-center space-x-2.5 max-w-[calc(100%-3rem)]">
           {/* File icon box */}
-          <div className="flex items-center justify-center gap-[10px] opacity-100 w-8 h-8">
-            <div className=" flex items-center justify-center opacity-100 relative ">
-              <Folder className="w-6 h-6 text-white dark:text-black" />
-            </div>
+          <div className="p-2 flex-shrink-0">
+            <FolderIcon color={iconColor} />
           </div>
           {/* File info box */}
-          <div className="w-[86px] h-[32px] flex flex-col justify-between opacity-100 sm:w-[86px] sm:h-[32px]">
-            <div
-              className="font-sans font-semibold text-[14px] leading-[1] tracking-normal align-bottom text-white dark:text-black sm:w-[86px] sm:h-[16px] w-full h-auto"
-              style={{
-                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                fontWeight: 600,
-              }}
-            >
-              Calamansi.zip
-            </div>
-            <div
-              className="font-sans font-semibold text-[14px] leading-[1] tracking-normal align-middle text-white dark:text-black sm:w-[86px] sm:h-[16px] w-full h-auto"
-              style={{
-                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                fontWeight: 600,
-              }}
-            >
-              2.4 GB
-            </div>
+          <div className="flex flex-col justify-between space-y-3 w-full min-w-0">
+            <span className="font-sans font-semibold text-sm leading-[1] tracking-normal text-white dark:text-black truncate">
+              {file.name}
+            </span>
+            <span className="font-sans font-semibold text-sm leading-[1] tracking-normal text-white dark:text-black">
+              {file.size}
+            </span>
           </div>
         </div>
-        <div className="flex items-center justify-center rounded-full gap-[10px] opacity-100  bg-gray-200 dark:bg-gray-200 sm:w-[32px] sm:h-[32px] w-8 h-8 p-2.5">
-          <ArrowDown className="w-[14px] h-[16px] text-black dark:text-black" />
+        <div className="flex items-center justify-center rounded-full bg-white/10 dark:bg-gray-200  w-[2rem] h-[2rem] p-[0.625rem] flex-shrink-0">
+          <ArrowDownIcon color={iconColor} />
         </div>
       </div>
     </div>
