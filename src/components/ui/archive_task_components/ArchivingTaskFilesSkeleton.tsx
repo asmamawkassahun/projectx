@@ -1,12 +1,15 @@
-import { File, ArrowDown } from "lucide-react"
-import { Skeleton } from "@/components/ui/skeleton"
+import { File, ArrowDown, Folder } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ArchivingTaskFilesSkeleton = () => {
   return (
     <div className="w-[335px] h-[119px] flex flex-col gap-[32px] opacity-100">
       <div
         className="font-sans font-bold text-[32px] leading-[1.1] tracking-normal text-gray-900 dark:text-white"
-        style={{ fontFamily: "Neue Haas Grotesk Display Pro, sans-serif", fontWeight: 700 }}
+        style={{
+          fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+          fontWeight: 700,
+        }}
       >
         Archiving task files
       </div>
@@ -16,12 +19,9 @@ const ArchivingTaskFilesSkeleton = () => {
       >
         <div className="w-[128px] h-[32px] flex items-center gap-[10px] opacity-100">
           {/* File icon box */}
-          <div className="w-[32px] h-[32px] flex items-center justify-center gap-[10px] opacity-100">
-            <div className="w-[16px] h-[16px] flex items-center justify-center opacity-100 relative">
-              <File
-                className="w-[14px] h-[11px] text-gray-400 dark:text-gray-500"
-                style={{ position: "absolute", top: "2.3px", left: "0.83px" }}
-              />
+          <div className="flex items-center justify-center gap-[10px] opacity-100 w-8 h-8">
+            <div className=" flex items-center justify-center opacity-100 relative ">
+              <Folder className="w-6 h-6 text-foreground/40" />
             </div>
           </div>
           {/* File info box */}
@@ -35,7 +35,7 @@ const ArchivingTaskFilesSkeleton = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ArchivingTaskFilesSkeleton
+export default ArchivingTaskFilesSkeleton;
