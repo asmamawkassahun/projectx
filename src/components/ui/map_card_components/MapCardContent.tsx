@@ -32,7 +32,7 @@ function MapCard({ locationQuery }: { locationQuery: string }) {
 
   return (
     <div className="relative w-full h-[12rem] rounded-3xl overflow-hidden">
-      <iframe
+      {/* <iframe
         src={mapEmbedUrl}
         width="100%"
         height="100%"
@@ -42,7 +42,15 @@ function MapCard({ locationQuery }: { locationQuery: string }) {
         referrerPolicy="no-referrer-when-downgrade"
         title="Google Map of locations"
         className="rounded-3xl" // Apply border-radius to the iframe
-      ></iframe>
+      ></iframe> */}
+
+      <Image
+        src={locationQuery}
+        alt="Map of locations"
+        width={689}
+        height={192}
+        className="object-cover rounded-3xl"
+      />
     </div>
   );
 }
