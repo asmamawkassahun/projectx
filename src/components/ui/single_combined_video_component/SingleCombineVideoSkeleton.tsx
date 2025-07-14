@@ -3,8 +3,8 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 const SingleCombinedVideoSkeleton = () => {
   return (
-    <div className="w-[453px] h-[337px] flex flex-col gap-[24px] opacity-100 max-w-full sm:w-[453px] sm:h-[337px] w-full h-auto p-2">
-      <div className="w-[453px] h-[10px] flex items-end sm:w-[453px] sm:h-[10px] w-full h-auto">
+    <div className="w-[453px] h-[337px] flex flex-col gap-[24px] opacity-100 max-w-full sm:w-[453px] sm:h-[337px]  p-2">
+      <div className="w-[453px] h-[10px] flex items-end sm:w-[453px] sm:h-[10px] ">
         <span
           className="font-sans font-semibold text-[14px] leading-[1] tracking-normal align-bottom text-gray-900 dark:text-white"
           style={{ fontFamily: "Neue Haas Grotesk Display Pro, sans-serif", fontWeight: 600 }}
@@ -12,8 +12,8 @@ const SingleCombinedVideoSkeleton = () => {
           Single combined video
         </span>
       </div>
-      <div className="w-[453px] h-[303px] flex flex-col gap-[16px] opacity-100 sm:w-[453px] sm:h-[303px] w-full h-auto">
-        <div className="w-[453px] h-[260px] rounded-[24px] opacity-100 overflow-hidden flex items-center justify-center relative sm:w-[453px] sm:h-[260px] w-full h-[180px]">
+      <div className="w-[453px] h-[303px] flex flex-col gap-[16px] opacity-100 sm:w-[453px] sm:h-[303px] ">
+        <div className="w-[453px] h-[260px] rounded-[24px] opacity-100 overflow-hidden flex items-center justify-center relative sm:w-[453px] sm:h-[260px]">
           <Skeleton className="w-full h-full rounded-[24px]" />
           <div
             className="w-[73px] h-[32px] flex items-center gap-2 rounded-[1000px] opacity-100 absolute bg-gray-300 dark:bg-gray-600"
@@ -25,6 +25,8 @@ const SingleCombinedVideoSkeleton = () => {
               paddingBottom: 10,
               paddingLeft: 10,
               gap: 8,
+              background: "#FFFFFF1A",
+              backdropFilter: "blur(16px)",
               ...(typeof window !== 'undefined' && window.innerWidth < 640 ? { top: '120px' } : {})
             }}
           >
@@ -54,9 +56,9 @@ const SingleCombinedVideoSkeleton = () => {
             </div>
           </div>
         </div>
-        <div className="w-[453px] h-[27px] flex flex-col gap-[10px] opacity-100 sm:w-[453px] sm:h-[27px] w-full h-auto">
-          <Skeleton className="w-[193px] h-[10px] rounded-[100px] sm:w-[193px] sm:h-[10px] w-1/2 h-[10px]" />
-          <Skeleton className="w-[39px] h-[10px] rounded-[100px] mt-1 sm:w-[39px] sm:h-[10px] w-1/4 h-[10px]" />
+        <div className="w-[453px] h-[27px] flex flex-col gap-[10px] opacity-100 sm:w-[453px] sm:h-[27px] ">
+          <Skeleton className="w-[193px] h-[10px] rounded-[100px] sm:w-[193px] sm:h-[10px]" />
+          <Skeleton className="w-[39px] h-[10px] rounded-[100px] mt-1 sm:w-[39px] sm:h-[10px]" />
         </div>
       </div>
     </div>

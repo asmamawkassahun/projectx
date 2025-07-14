@@ -3,8 +3,8 @@ import Image from "next/image"
 
 const SingleCombinedVideoComponent = () => {
   return (
-    <div className="w-[453px] h-[337px] flex flex-col gap-[24px] opacity-100 max-w-full sm:w-[453px] sm:h-[337px] w-full h-auto p-2">
-      <div className="w-[453px] h-[10px] flex items-end sm:w-[453px] sm:h-[10px] w-full h-auto">
+    <div className="w-[453px] h-[337px] flex flex-col gap-[24px] opacity-100 max-w-full sm:w-[453px] sm:h-[337px] p-2">
+      <div className="w-[453px] h-[10px] flex items-end sm:w-[453px] sm:h-[10px]">
         <span
           className="font-sans font-semibold text-[14px] leading-[1] tracking-normal align-bottom text-gray-900 dark:text-white"
           style={{ fontFamily: "Neue Haas Grotesk Display Pro, sans-serif", fontWeight: 600 }}
@@ -12,8 +12,8 @@ const SingleCombinedVideoComponent = () => {
           Single combined video
         </span>
       </div>
-      <div className="w-[453px] h-[303px] flex flex-col gap-[16px] opacity-100 sm:w-[453px] sm:h-[303px] w-full h-auto">
-        <div className="w-[453px] h-[260px] rounded-[24px] opacity-100 overflow-hidden flex items-center justify-center relative sm:w-[453px] sm:h-[260px] w-full h-[180px]">
+      <div className="w-[453px] h-[303px] flex flex-col gap-[16px] opacity-100 sm:w-[453px] sm:h-[303px]">
+        <div className="w-[453px] h-[260px] rounded-[24px] opacity-100 overflow-hidden flex items-center justify-center relative sm:w-[453px] sm:h-[260px]">
           <Image
             src="/SCImage1.png"
             alt="Combined Video"
@@ -55,15 +55,15 @@ const SingleCombinedVideoComponent = () => {
             </div>
           </div>
         </div>
-        <div className="w-[453px] h-[27px] flex flex-col gap-[10px] opacity-100 sm:w-[453px] sm:h-[27px] w-full h-auto">
+        <div className="w-[453px] h-[27px] flex flex-col gap-[10px] opacity-100 sm:w-[453px] sm:h-[27px]">
           <div
-            className="w-[453px] h-[10px] font-sans font-semibold text-[14px] leading-[1] tracking-normal align-bottom text-gray-900 dark:text-white sm:w-[453px] sm:h-[10px] w-full h-auto"
+            className="w-[453px] h-[10px] font-sans font-semibold text-[14px] leading-[1] tracking-normal align-bottom text-gray-900 dark:text-white sm:w-[453px] sm:h-[10px]"
             style={{ fontFamily: "Neue Haas Grotesk Display Pro, sans-serif", fontWeight: 600 }}
           >
             final_video_with_new_audio.mp4
           </div>
           <div
-            className="w-[453px] h-[7px] font-sans font-medium text-[10px] leading-[1] tracking-normal align-bottom text-gray-500 dark:text-white/40 sm:w-[453px] sm:h-[7px] w-full h-auto"
+            className="w-[453px] h-[7px] font-sans font-medium text-[10px] leading-[1] tracking-normal align-bottom text-gray-500 dark:text-white/40 sm:w-[453px] sm:h-[7px]"
             style={{ fontFamily: "Neue Haas Grotesk Display Pro, sans-serif", fontWeight: 500 }}
           >
             0:26 sec • 720x1280
