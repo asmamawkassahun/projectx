@@ -32,15 +32,15 @@ const GeneratedClipsSkeletonComponent = () => {
               >
                 <Skeleton className="w-full h-full rounded-[24px]" />
                 <div
-                  className="w-[73px] h-[32px] flex items-center rounded-[1000px] opacity-100 absolute backdrop-blur-md bg-black/40 dark:bg-black/40 left-3 bottom-3 sm:top-[216px] sm:left-[12px] sm:bottom-auto sm:right-auto"
+                  className="w-[73px] h-[32px] flex items-center rounded-[1000px] opacity-100 absolute left-3 bottom-3 sm:top-[216px] sm:left-[12px] sm:bottom-auto sm:right-auto dark:bg-black/40"
                   style={{
                     paddingTop: 10,
                     paddingRight: 12,
                     paddingBottom: 10,
                     paddingLeft: 10,
                     gap: 8,
-                    background: "#FFFFFF1A",
-                    backdropFilter: "blur(16px)",
+                    background: '#0000001A',
+                    backdropFilter: 'blur(16px)',
                   }}
                 >
                   <div className="w-4 h-4 flex items-center justify-center" style={{ position: "relative" }}>
@@ -61,17 +61,17 @@ const GeneratedClipsSkeletonComponent = () => {
               </div>
               <div className="w-full max-w-[193px] h-[32px] flex flex-col gap-2 mt-4 -ml-4">
                 <Skeleton
-                  className="w-full max-w-[193px] h-[10px] rounded-[100px] mb-1"
+                  className="w-full max-w-[193px] h-[10px] rounded-[100px] mb-1 dark:!bg-[linear-gradient(90deg,rgba(255,255,255,0.1)_0%,rgba(255,255,255,0.025)_100%)]"
                   style={{
                     background:
-                      "linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.025) 100%)",
+                      "linear-gradient(90deg, rgba(59, 59, 59, 0.1) 0%, rgba(45, 45, 45, 0.025) 100%)",
                   }}
                 />
                 <Skeleton
-                  className="w-[39px] h-[10px] rounded-[100px]"
+                  className="w-[39px] h-[10px] rounded-[100px] dark:!bg-[linear-gradient(90deg,rgba(255,255,255,0.1)_0%,rgba(255,255,255,0.025)_100%)]"
                   style={{
                     background:
-                      "linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.025) 100%)",
+                      "linear-gradient(90deg, rgba(59, 59, 59, 0.1) 0%, rgba(45, 45, 45, 0.025) 100%)",
                   }}
                 />
               </div>
