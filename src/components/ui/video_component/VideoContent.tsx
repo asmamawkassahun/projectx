@@ -27,7 +27,8 @@ export function VideoCardContent({
             {/* Top bar and avatar */}
             <div className="flex items-center space-x-2.5">
               <Image
-                src={video.channelAvatar}
+                // src={video.channelAvatar}
+                src={"/placeholder1.svg"}
                 alt={video.channelName}
                 width={20}
                 height={20}
@@ -45,7 +46,8 @@ export function VideoCardContent({
             {/* Video area */}
             <div className="relative rounded-2xl overflow-hidden w-full aspect-[217/160] min-h-[8rem]">
               <Image
-                src={video.thumbnail}
+                // src={video.thumbnail}
+                src={"/placeholder1.svg"}
                 alt={video.title}
                 layout="fill"
                 objectFit="cover"
@@ -71,9 +73,7 @@ export function VideoCardContent({
           </div>
         ))}
       </div>
-      <ShadCnButton
-        className="text-xs font-semibold text-foreground rounded-full hover:bg-transparent px-3 py-2.5 dark:bg-[#1a1a1a] bg-black/10"
-      >
+      <ShadCnButton className="text-xs font-semibold text-foreground rounded-full hover:bg-transparent px-3 py-2.5 dark:bg-[#1a1a1a] bg-black/10">
         See more
       </ShadCnButton>
     </div>

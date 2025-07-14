@@ -24,7 +24,7 @@ export default function GeneratedClipsWithLoading() {
   };
 
   return (
-    <div className="w-full min-h-screen p-8 bg-background flex justify-center">
+    <div className="w-full p-8 bg-background flex justify-center">
       {isLoading ? (
         <GeneratedClipsSkeletonComponent />
       ) : (

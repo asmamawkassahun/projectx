@@ -29,7 +29,7 @@ export default function VideoCard() {
   };
 
   return (
-    <div className="w-full flex min-h-screen justify-center bg-background p-4">
+    <div className="w-full flex  justify-center bg-background p-4">
       {isLoading ? (
         <VideoSkeleton />
       ) : (
