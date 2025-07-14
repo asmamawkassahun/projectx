@@ -41,14 +41,12 @@ const SingleCombinedVideoSkeleton = () => {
               }}
             >
               <span
-                className="font-sans font-semibold text-[14px] leading-[1] tracking-normal align-bottom text-gray-500 dark:text-gray-400"
+                className="font-sans font-semibold text-[14px] leading-[1] tracking-normal align-center text-gray-500 dark:text-gray-400"
                 style={{
                   fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                  width: "27px",
-                  height: "10px",
                   display: "inline-block",
                   lineHeight: "1",
-                  verticalAlign: "bottom",
+                  verticalAlign: "center",
                 }}
               >
                 Play
