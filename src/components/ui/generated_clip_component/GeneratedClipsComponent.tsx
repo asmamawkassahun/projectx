@@ -69,14 +69,14 @@ const GeneratedClipsComponent = () => {
           >
             Generated clips
           </span>
-          {/* <div className="w-[32px] h-[32px] flex items-center justify-center gap-[10px] rounded-full opacity-100 bg-gray-100 dark:bg-white/5 sm:w-[32px] sm:h-[32px] p-2"> */}
+          <div className="w-[32px] h-[32px] flex items-center justify-center gap-[10px] rounded-full opacity-100 bg-gray-100 dark:bg-white/5 sm:w-[32px] sm:h-[32px] p-2">
             <span
               className="w-[8px] h-[10px] font-sans font-semibold text-[14px] leading-[1] tracking-normal align-bottom text-foreground  opacity-100"
               // style={{ fontFamily: "Neue Haas Grotesk Display Pro, sans-serif" }}
             >
               7
             </span>
-          {/* </div> */}
+          </div>
         </div>
 
         <div className="w-[691px] h-[303px] flex gap-4 rotate-0 opacity-100 sm:flex-row flex-col sm:w-[691px] sm:h-[303px]">

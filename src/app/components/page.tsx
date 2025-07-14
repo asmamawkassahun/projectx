@@ -7,6 +7,7 @@ import GeneratedAudioWithLoading from "@/components/ui/loading/GeneratedAudioWit
 import GeneratedClipsWithLoading from "@/components/ui/loading/GeneratedClipsWithLoading";
 import SingleCombinedVideoWithLoading from "@/components/ui/loading/SingleCombinedVideoWithLoading";
 import React from "react";
+import ImageGridWithLoading from "@/components/ui/loading/ImageGridWithLoading";
 
 const page = () => {
   return (
@@ -22,6 +23,7 @@ const page = () => {
         <GeneratedAudioWithLoading />
         <SingleCombinedVideoWithLoading />
         <ArchivingTaskFilesWithLoading />
+        <ImageGridWithLoading />
       </div>
     </div>
   );
