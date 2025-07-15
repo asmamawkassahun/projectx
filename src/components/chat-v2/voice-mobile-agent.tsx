@@ -17,7 +17,7 @@ import { toast } from "react-hot-toast";
 import CenteredAudioPulse from "@/components/CenteredAudioPulse";
 import { VoiceSearchWidgets } from "@/components/voice_search_widgets";
 import { useConversationStore } from "@/stores/conversation-store";
-import UIOverlay from "./ui-overlay";
+import UIOverlay from "./min-task-ui-overlay";
 
 interface VoiceMobileAgentProps {
   sessionId?: string;

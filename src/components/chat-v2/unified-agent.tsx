@@ -13,7 +13,7 @@ import TaskStatus from "@/components/task/task-status";
 import TaskPlanner from "@/components/task/task-planner";
 import CostarTask from "./costar-task";
 import UnifiedToolHandler from "./unified-tool-handler";
-import UIOverlay from "./ui-overlay";
+import UIOverlay from "./min-task-ui-overlay";
 import { File } from "@/types";
 import { LiveAPIProvider } from "@/contexts/LiveAPIContext";
 import { useCombinedReplay } from "@/hooks/useCombinedReplay";

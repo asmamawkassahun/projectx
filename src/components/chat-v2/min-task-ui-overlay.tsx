@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Loader2 } from "lucide-react";
 import { useLiveAPIContext } from "@/contexts/LiveAPIContext";
@@ -8,9 +8,26 @@ import { useUIAgent } from "@/hooks/use-ui-agent";
 
 // Simple HTML renderer component for displaying generated UI
 const HTMLRenderer = ({ htmlContent }: { htmlContent: string }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [maxHeight, setMaxHeight] = useState("100%");
+
+  useEffect(() => {
+    if (containerRef.current) {
+      // Calculate available height considering the header and footer
+      const headerHeight = 70; // 4.375rem ≈ 70px
+      const footerHeight = 96; // 6rem ≈ 96px
+      const windowHeight = window.innerHeight;
+      const availableHeight = windowHeight - headerHeight - footerHeight;
+
+      setMaxHeight(`${availableHeight}px`);
+    }
+  }, []);
+
   return (
     <div
-      className="w-full h-full"
+      ref={containerRef}
+      className="w-full "
+      style={{ maxHeight }}
       dangerouslySetInnerHTML={{ __html: htmlContent }}
     />
   );
@@ -259,6 +276,16 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
     };
   }, [isVisible, handleClose]);
 
+  const handleBackdropClick = useCallback(
+    (e: React.MouseEvent) => {
+      // Only close if clicking on the backdrop itself, not on child elements
+      if (e.target === e.currentTarget) {
+        handleClose();
+      }
+    },
+    [handleClose]
+  );
+
   // Loading state component
   const LoadingState = () => (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
@@ -289,7 +316,8 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-x-0 top-[4.375rem] bottom-[6rem] z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={handleBackdropClick}
         >
           {/* Close button */}
           <button
@@ -301,7 +329,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
           </button>
 
           {/* Generated UI content as the modal itself */}
-          <div className="relative">
+          <div className="relative" onClick={(e) => e.stopPropagation()}>
             <HTMLRenderer htmlContent={generatedHTML} />
           </div>
         </motion.div>
