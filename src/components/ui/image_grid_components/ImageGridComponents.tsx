@@ -1,13 +1,7 @@
 "use client"
 
 import Image from "next/image"
-
-interface ImageItem {
-  src: string
-  alt: string
-  width: number
-  height: number
-}
+import { ImageItem } from "@/types/imageGrid"
 
 interface ImageGridProps {
   images: ImageItem[]

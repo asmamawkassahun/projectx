@@ -12,12 +12,8 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel"
 
-interface ImageItem {
-  src: string
-  alt: string
-  width: number
-  height: number
-}
+
+import { ImageItem } from "@/types/imageGrid"
 
 interface ImageCarouselModalProps {
   images: ImageItem[]
