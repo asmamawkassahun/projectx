@@ -42,20 +42,21 @@ const Navbar = () => {
         </div>
 
         {/* Right side - User profile */}
-        <div className="flex items-center gap-3">
-          <Button
+        <div className="flex items-center space-x-2.5">
+          {/* <Button
             onClick={handleNewChat}
             variant="primary"
             size="md"
             aria-label="New Chat"
           >
             <MessageSquarePlus size={20} />
-          </Button>
+          </Button> */}
           <Button
             onClick={handleNewChat}
             variant="primary"
             size="md"
             aria-label="Tasks history"
+            className="bg-white/20 hover:bg-white/30 text-white "
           >
             <LayersIcon />
           </Button>
@@ -64,6 +65,7 @@ const Navbar = () => {
             variant="primary"
             size="md"
             aria-label="Tutorial page"
+            className="bg-white/20 hover:bg-white/30 text-white "
           >
             <BooksIcon />
           </Button>
