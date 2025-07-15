@@ -9,7 +9,6 @@ const publicRoutes = [
   "/auth/forgot-password",
   "/auth/reset-password",
   "/voice-agent",
-  "/components",
 ];
 
 // Function to check if a route should be treated as public
@@ -56,6 +55,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    // "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico).*)",
   ],
 };

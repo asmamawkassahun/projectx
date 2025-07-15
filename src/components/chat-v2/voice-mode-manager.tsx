@@ -1,6 +1,14 @@
 import { memo, useEffect, useRef, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { Camera, Mic, MicOff, Maximize2, X, Volume2, XCircle } from "lucide-react";
+import {
+  Camera,
+  Mic,
+  MicOff,
+  Maximize2,
+  X,
+  Volume2,
+  XCircle,
+} from "lucide-react";
 import { useVideoManager } from "@/hooks/use-video-manager";
 import { useLiveAPIContext } from "@/contexts/LiveAPIContext";
 import VideoPreview from "../VideoPreview";
@@ -33,9 +41,10 @@ const VoiceModeManager = ({
   // Detect if we're on a mobile device - only on client side
   useEffect(() => {
     if (typeof window !== "undefined" && typeof navigator !== "undefined") {
-      const mobileCheck = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      );
+      const mobileCheck =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        );
       setIsMobile(mobileCheck);
     }
   }, []);
@@ -62,13 +71,16 @@ const VoiceModeManager = ({
   // Use the audio manager hook with callback
   const { inVolume, audioRecorder } = useAudioManager({
     muted,
-    conversationId,
     onAudioData: handleAudioData,
   });
 
   // Use the video manager hook for webcam and screen sharing
-  const { videoStreams, activeVideoStream, changeStreams, setupVideoFrameCapture } =
-    useVideoManager();
+  const {
+    videoStreams,
+    activeVideoStream,
+    changeStreams,
+    setupVideoFrameCapture,
+  } = useVideoManager();
 
   // Destructure video streams
   const [webcam, screenCapture] = videoStreams;
@@ -97,11 +109,17 @@ const VoiceModeManager = ({
     };
 
     // Add event listener
-    window.addEventListener("agent-message-received", handleAgentMessage as EventListener);
+    window.addEventListener(
+      "agent-message-received",
+      handleAgentMessage as EventListener
+    );
 
     return () => {
       // Remove event listener
-      window.removeEventListener("agent-message-received", handleAgentMessage as EventListener);
+      window.removeEventListener(
+        "agent-message-received",
+        handleAgentMessage as EventListener
+      );
     };
   }, []);
 
@@ -123,7 +141,14 @@ const VoiceModeManager = ({
     )();
 
     return cleanup;
-  }, [setupVideoFrameCapture, videoRef, canvasRef, client, connected, isVoiceModeActive]);
+  }, [
+    setupVideoFrameCapture,
+    videoRef,
+    canvasRef,
+    client,
+    connected,
+    isVoiceModeActive,
+  ]);
 
   // Set volume CSS variable for animation
   useEffect(() => {
@@ -156,7 +181,8 @@ const VoiceModeManager = ({
       // Critical iOS Safari fix: Ensure AudioContext is resumed
       const ensureAudioContextResumed = async () => {
         try {
-          const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+          const AudioContextClass =
+            window.AudioContext || (window as any).webkitAudioContext;
           if (AudioContextClass) {
             const testContext = new AudioContextClass();
             if (testContext.state === "suspended") {
@@ -165,7 +191,10 @@ const VoiceModeManager = ({
             testContext.close();
           }
         } catch (error: any) {
-          console.warn("[VoiceModeManager] AudioContext resume attempt failed:", error.message);
+          console.warn(
+            "[VoiceModeManager] AudioContext resume attempt failed:",
+            error.message
+          );
         }
       };
 
@@ -263,7 +292,8 @@ const VoiceModeManager = ({
   ]);
 
   // Button styles
-  const buttonClassName = "p-2 rounded-full transition-colors hover:bg-gray-200 relative";
+  const buttonClassName =
+    "p-2 rounded-full transition-colors hover:bg-gray-200 relative";
   const activeButtonClassName =
     "p-2 rounded-full bg-black text-white transition-colors hover:bg-gray-800 relative";
   const disabledButtonClassName =
@@ -341,7 +371,11 @@ const VoiceModeManager = ({
                     {muted ? (
                       <MicOff className="w-5 h-5 text-black/60" />
                     ) : (
-                      <Mic className={`w-5 h-5 ${!muted ? "text-white" : "text-black/60"}`} />
+                      <Mic
+                        className={`w-5 h-5 ${
+                          !muted ? "text-white" : "text-black/60"
+                        }`}
+                      />
                     )}
                   </div>
                 </button>
@@ -350,7 +384,9 @@ const VoiceModeManager = ({
               {/* Webcam button */}
               <motion.div variants={itemVariants}>
                 <button
-                  className={webcam.isStreaming ? activeButtonClassName : buttonClassName}
+                  className={
+                    webcam.isStreaming ? activeButtonClassName : buttonClassName
+                  }
                   onClick={() => {
                     if (webcam.isStreaming) {
                       // Stop webcam
@@ -362,10 +398,14 @@ const VoiceModeManager = ({
                       startWebcam();
                     }
                   }}
-                  aria-label={webcam.isStreaming ? "Turn off camera" : "Turn on camera"}
+                  aria-label={
+                    webcam.isStreaming ? "Turn off camera" : "Turn on camera"
+                  }
                 >
                   <Camera
-                    className={`w-5 h-5 ${webcam.isStreaming ? "text-white" : "text-black/60"}`}
+                    className={`w-5 h-5 ${
+                      webcam.isStreaming ? "text-white" : "text-black/60"
+                    }`}
                   />
                 </button>
               </motion.div>
@@ -374,7 +414,11 @@ const VoiceModeManager = ({
               {!isMobile && (
                 <motion.div variants={itemVariants}>
                   <button
-                    className={screenCapture.isStreaming ? activeButtonClassName : buttonClassName}
+                    className={
+                      screenCapture.isStreaming
+                        ? activeButtonClassName
+                        : buttonClassName
+                    }
                     onClick={() => {
                       if (screenCapture.isStreaming) {
                         // Stop screen sharing
@@ -386,7 +430,11 @@ const VoiceModeManager = ({
                         startScreenCapture();
                       }
                     }}
-                    aria-label={screenCapture.isStreaming ? "Stop screen sharing" : "Share screen"}
+                    aria-label={
+                      screenCapture.isStreaming
+                        ? "Stop screen sharing"
+                        : "Share screen"
+                    }
                   >
                     {screenCapture.isStreaming ? (
                       <X className="w-5 h-5 text-white" />
@@ -441,7 +489,6 @@ const VoiceModeManager = ({
           <VideoPreview
             videoStream={videoStream}
             videoRef={videoRef}
-            onVideoStreamChange={setVideoStream}
             isVisible={!!videoStream}
           />,
           document.body
@@ -451,20 +498,29 @@ const VoiceModeManager = ({
 };
 
 export default memo(VoiceModeManager, (prevProps, nextProps) => {
-  const conversationIdSame = prevProps.conversationId === nextProps.conversationId;
+  const conversationIdSame =
+    prevProps.conversationId === nextProps.conversationId;
   const onAudioDataSame = prevProps.onAudioData === nextProps.onAudioData;
-  const onVoiceModeChangeSame = prevProps.onVoiceModeChange === nextProps.onVoiceModeChange;
+  const onVoiceModeChangeSame =
+    prevProps.onVoiceModeChange === nextProps.onVoiceModeChange;
   const autoStartSame = prevProps.autoStart === nextProps.autoStart;
 
-  const areEqual = conversationIdSame && onAudioDataSame && onVoiceModeChangeSame && autoStartSame;
+  const areEqual =
+    conversationIdSame &&
+    onAudioDataSame &&
+    onVoiceModeChangeSame &&
+    autoStartSame;
 
   if (!areEqual) {
-    console.log("[VOICE MODE MANAGER] MEMO: Props changed, allowing re-render", {
-      conversationIdSame,
-      onAudioDataSame,
-      onVoiceModeChangeSame,
-      autoStartSame,
-    });
+    console.log(
+      "[VOICE MODE MANAGER] MEMO: Props changed, allowing re-render",
+      {
+        conversationIdSame,
+        onAudioDataSame,
+        onVoiceModeChangeSame,
+        autoStartSame,
+      }
+    );
   } else {
     console.log("[VOICE MODE MANAGER] MEMO: Props same, SKIPPING re-render");
   }

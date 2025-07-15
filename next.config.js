@@ -34,15 +34,6 @@ const nextConfig = {
     // For production, return empty array (no rewrites needed as we use absolute URLs)
     return [];
   },
-  images: {
-    unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**", // This allows all domains - you should restrict this in production
-      },
-    ],
-  },
 };
 
 module.exports = nextConfig;

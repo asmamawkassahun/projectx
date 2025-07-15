@@ -329,9 +329,11 @@ export class MultimodalLiveClient extends EventEmitter<LiveClientEventTypes> {
       toolResponse.functionResponses &&
       toolResponse.functionResponses.length
     ) {
+      console.log("Sending tool response:", toolResponse);
       this.session?.sendToolResponse({
         functionResponses: toolResponse.functionResponses,
       });
+      console.log("Tool response sent:", toolResponse);
       this.log(`client.toolResponse`, toolResponse);
     }
   }

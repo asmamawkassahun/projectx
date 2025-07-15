@@ -27,11 +27,13 @@ const Navbar = () => {
   };
 
   // Create display name from user data
-  const displayName = user ? `${user.firstName || ""} ${user.lastName || ""}`.trim() : "";
+  const displayName = user
+    ? `${user.firstName || ""} ${user.lastName || ""}`.trim()
+    : "";
 
   return (
     <>
-      <nav className="px-4 py-2.5 flex  items-center justify-between sm:p-5">
+      <nav className="px-4 py-2.5 flex  items-center justify-between relative git push --set-upstream origin dev-mini-task z-10 sm:p-5">
         {/* Left side */}
         <div className="flex items-center space-x-4">
           <Link href={user ? "/" : "/login"} className="mr-4">
@@ -41,19 +43,43 @@ const Navbar = () => {
 
         {/* Right side - User profile */}
         <div className="flex items-center gap-3">
-          <Button onClick={handleNewChat} variant="primary" size="md" aria-label="New Chat">
+          <Button
+            onClick={handleNewChat}
+            variant="primary"
+            size="md"
+            aria-label="New Chat"
+          >
             <MessageSquarePlus size={20} />
           </Button>
-          <Button onClick={handleNewChat} variant="primary" size="md" aria-label="Tasks history">
+          <Button
+            onClick={handleNewChat}
+            variant="primary"
+            size="md"
+            aria-label="Tasks history"
+          >
             <LayersIcon />
           </Button>
-          <Button onClick={handleNewChat} variant="primary" size="md" aria-label="Tutorial page">
+          <Button
+            onClick={handleNewChat}
+            variant="primary"
+            size="md"
+            aria-label="Tutorial page"
+          >
             <BooksIcon />
           </Button>
           {isLoggedIn ? (
-            <Button onClick={handleLogout} variant="primary" size="md" className="p-0">
+            <Button
+              onClick={handleLogout}
+              variant="primary"
+              size="md"
+              className="p-0"
+            >
               {user?.picture ? (
-                <img src={user.picture} alt={displayName} className="rounded-full object-cover" />
+                <img
+                  src={user.picture}
+                  alt={displayName}
+                  className="rounded-full object-cover"
+                />
               ) : (
                 <div className="rounded-full w-full">
                   <Icon name="user" className="w-full" />

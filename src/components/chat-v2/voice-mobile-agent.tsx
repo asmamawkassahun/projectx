@@ -11,17 +11,15 @@ import { Camera, Mic, MicOff, XCircle } from "lucide-react";
 import { useVideoManager } from "@/hooks/use-video-manager";
 import { useLiveAPIContext } from "@/contexts/LiveAPIContext";
 import { useAudioManager } from "@/hooks/use-audio-manager";
-import {
-  useConversationLLMHistory,
-  useVoiceSearchEnhancerMinimal,
-} from "@/hooks/use-gemini-api";
+import { useConversationLLMHistory } from "@/hooks/use-gemini-api";
 import { useLocation, LocationCoordinates } from "@/hooks/use-location";
 import { toast } from "react-hot-toast";
 import CenteredAudioPulse from "@/components/CenteredAudioPulse";
 import { VoiceSearchWidgets } from "@/components/voice_search_widgets";
+import { useConversationStore } from "@/stores/conversation-store";
+import UIOverlay from "./ui-overlay";
 
 interface VoiceMobileAgentProps {
-  conversationId?: string;
   sessionId?: string;
   onTranscriptReceived: (
     role: "user" | "model",
@@ -32,11 +30,11 @@ interface VoiceMobileAgentProps {
 }
 
 const VoiceMobileAgent: React.FC<VoiceMobileAgentProps> = ({
-  conversationId,
   sessionId,
   onTranscriptReceived,
   onClose,
 }) => {
+  const { conversationId } = useConversationStore();
   const [muted, setMuted] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
@@ -44,6 +42,24 @@ const VoiceMobileAgent: React.FC<VoiceMobileAgentProps> = ({
     Array<{ role: string; content: string }>
   >([]);
   const [locationRequested, setLocationRequested] = useState(false);
+
+  // UI overlay state management
+  const [isUIGenerating, setIsUIGenerating] = useState(false);
+  const [currentUITool, setCurrentUITool] = useState<string | null>(null);
+
+  // Handle UI loading state changes
+  const handleUILoadingStateChange = useCallback(
+    (isLoading: boolean, toolName?: string) => {
+      setIsUIGenerating(isLoading);
+      setCurrentUITool(isLoading ? toolName || null : null);
+    },
+    []
+  );
+
+  // Handle UI generation completion
+  const handleUIGenerated = useCallback((toolName: string) => {
+    console.log(`🎨 Voice Agent UI generated successfully for: ${toolName}`);
+  }, []);
 
   // Video zoom and pan state
   const [scale, setScale] = useState(1);
@@ -72,9 +88,6 @@ const VoiceMobileAgent: React.FC<VoiceMobileAgentProps> = ({
 
   // Get conversation history
   const { fetchHistory } = useConversationLLMHistory();
-
-  // Voice search enhancer hook
-  const { sendSearchData } = useVoiceSearchEnhancerMinimal();
 
   // Location hook
   const {
@@ -138,7 +151,6 @@ const VoiceMobileAgent: React.FC<VoiceMobileAgentProps> = ({
   // Use the audio manager hook
   const { inVolume, audioRecorder } = useAudioManager({
     muted,
-    conversationId,
     onAudioData: handleAudioData,
   });
 
@@ -182,78 +194,9 @@ const VoiceMobileAgent: React.FC<VoiceMobileAgentProps> = ({
     requestLocation,
   ]);
 
-  // Memoized search handler to prevent re-renders
-  const handleSearchData = useCallback(
-    async (searchData: any) => {
-      // Check if we need location data
-      if (!locationRequested && !coordinates) {
-        console.log("Location needed for search, requesting...");
-        setLocationRequested(true);
-        requestLocation();
-        return;
-      }
-
-      console.log("Sending search data to enhancer...");
-
-      if (sendSearchData && conversationId) {
-        try {
-          // Get the last 3 messages from local state
-          const recentMessages = conversationMessagesRef.current
-            .map((message) => `${message.role}: ${message.content}`)
-            .join("\n");
-
-          // Extract segments from GroundingSupport
-          let segments = "";
-          if (
-            searchData?.groundingSupports &&
-            Array.isArray(searchData.groundingSupports)
-          ) {
-            segments = searchData.groundingSupports
-              .map((support: any) => support.segment?.text)
-              .filter(
-                (segmentText: string) => segmentText && segmentText.trim()
-              )
-              .join(" ");
-          }
-
-          console.log("Recent messages:", recentMessages);
-          console.log("Location data:", locationData);
-          console.log("Segments:", segments);
-
-          // Send the search data with correct parameter structure
-          await sendSearchData({
-            conversation_id: conversationId,
-            recent_conversation: recentMessages,
-            search_data: segments,
-            session_id: sessionId,
-            location: locationData,
-          });
-        } catch (error) {
-          console.error("Error sending to enhancer:", error);
-        }
-      }
-    },
-    [
-      locationRequested,
-      coordinates,
-      sendSearchData,
-      conversationId,
-      sessionId,
-      locationData,
-      requestLocation,
-    ]
-  );
-
-  // Listen for searchData event from the client - optimized with memoized handler
-  useEffect(() => {
-    if (!client) return;
-
-    client.on("searchData", handleSearchData);
-
-    return () => {
-      client.off("searchData", handleSearchData);
-    };
-  }, [client, handleSearchData]);
+  // NOTE: Search data handling is now fully managed by UI Overlay component
+  // UI Overlay listens to Live API 'searchData' events and handles UI generation
+  // This ensures consistent behavior across both voice mobile and agent chat modes
 
   // Setup video stream on video element
   useEffect(() => {
@@ -628,7 +571,27 @@ const VoiceMobileAgent: React.FC<VoiceMobileAgentProps> = ({
 
   // Render in portal to ensure it's above everything else
   if (typeof window !== "undefined") {
-    return createPortal(mobileAgentContent, document.body);
+    return createPortal(
+      <>
+        {mobileAgentContent}
+
+        {/* UI Generation Status Indicator for Voice Mode */}
+        {isUIGenerating && currentUITool && (
+          <div className="fixed top-4 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg shadow-lg z-40 flex items-center gap-2">
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+            <span>
+              Generating {currentUITool.replace(/_/g, " ")} interface...
+            </span>
+          </div>
+        )}
+
+        <UIOverlay
+          onLoadingStateChange={handleUILoadingStateChange}
+          onUIGenerated={handleUIGenerated}
+        />
+      </>,
+      document.body
+    );
   }
 
   return null;
@@ -638,20 +601,16 @@ const VoiceMobileAgent: React.FC<VoiceMobileAgentProps> = ({
 VoiceMobileAgent.displayName = "VoiceMobileAgent";
 
 export default React.memo(VoiceMobileAgent, (prevProps, nextProps) => {
-  const conversationIdSame =
-    prevProps.conversationId === nextProps.conversationId;
   const onTranscriptReceivedSame =
     prevProps.onTranscriptReceived === nextProps.onTranscriptReceived;
   const onCloseSame = prevProps.onClose === nextProps.onClose;
 
-  const areEqual =
-    conversationIdSame && onTranscriptReceivedSame && onCloseSame;
+  const areEqual = onTranscriptReceivedSame && onCloseSame;
 
   if (!areEqual) {
     console.log(
       "[VOICE MOBILE AGENT] MEMO: Props changed, allowing re-render",
       {
-        conversationIdSame,
         onTranscriptReceivedSame,
         onCloseSame,
       }

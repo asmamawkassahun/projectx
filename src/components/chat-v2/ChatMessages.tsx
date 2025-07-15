@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useInputValueContext } from "@/contexts/InputValueContext";
 
 export interface ChatMessage {
   type: "user" | "model" | "agent";
@@ -15,26 +16,43 @@ interface ChatMessagesProps {
 }
 
 const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
-  if (messages.length === 0) return null;
+  const { inputValue, setInputValue } = useInputValueContext();
 
-  return (
-    <div className={`min-h-full flex flex-col justify-end w-full px-2 sm:max-w-2xl sm:mx-auto`}>
-      <div className="relative">
-        <div className="absolute top-0 left-0 w-full h-8 bg-gradient-to-b from-black/80 to-transparent pointer-events-none" />
+  // TO DO : add a another variant if the input.length > 0 where we don't actually return a p but a form>textarea
+  if (inputValue.length > 0) {
+    return (
+      <div
+        className={`min-h-full flex flex-col justify-end w-full px-2 sm:max-w-2xl sm:mx-auto`}
+      >
+        <textarea
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          className={`w-full bg-transparent focus:outline-none font-semibold text-[24px] leading-[100%] mb-28 caret-white`}
+          autoFocus
+        />
+      </div>
+    );
+  } else if (messages.length > 0) {
+    return (
+      <div
+        className={`min-h-full flex flex-col justify-end w-full px-2 sm:max-w-2xl sm:mx-auto`}
+      >
         <AnimatePresence initial={false} mode="wait">
           <motion.p
             key={`message-${messages.length}`}
-            className="text-white font-semibold text-[24px] leading-[100%] mb-28"
+            className="font-semibold text-[24px] leading-[100%] mb-28"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
           >
-            {messages[messages.length - 1].content}
+            {messages[messages.length - 1]?.content}
           </motion.p>
         </AnimatePresence>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return null;
+  }
 };
 
 export default ChatMessages;

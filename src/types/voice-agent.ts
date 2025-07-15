@@ -1,4 +1,4 @@
-import { Message } from '@/types';
+import { Message } from "@/types";
 
 // Define file types
 export interface File {
@@ -27,10 +27,18 @@ export interface ExtendedMessage extends Message {
   eventData?: any;
   id?: string;
   toolName?: string;
-  display?: 'conversation' | 'costar_event';
+  display?: "conversation" | "costar_event";
   inChatUpdates?: InChatUpdate[];
   files?: File[];
   markdownFiles?: MarkdownFile[];
+}
+
+export interface TranscriptType {
+  role: "user" | "model";
+  content: string;
+  timestamp: Date;
+  conversationId: string;
+  audioData?: string; // Base64 encoded audio data
 }
 
 export interface AgentStateProps {
@@ -52,5 +60,5 @@ export interface AgentStateProps {
 
 export interface Task {
   step: string;
-  status: 'pending' | 'processing' | 'completed' | 'failed';
-} 
+  status: "pending" | "processing" | "completed" | "failed";
+}

@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  MultimodalLiveClient,
-} from "../lib/multimodal-live-client";
+import { MultimodalLiveClient } from "../lib/multimodal-live-client";
 import { LiveConfig, LiveClientOptions } from "../multimodal-live-types";
 import { AudioStreamer } from "../lib/audio-streamer";
 import { audioContext } from "../lib/utils";
 import VolMeterWorket from "../lib/worklets/vol-meter";
-import { Type, FunctionDeclaration, Modality, MediaResolution } from "@google/genai";
+import {
+  Type,
+  FunctionDeclaration,
+  Modality,
+  MediaResolution,
+} from "@google/genai";
 
 const deepResearchDeclaration: FunctionDeclaration = {
   name: "super_agent",
@@ -20,18 +23,299 @@ const deepResearchDeclaration: FunctionDeclaration = {
     properties: {
       prompt: {
         type: Type.STRING,
-        description: "Detailed instructions for the research agent. Required when action is 'start' or 'intervention'. For 'start': comprehensive initial task description. For 'intervention': additional guidance or course corrections during task execution."
+        description:
+          "Detailed instructions for the research agent. Required when action is 'start' or 'intervention'. For 'start': comprehensive initial task description. For 'intervention': additional guidance or course corrections during task execution.",
       },
       answer: {
         type: Type.STRING,
-        description: "User's answer to a question asked by the super agent. Required when action is 'send_user_answer'. Only use this when the super agent is actively waiting for user input."
+        description:
+          "User's answer to a question asked by the super agent. Required when action is 'send_user_answer'. Only use this when the super agent is actively waiting for user input.",
       },
       action: {
         type: Type.STRING,
-        description: "Action to perform: 'start' to begin a new task, 'stop' to terminate a running task, 'status' to check progress, 'intervention' to provide additional instructions during task execution, or 'send_user_answer' to respond to agent questions",
+        description:
+          "Action to perform: 'start' to begin a new task, 'stop' to terminate a running task, 'status' to check progress, 'intervention' to provide additional instructions during task execution, or 'send_user_answer' to respond to agent questions",
+      },
+    },
+    required: ["action"],
+  },
+};
+
+// Email function declarations
+const listEmailsDeclaration: FunctionDeclaration = {
+  name: "list_emails",
+  description: "List emails based on a Gmail search query.",
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      query: {
+        type: Type.STRING,
+        description: "A valid Gmail search query."
+      },
+      max_results: {
+        type: Type.NUMBER,
+        description: "The maximum number of emails to return. Default is 10."
       }
     },
-    required: ["action"]
+    required: ["query", "max_results"]
+  }
+};
+
+const summarizeEmailsDeclaration: FunctionDeclaration = {
+  name: "summarize_emails",
+  description: "Summarize emails based on a Gmail search query. Only use when explicitly asked for a summary.",
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      query: {
+        type: Type.STRING,
+        description: "A valid Gmail search query."
+      }
+    },
+    required: ["query"]
+  }
+};
+
+const writeDraftNewEmailDeclaration: FunctionDeclaration = {
+  name: "write_draft_for_new_email",
+  description: "Write a new email draft.",
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      to: {
+        type: Type.STRING,
+        description: "The recipient's email address."
+      },
+      subject: {
+        type: Type.STRING,
+        description: "The subject of the email."
+      },
+      body: {
+        type: Type.STRING,
+        description: "The body content of the email."
+      }
+    },
+    required: ["to", "subject", "body"]
+  }
+};
+
+const writeDraftReplyDeclaration: FunctionDeclaration = {
+  name: "write_draft_for_reply",
+  description: "Write a reply to an email. Use message_id if available, otherwise use a query to find the email.",
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      message_id: {
+        type: Type.STRING,
+        description: "The ID of the message to reply to."
+      },
+      query: {
+        type: Type.STRING,
+        description: "A query to find the email to reply to if the ID is not known."
+      },
+      body: {
+        type: Type.STRING,
+        description: "The body content of the reply."
+      },
+      to: {
+        type: Type.STRING,
+        description: "Optional: The recipient's email address if it needs to be changed."
+      },
+      subject: {
+        type: Type.STRING,
+        description: "Optional: The subject of the email if it needs to be changed."
+      }
+    },
+    required: ["body"]
+  }
+};
+
+const sendEmailDeclaration: FunctionDeclaration = {
+  name: "send_email",
+  description: "Send a previously approved email draft.",
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      to: {
+        type: Type.STRING,
+        description: "The recipient's email address."
+      },
+      subject: {
+        type: Type.STRING,
+        description: "The subject of the email."
+      },
+      body: {
+        type: Type.STRING,
+        description: "The body content of the email."
+      }
+    },
+    required: ["to", "subject", "body"]
+  }
+};
+
+const coordinateMeetingDeclaration: FunctionDeclaration = {
+  name: "coordinate_meeting",
+  description: "Initiate a meeting coordination process with one or more recipients.",
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      recipient_emails: {
+        type: Type.ARRAY,
+        description: "The email addresses of the meeting recipients.",
+        items: {
+          type: Type.STRING
+        }
+      },
+      purpose: {
+        type: Type.STRING,
+        description: "The purpose or topic of the meeting."
+      }
+    },
+    required: ["recipient_emails", "purpose"]
+  }
+};
+
+// Calendar function declarations
+const listEventsDeclaration: FunctionDeclaration = {
+  name: "list_events",
+  description: "List calendar events for a given time range. Only use when explicitly asked to see calendar or schedule.",
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      time_min: {
+        type: Type.STRING,
+        description: "The start of the time range in ISO-8601 format."
+      },
+      time_max: {
+        type: Type.STRING,
+        description: "The end of the time range in ISO-8601 format."
+      }
+    }
+  }
+};
+
+const checkAvailabilityDeclaration: FunctionDeclaration = {
+  name: "check_availability",
+  description: "Check if the user is free at a certain time or date.",
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      query: {
+        type: Type.STRING,
+        description: "A natural language query about availability (e.g., 'tomorrow afternoon')."
+      },
+      time_min: {
+        type: Type.STRING,
+        description: "The start of the time range in ISO-8601 format."
+      },
+      time_max: {
+        type: Type.STRING,
+        description: "The end of the time range in ISO-8601 format."
+      }
+    }
+  }
+};
+
+const createEventDeclaration: FunctionDeclaration = {
+  name: "create_event",
+  description: "Create a new event in the calendar.",
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      summary: {
+        type: Type.STRING,
+        description: "The title or summary of the event."
+      },
+      start_time: {
+        type: Type.STRING,
+        description: "The event start time in ISO-8601 format."
+      },
+      end_time: {
+        type: Type.STRING,
+        description: "The event end time in ISO-8601 format."
+      },
+      location: {
+        type: Type.STRING,
+        description: "The location of the event."
+      },
+      attendees: {
+        type: Type.ARRAY,
+        description: "The email addresses of the event attendees.",
+        items: {
+          type: Type.STRING
+        }
+      }
+    },
+    required: ["summary", "start_time", "end_time"]
+  }
+};
+
+const updateEventDeclaration: FunctionDeclaration = {
+  name: "update_event",
+  description: "Update an existing calendar event. First find the event ID with list_events.",
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      event_id: {
+        type: Type.STRING,
+        description: "The ID of the event to update."
+      },
+      summary: {
+        type: Type.STRING,
+        description: "The new title or summary of the event."
+      },
+      start_time: {
+        type: Type.STRING,
+        description: "The new event start time in ISO-8601 format."
+      },
+      end_time: {
+        type: Type.STRING,
+        description: "The new event end time in ISO-8601 format."
+      },
+      location: {
+        type: Type.STRING,
+        description: "The new location of the event."
+      },
+      attendees: {
+        type: Type.ARRAY,
+        description: "The new list of email addresses for event attendees.",
+        items: {
+          type: Type.STRING
+        }
+      }
+    },
+    required: ["event_id"]
+  }
+};
+
+const deleteEventDeclaration: FunctionDeclaration = {
+  name: "delete_event",
+  description: "Delete an event from the calendar.",
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      event_id: {
+        type: Type.STRING,
+        description: "The ID of the event to delete."
+      }
+    },
+    required: ["event_id"]
+  }
+};
+
+// Contact function declarations
+const findContactDeclaration: FunctionDeclaration = {
+  name: "find_contact",
+  description: "Find a contact's email address by their name.",
+  parameters: {
+    type: Type.OBJECT,
+    properties: {
+      query: {
+        type: Type.STRING,
+        description: "The name of the contact to find."
+      }
+    },
+    required: ["query"]
   }
 };
 
@@ -45,19 +329,17 @@ export type UseLiveAPIResults = {
   volume: number;
 };
 
-export function useLiveAPI({
-  apiKey,
-}: LiveClientOptions): UseLiveAPIResults {
-  const client = useMemo(
-    () => new MultimodalLiveClient({ apiKey }),
-    [apiKey],
-  );
+export function useLiveAPI({ apiKey }: LiveClientOptions): UseLiveAPIResults {
+  const client = useMemo(() => new MultimodalLiveClient({ apiKey }), [apiKey]);
+
   const audioStreamerRef = useRef<AudioStreamer | null>(null);
 
   const [connected, setConnected] = useState(false);
+  const [volume, setVolume] = useState(0);
+  
   const [config, setConfig] = useState<LiveConfig>({
-    // model: "models/gemini-2.0-flash-live-001",
-    model: "models/gemini-2.5-flash-preview-native-audio-dialog",
+    model: "models/gemini-live-2.5-flash-preview",
+    // model: "models/gemini-2.5-flash-preview-native-audio-dialog",
     generationConfig: {
       responseModalities: [Modality.AUDIO],
       // speechConfig: {
@@ -65,8 +347,8 @@ export function useLiveAPI({
       //   language_code: "en-US",
       // },
     },
-    inputAudioTranscription:{},
-    outputAudioTranscription:{},
+    inputAudioTranscription: {},
+    outputAudioTranscription: {},
     systemInstruction: {
       parts: [
         {
@@ -79,6 +361,9 @@ export function useLiveAPI({
           * **Instant Knowledge** - Answer straightforward questions directly using your knowledge without unnecessary steps.
           * **Web Search** - Retrieve current information when needed, presenting results conversationally.
           * **Complex Processing** - Handle multi-step, analytical, and specialized tasks efficiently.
+          * **Email Management** - List, summarize, draft, send emails and coordinate meetings through Gmail integration.
+          * **Calendar Management** - Check availability, list events, create/update/delete calendar events.
+          * **Contact Management** - Find contact information by name.
 
           ## EXECUTION RULES
 
@@ -87,6 +372,7 @@ export function useLiveAPI({
             - Simple: Direct answer from knowledge
             - Verification: Quick web search needed
             - Complex: Multi-step processing required
+            - Email/Calendar/Contact: Use specific productivity tools
 
           2. **MANDATORY**: Execute appropriate tool calls immediately - never skip them
 
@@ -104,6 +390,27 @@ export function useLiveAPI({
           - For directions: Current location is automatically obtained via Google Maps API. Only clarify destination if needed, then provide navigation guidance
           - Never ask for starting location when providing directions - it's automatically detected
           - Prefer quick search when user asks for directions or places
+
+          ### Email Management Rules
+          - Use list_emails for finding specific emails or browsing email content
+          - Use summarize_emails when user explicitly requests email summaries
+          - Use write_draft_for_new_email for composing new emails
+          - Use write_draft_for_reply when responding to existing emails
+          - Use send_email only after user confirms the draft
+          - Use coordinate_meeting for scheduling meetings with multiple people
+          - Always confirm before sending emails
+
+          ### Calendar Management Rules
+          - Use list_events when user asks to see their schedule or calendar
+          - Use check_availability to verify free time slots
+          - Use create_event for new calendar entries
+          - Use update_event to modify existing events (get event_id first with list_events)
+          - Use delete_event to remove calendar entries
+          - Always confirm event details before creating/updating
+
+          ### Contact Management Rules
+          - Use find_contact to locate email addresses by name
+          - Helpful for email composition and meeting coordination
 
           ### Complex Task Rules
           - **WHAT YOU ACTUALLY DO**: Always delegate complex tasks to super agent via tool call
@@ -151,6 +458,8 @@ export function useLiveAPI({
           - Balance brevity with informativeness
           - Express appropriate enthusiasm and curiosity
           - Handle interruptions and topic shifts gracefully
+          - When using productivity tools (email, calendar, contacts), provide clear confirmations and summaries
+          - For mobile automation, explain what's happening in simple terms
 
           Today is ${new Date().toLocaleDateString()}.
           `,
@@ -160,10 +469,28 @@ export function useLiveAPI({
     tools: [
       // there is a free-tier quota for search
       { googleSearch: {} },
-      { functionDeclarations: [deepResearchDeclaration] },
+      { 
+        functionDeclarations: [
+          deepResearchDeclaration,
+          // Email tools
+          listEmailsDeclaration,
+          summarizeEmailsDeclaration,
+          writeDraftNewEmailDeclaration,
+          writeDraftReplyDeclaration,
+          sendEmailDeclaration,
+          coordinateMeetingDeclaration,
+          // Calendar tools
+          listEventsDeclaration,
+          checkAvailabilityDeclaration,
+          createEventDeclaration,
+          updateEventDeclaration,
+          deleteEventDeclaration,
+          // Contact tools
+          findContactDeclaration,
+        ] 
+      },
     ],
   });
-  const [volume, setVolume] = useState(0);
 
   // Add a flag to track if user_turn_complete has been triggered
   const userTurnCompleteTriggered = useRef<boolean>(false);
@@ -184,6 +511,7 @@ export function useLiveAPI({
     }
   }, [audioStreamerRef]);
 
+  // Enhanced event handlers for real-time UI generation
   useEffect(() => {
     const onClose = () => {
       setConnected(false);
@@ -198,11 +526,13 @@ export function useLiveAPI({
     const onAudio = (data: ArrayBuffer) => {
       // Process audio for playback first
       audioStreamerRef.current?.addPCM16(new Uint8Array(data));
-      
+
       // Signal user turn complete after processing the first audio chunk
       // This ensures audio is queued before signaling completion
       if (!userTurnCompleteTriggered.current) {
-        console.log('[LiveAPI] First audio chunk processed, signaling user turn complete');
+        console.log(
+          "[LiveAPI] First audio chunk processed, signaling user turn complete"
+        );
         // Use setTimeout to ensure audio processing completes first
         setTimeout(() => {
           client.emit("user_turn_complete");
@@ -210,16 +540,16 @@ export function useLiveAPI({
         userTurnCompleteTriggered.current = true;
       }
     };
-    
+
     // Reset the flag when the turn is completed
     const onTurnComplete = () => {
-      console.log('[LiveAPI] Turn complete, resetting flags');
+      console.log("[LiveAPI] Turn complete, resetting flags");
       userTurnCompleteTriggered.current = false;
     };
 
     // Handle interruptions to ensure clean audio state
     const onInterrupted = () => {
-      console.log('[LiveAPI] Interrupted, stopping audio and resetting flags');
+      console.log("[LiveAPI] Interrupted, stopping audio and resetting flags");
       stopAudioStreamer();
     };
 
@@ -244,7 +574,7 @@ export function useLiveAPI({
       throw new Error("config has not been set");
     }
     client.disconnect();
-    
+
     // Convert LiveConfig to LiveConnectConfig by removing model
     const { model, ...connectConfig } = config;
     await client.connect(model, connectConfig);
@@ -265,4 +595,4 @@ export function useLiveAPI({
     disconnect,
     volume,
   };
-} 
+}
