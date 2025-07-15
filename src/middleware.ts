@@ -9,6 +9,7 @@ const publicRoutes = [
   "/auth/forgot-password",
   "/auth/reset-password",
   "/voice-agent",
+  "/components",
 ];
 
 // Function to check if a route should be treated as public
