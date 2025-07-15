@@ -19,17 +19,17 @@ const page = () => {
         <ThemeToggle />
       </div>
       <div className="flex flex-col  w-full ">
-        <HotelsCardLoading />
-        <FlightCardWithLoading />
+        {/* <HotelsCardLoading />
+        <FlightCardWithLoading /> */}
         <MapCardLoading />
-        <LinksListWithLoading />
-        <IngredientsCard />
-        <VideoCard />
+        {/* <LinksListWithLoading />
+        <IngredientsCard /> */}
+        {/* <VideoCard />
         <GeneratedClipsWithLoading />
         <GeneratedAudioWithLoading />
         <SingleCombinedVideoWithLoading />
         <ArchivingTaskFilesWithLoading />
-        <ImageGridWithLoading />
+        <ImageGridWithLoading /> */}
       </div>
     </div>
   );

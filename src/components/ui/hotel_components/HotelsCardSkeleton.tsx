@@ -26,7 +26,7 @@ const HotelsCardSkeleton = () => {
     <div className="w-full max-w-[43.0625rem] space-y-4">
       <div className="flex items-center space-x-4  dark:text-white text-black text-sm font-semibold">
         <span>Hotels</span>
-        <span className="w-8 h-8 rounded-full flex justify-center items-center bg-black/10 dark:white/10">
+        <span className="w-8 h-8 rounded-full flex justify-center items-center bg-black/10 dark:bg-white/5">
           6
         </span>
       </div>

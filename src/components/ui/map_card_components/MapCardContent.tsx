@@ -44,7 +44,7 @@ function MapCard({
           alt="Map of locations"
           width={689}
           height={192}
-          className="object-cover rounded-3xl cursor-pointer"
+          className="object-cover rounded-3xl  h-[12rem] cursor-pointer"
           onClick={handleImageClick}
         />
       )}
@@ -63,94 +63,100 @@ function PlaceCard({
   reveiw,
 }: Place) {
   return (
-    <div className="flex items-start space-x-4 py-4 px-[1.125rem] rounded-3xl dark:bg-[#1a1a1a] bg-black/10">
-      <div className="relative w-[8.75rem] h-[6.125rem] flex-shrink-0 rounded-2xl overflow-hidden">
+    <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 items-start space-x-0 sm:space-x-4 p-4 rounded-3xl dark:bg-[#1a1a1a] bg-black/10">
+      <div className="relative w-full sm:w-[8.75rem] h-auto flex-shrink-0 rounded-2xl overflow-hidden">
         <Image
           src={"/images/Image1.png"}
           alt={`Image of ${title}`}
-          fill
-          className="object-cover rounded-lg"
+          width={140}
+          height={98}
+          className="object-cover w-full sm:w-[8.75rem] rounded-2xl "
         />
       </div>
-      <div className="flex-1 min-w-0 space-y-4">
-        <h3 className="text-base font-semibold text-foreground truncate">
-          {title}
-        </h3>
-
-        <div className="flex  space-x-4 flex-wrap">
-          <div className="flex items-center gap-2 text-sm text-gray-400">
-            <div className="flex items-center space-x-1">
-              <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
-              <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
-              <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
-              <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
-              <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+      <div className="flex justify-between w-full h-auto  items-start min-w-0">
+        <div className="flex-1 min-w-0 space-y-3">
+          <h3 className="text-base font-medium text-foreground truncate">
+            {title}
+          </h3>
+          <div className="flex  space-x-4 flex-wrap">
+            <div className="flex items-center space-x-2 text-sm text-gray-400">
+              <div className="flex items-center space-x-1">
+                <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+              </div>
+              <span className="text-foreground text-sm">
+                {rating} ({reveiw})
+              </span>
             </div>
-            <span className="text-foreground text-sm">
-              {rating} ({reveiw})
-            </span>
-          </div>
-          <div className="flex items-center gap-2 text-sm ">
-            <MapPin className="h-3.5 w-3.5 text-foreground/50" />
-            <span className="truncate text-foreground text-sm">{address}</span>
-          </div>
-          {hours && (
-            <div className="flex items-center gap-2 text-sm">
-              <Clock className="h-3.5 w-3.5 text-foreground/50" />
-              <span className="text-foreground text-sm">{hours}</span>
+            <div className="flex items-center space-x-2 text-sm ">
+              <MapPin className="h-3.5 w-3.5 text-foreground/50" />
+              <span className="truncate text-foreground text-sm">
+                {address}
+              </span>
             </div>
-          )}
+            {hours && (
+              <div className="flex items-center space-x-2 text-sm">
+                <Clock className="h-3.5 w-3.5 text-foreground/50" />
+                <span className="text-foreground text-sm">{hours}</span>
+              </div>
+            )}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <ShadCnButton
+              asChild
+              variant="outline"
+              size="sm"
+              className="flex items-center border-none space-x-2.5 rounded-full p-2.5 dark:bg-white/10 bg-black/10"
+            >
+              <Link
+                href={links.website}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Globe className="h-3.5 w-3.5" />
+                Website
+              </Link>
+            </ShadCnButton>
+            <ShadCnButton
+              asChild
+              variant="outline"
+              size="sm"
+              className="flex items-center border-none space-x-2.5 rounded-full p-2.5 dark:bg-white/10 bg-black/10"
+            >
+              <Link
+                href={links.directions}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Send className="h-3.5 w-3.5" />
+                Directions
+              </Link>
+            </ShadCnButton>
+            <ShadCnButton
+              asChild
+              variant="outline"
+              size="sm"
+              className="flex items-center border-none space-x-2.5 rounded-full p-2.5 dark:bg-white/10 bg-black/10"
+            >
+              <Link
+                href={`tel:${phone}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Phone className="h-3.5 w-3.5" />
+                {phone}
+              </Link>
+            </ShadCnButton>
+          </div>
         </div>
-        <div className="flex flex-wrap gap-2">
-          <ShadCnButton
-            asChild
-            variant="outline"
-            size="sm"
-            className="flex items-center space-x-2.5 rounded-full p-3 dark:bg-white/10 bg-black/10"
-          >
-            <Link
-              href={links.website}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Globe className="h-3.5 w-3.5" />
-              Website
-            </Link>
-          </ShadCnButton>
-          <ShadCnButton
-            asChild
-            variant="outline"
-            size="sm"
-            className="flex items-center space-x-2.5 rounded-full p-3 dark:bg-white/10 bg-black/10"
-          >
-            <Link
-              href={links.directions}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Send className="h-3.5 w-3.5" />
-              Directions
-            </Link>
-          </ShadCnButton>
-          <ShadCnButton
-            asChild
-            variant="outline"
-            size="sm"
-            className="flex items-center space-x-2.5 rounded-full p-3 dark:bg-white/10 bg-black/10"
-          >
-            <Link
-              href={`tel:${phone}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Phone className="h-3.5 w-3.5" />
-              {phone}
-            </Link>
-          </ShadCnButton>
+        <div className="flex items-center justify-end flex-shrink-0">
+          <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full p-2  text-base font-medium text-foreground bg-black/10 dark:bg-white/10">
+            {label}
+          </span>
         </div>
-      </div>
-      <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full  text-base font-medium text-foreground bg-white/10 dark:black/10 p-2">
-        {label}
       </div>
     </div>
   );
@@ -164,7 +170,9 @@ export default function MapCardContent({
     <div className="w-full max-w-[43.0625rem] space-y-4">
       <div className="flex items-center space-x-4  dark:text-white text-black text-sm font-semibold">
         <span>Local results</span>
-        <span>6</span>
+        <span className="w-8 h-8 rounded-full flex justify-center items-center bg-black/10 dark:bg-white/5">
+          6
+        </span>
       </div>
 
       <MapCard mapData={mapData} />
