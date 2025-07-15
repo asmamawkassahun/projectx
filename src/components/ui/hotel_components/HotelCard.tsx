@@ -23,7 +23,7 @@ export default function HotelCard({
   imageUrl,
 }: HotelCardProps) {
   return (
-    <div className="w-full space-y-6 dark:bg-[#1a1a1a] bg-black/10 text-foreground p-4 rounded-xl">
+    <div className="w-full space-y-6 dark:bg-[#1a1a1a] bg-black/10 text-foreground p-4 rounded-3xl">
       <div className="relative w-full aspect-[300/200] overflow-hidden">
         <Image
           src={imageUrl || "/placeholder.svg"}

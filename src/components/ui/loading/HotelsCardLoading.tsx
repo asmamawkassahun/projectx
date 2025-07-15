@@ -56,7 +56,7 @@ const HotelsCardLoading = () => {
   };
 
   return (
-    <div className="w-full p-8 bg-background flex justify-center">
+    <div className="w-full py-8 bg-background flex justify-center">
       {isLoading ? (
         <HotelsCardSkeleton />
       ) : (
@@ -66,8 +66,7 @@ const HotelsCardLoading = () => {
         onClick={resetLoading}
         className="w-8 h-8 rounded-full bg-gray-800 text-white hover:bg-gray-700"
       >
-        <RefreshCcw className="w-4 h-4" />{" "}
-        {/* Adjusted icon size for better fit */}
+        <RefreshCcw className="w-4 h-4" />
       </ShadCnButton>
     </div>
   );
