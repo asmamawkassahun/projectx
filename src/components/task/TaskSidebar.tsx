@@ -1,38 +1,36 @@
 "use client";
 
 import { useTasksSteps } from "@/contexts/TasksStepsContext";
-import { StopResponse } from "../icons/StopResponse"; // Assuming this path is correct
-import Button from "../ui/Button"; // Assuming this is your custom Button component
-import { cn } from "@/lib/utils"; // Import cn for conditional class names
+import { StopResponse } from "../icons/StopResponse";
+import Button from "../ui/Button";
+import { cn } from "@/lib/utils";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 interface TaskSidebarProps {
-  onStopTask: () => void; // Add prop for stopping the task
+  onStopTask: () => void;
 }
 
 export const TaskSidebar = ({ onStopTask }: TaskSidebarProps) => {
-  const { steps, activeStep, setActiveStep } = useTasksSteps(); // Destructure setActiveStep
+  const { steps, activeStep, setActiveStep } = useTasksSteps();
+  const [prevActiveStep, setPrevActiveStep] = useState<number>(activeStep);
 
-  console.log("TaskSidebar steps:", JSON.stringify(steps, null, 2));
-  console.log("TaskSidebar activeStep:", activeStep);
+  useEffect(() => {
+    if (activeStep !== prevActiveStep) {
+      setPrevActiveStep(activeStep);
+    }
+  }, [activeStep]);
 
-  const handleStopResponse = () => {
-    console.log("Stopping response...");
-    onStopTask(); // Call the passed function to stop the task
-  };
+  const handleStopResponse = () => onStopTask();
+  const handleStepClick = (index: number) => setActiveStep(index);
 
-  const handleStepClick = (index: number) => {
-    console.log(`Clicked step ${index + 1}`);
-    setActiveStep(index); // Update the active step in the context
-  };
-
-  // Determine the indices of the steps to display: previous, active, and next
-  const prevStep = activeStep > 0 ? steps[activeStep - 1] : null;
+  // Boundary checks
+  const isFirstStep = activeStep === 0;
+  const isLastStep = activeStep === steps.length - 1;
   const currentStep = steps[activeStep];
-  const nextStep = activeStep < steps.length - 1 ? steps[activeStep + 1] : null;
 
   return (
     <div className="flex flex-col justify-center items-center px-5 space-y-2.5 bg-[#0A0A0A] h-[100vh] w-[5.25rem] flex-shrink-0">
-      {/* Button for stopping response */}
       <Button
         onClick={handleStopResponse}
         variant="primary"
@@ -44,55 +42,78 @@ export const TaskSidebar = ({ onStopTask }: TaskSidebarProps) => {
       </Button>
 
       <div className="flex flex-col items-center gap-2 mt-8">
-        {/* Previous Step Button */}
-        {prevStep && (
-          <Button
-            onClick={() => handleStepClick(activeStep - 1)}
-            variant="primary"
-            size="sm"
-            aria-label={`Previous Step ${activeStep}`}
-            className="w-[2.125rem] h-[2.125rem] bg-[#262626] text-white"
+        {!isFirstStep && (
+          <motion.div
+            layout
+            initial={{ scale: 0.8, opacity: 0.5 }}
+            animate={{ scale: 0.9, opacity: 0.6 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
-            {activeStep-1}
-          </Button>
-        )}
-
-        {/* Active Step Button */}
-        {currentStep && (
-          <div className="relative flex justify-center items-center">
-            {/* Arc for processing state */}
-            {currentStep.status === "processing" && (
-              <div className="absolute w-[48px] h-[48px] rounded-full border-2 border-transparent border-t-gray-400 border-r-gray-400 animate-spin" />
-            )}
             <Button
-              onClick={() => handleStepClick(activeStep)}
+              onClick={() => handleStepClick(activeStep - 1)}
               variant="primary"
-              size="md"
-              aria-label={`Current Step ${activeStep + 1}`}
-              className={cn(
-                "bg-background hover:bg-background/80 text-foreground text-2xl font-medium leading-[125%] text-center",
-                // Add a border to the active step to make it more prominent
-                currentStep.status === "processing"
-                  ? "border-2 border-gray-400"
-                  : ""
-              )}
+              size="sm"
+              aria-label={`Previous Step ${activeStep - 1}`}
+              className="w-[2.125rem] h-[2.125rem] bg-[#262626] backdrop:blur-lg text-lg font-medium leading-[125%] text-center text-white"
             >
-              {activeStep}
+              {activeStep - 1}
             </Button>
-          </div>
+          </motion.div>
         )}
 
-        {/* Next Step Button */}
-        {nextStep && (
+        <motion.div
+          layout
+          initial={{ scale: 1, opacity: 1 }}
+          animate={{
+            scale: 1.1,
+            opacity: 1,
+            boxShadow:
+              currentStep?.status === "processing"
+                ? "0 0 0 4px #60a5fa"
+                : "none",
+          }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          className="relative flex justify-center items-center"
+        >
+          {currentStep?.status === "processing" && (
+            <motion.div
+              className="absolute w-[48px] h-[48px] rounded-full border-2 border-transparent border-t-gray-400 border-r-gray-400"
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+            />
+          )}
           <Button
-            onClick={() => handleStepClick(activeStep + 1)}
+            onClick={() => handleStepClick(activeStep)}
             variant="primary"
             size="md"
-            aria-label={`Next Step ${activeStep + 2}`}
-            className="backdrop:blur-lg rounded-full opacity-40 text-lg font-medium leading-[125%] text-center"
+            aria-label={`Current Step ${activeStep + 1}`}
+            className={cn(
+              "bg-background hover:bg-background/80 text-foreground text-2xl font-medium leading-[125%] text-center",
+              currentStep?.status === "processing" &&
+                "border-2 border-gray-400 "
+            )}
           >
-            {activeStep + 1}
+            {activeStep}
           </Button>
+        </motion.div>
+
+        {!isLastStep && (
+          <motion.div
+            layout
+            initial={{ scale: 0.8, opacity: 0.3 }}
+            animate={{ scale: 0.9, opacity: 0.4 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          >
+            <Button
+              onClick={() => handleStepClick(activeStep + 1)}
+              variant="primary"
+              size="md"
+              aria-label={`Next Step ${activeStep + 1}`}
+              className="backdrop:blur-lg rounded-full text-lg font-medium leading-[125%] text-center"
+            >
+              {activeStep + 1}
+            </Button>
+          </motion.div>
         )}
       </div>
     </div>
