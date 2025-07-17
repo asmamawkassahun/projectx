@@ -5,6 +5,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import CostarTask from "../chat-v2/costar-task";
 import TaskPlanner from "./task-planner";
+import { TaskError } from "./task-error";
+import { TaskLoader } from "./task-loader";
+import { TaskLayout } from "./task-layout";
+import { useTasksSteps } from "@/contexts/TasksStepsContext";
 
 type ViewMode = "planner" | "execution";
 
@@ -17,9 +21,9 @@ type TaskStatus =
   | null;
 
 interface TaskProps {
-  taskUuid: string | null;
+  setTaskUuid: (uuid: string | null) => void;
   isReplayMode?: boolean;
-  onTaskStatusChange?: (status: TaskStatus) => void;
+
   onTaskViewChange?: (show: boolean) => void;
   onWaitingUserResponseChange?: (waiting: boolean) => void;
   connectToPusher?: () => Promise<string>;
@@ -27,10 +31,10 @@ interface TaskProps {
 }
 
 const Task = ({
-  taskUuid,
+  setTaskUuid,
   connectionStatus,
   isReplayMode = false,
-  onTaskStatusChange,
+
   onTaskViewChange,
   onWaitingUserResponseChange,
 }: TaskProps) => {
@@ -39,8 +43,8 @@ const Task = ({
 
   // Task-related state
   const [viewMode, setViewMode] = useState<ViewMode>("planner");
-  const [currentStep, setCurrentStep] = useState(0);
-  const [steps, setSteps] = useState<TaskStep[]>([]);
+
+  const { steps, setSteps, setActiveStep } = useTasksSteps();
   const [isTaskActive, setIsTaskActive] = useState(false);
   const [taskStatus, setTaskStatus] = useState<TaskStatus>(null);
   const [acknowledgmentMessage, setAcknowledgmentMessage] =
@@ -90,7 +94,6 @@ const Task = ({
         setIsWaitingUserResponse(true);
         onWaitingUserResponseChange?.(true);
         setTaskStatus("waiting_user_response");
-        onTaskStatusChange?.("waiting_user_response");
         return;
       }
 
@@ -104,7 +107,6 @@ const Task = ({
           data.type
         );
         setTaskStatus("in_progress");
-        onTaskStatusChange?.("in_progress");
       }
 
       // Handle task plan updates
@@ -120,7 +122,7 @@ const Task = ({
           // Simply replace the entire plan - the backend sends the complete updated structure
           setSteps(
             data.task_plan.map((stepObj: any) => ({
-              step: stepObj.step,
+              name: stepObj.step,
               status: stepObj.status || "pending", // Only default to pending if status is null/undefined
             }))
           );
@@ -134,7 +136,7 @@ const Task = ({
           console.log("Processing initial plan creation in Task component");
           setSteps(
             data.task_plan.map((stepObj: any) => ({
-              step: stepObj.step,
+              name: stepObj.step,
               status: stepObj.status || "pending", // Only default to pending if status is null/undefined
             }))
           );
@@ -155,7 +157,7 @@ const Task = ({
           // If a step is processing, update currentStep
           if (data.step_status === "processing") {
             console.log("Updating currentStep to:", stepIndex);
-            setCurrentStep(stepIndex);
+            setActiveStep(stepIndex);
           }
         }
         return;
@@ -171,10 +173,9 @@ const Task = ({
           console.log("Activating task view due to live status without plan");
           setShowTaskView(true);
           onTaskViewChange?.(true);
-          setViewMode("execution");
+          // setViewMode("execution");
           setIsTaskActive(true);
           setTaskStatus("in_progress");
-          onTaskStatusChange?.("in_progress");
         }
 
         // Handle structured message_parts if available
@@ -192,7 +193,6 @@ const Task = ({
         setAcknowledgmentMessage(data.message);
         setIsTaskActive(true);
         setTaskStatus("in_progress");
-        onTaskStatusChange?.("in_progress");
 
         // Also activate task view if not already shown
         if (!showTaskView) {
@@ -211,68 +211,50 @@ const Task = ({
       acknowledgmentMessage,
       showTaskView,
       taskStatus,
-      onTaskStatusChange,
       onTaskViewChange,
     ]
   );
 
   // Handle task completion
-  const handleCompleteEvent = useCallback(
-    (data: any) => {
-      console.log("Complete event received:", data);
+  const handleCompleteEvent = (data: any) => {
+    console.log("Complete event received:", data);
 
-      // Update task status to completed
-      setTaskStatus("completed");
-      onTaskStatusChange?.("completed");
-      setIsTaskActive(false);
-      setViewMode("execution");
+    // Update task status to completed
+    setTaskStatus("completed");
+    setIsTaskActive(false);
 
-      // Handle files from completion data
-      const files = data.files || [];
-      if (files.length > 0) {
-        console.log("Setting completed files:", files);
-        setCompletedFiles(files);
-      }
+    // Handle files from completion data
+    const files = data.files || [];
+    if (files.length > 0) {
+      setCompletedFiles(files);
+    }
 
-      // Clear live status when task completes
-      setHasReceivedLiveStatus(false);
-      setCurrentLiveStatusParts([]);
-    },
-    [onTaskStatusChange]
-  );
+    // Clear live status when task completes
+    setHasReceivedLiveStatus(false);
+    setCurrentLiveStatusParts([]);
+  };
 
   // Handle errors
-  const handleErrorEvent = useCallback(
-    (data: any) => {
-      setTaskStatus("failed");
-      onTaskStatusChange?.("failed");
-      setIsTaskActive(false);
-    },
-    [onTaskStatusChange]
-  );
+  const handleErrorEvent = (data: any) => {
+    setTaskStatus("failed");
+    setIsTaskActive(false);
+  };
 
   // Handle agent stopped
-  const handleAgentStoppedEvent = useCallback(
-    (data: any) => {
-      setTaskStatus("failed");
-      onTaskStatusChange?.("failed");
-      setIsTaskActive(false);
-    },
-    [onTaskStatusChange]
-  );
+  const handleAgentStoppedEvent = (data: any) => {
+    setTaskStatus("failed");
+    setIsTaskActive(false);
+  };
 
-  const handleTaskCreated = useCallback(
-    (data: any) => {
-      setShowTaskView(true);
-      onTaskViewChange?.(true);
-    },
-    [onTaskViewChange]
-  );
+  const handleTaskCreated = (data: any) => {
+    console.log("Task created event received:", data);
+    setShowTaskView(true);
+    onTaskViewChange?.(true);
+    setTaskUuid(data.task_uuid);
+  };
 
   // Setup Pusher event listeners
   const setupEventListeners = () => {
-    console.log("Setting up event listeners");
-
     pusherManager.addEventListener(
       PusherEventType.TaskCreated,
       handleTaskCreated
@@ -400,118 +382,53 @@ const Task = ({
     showAdvancedControls: true,
   });
 
+  if (!showTaskView) {
+    return null; // Don't render anything if task view is not active
+  }
+
   return (
-    <AnimatePresence>
-      {showTaskView && (
-        <motion.div
-          initial={{ y: "100%", opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: "100%", opacity: 0 }}
-          transition={{
-            type: "spring",
-            stiffness: 300,
-            damping: 30,
-            duration: 0.6,
-          }}
-          className="absolute inset-0 bg-gradient-to-b from-white to-gray-100 flex flex-col items-center z-30 backdrop-blur-sm"
-        >
-          {/* Main content area */}
-          <motion.div
-            className="flex-1 w-full flex items-center justify-center overflow-hidden px-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.4 }}
-          >
-            <AnimatePresence mode="wait">
-              {taskStatus === "failed" ? (
-                <motion.div
-                  key="failed"
-                  className="flex flex-col items-center justify-center h-full text-center"
-                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, y: -20 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                >
-                  <div className="bg-white rounded-lg shadow-lg p-8 max-w-md mx-4">
-                    <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <svg
-                        className="w-8 h-8 text-orange-600"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                      Task Stopped
-                    </h3>
-                    <p className="text-gray-600 mb-4">
-                      The agent has been stopped and the task execution has been
-                      halted.
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      You can start a new conversation to begin a different
-                      task.
-                    </p>
-                  </div>
-                </motion.div>
-              ) : viewMode === "planner" ? (
-                <motion.div
-                  key="planner"
-                  className="w-full max-w-6xl mx-auto"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                >
-                  {steps.length > 0 ? (
-                    <TaskPlanner
-                      steps={steps.map((stepObj) => stepObj.step)}
-                      setViewMode={setViewMode}
-                      setShowTaskView={setShowTaskView}
-                    />
-                  ) : (
-                    <div className="flex flex-col items-center justify-center h-full">
-                      <div className="text-center">
-                        <div className="animate-spin w-8 h-8 border-2 border-gray-300 border-t-gray-600 rounded-full mx-auto mb-4"></div>
-                        <p className="text-gray-600 text-lg">
-                          Creating your task plan...
-                        </p>
-                        <p className="text-gray-400 text-sm mt-2">
-                          Waiting for task plan...
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
+    <AnimatePresence mode="wait">
+      {taskStatus === "failed" ? (
+        <TaskError />
+      ) : (
+        <TaskLayout>
+          {viewMode === "planner" ? (
+            <motion.div
+              key="planner"
+              className="w-full max-w-6xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
+              {steps.length > 0 ? (
+                <TaskPlanner
+                  setViewMode={setViewMode}
+                  setShowTaskView={setShowTaskView}
+                />
               ) : (
-                <motion.div
-                  key="execution"
-                  className="w-full max-w-6xl mx-auto"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                >
-                  <CostarTask
-                    steps={steps.map((stepObj) => stepObj.step)}
-                    isTaskCompleted={taskStatus === "completed"}
-                    files={completedFiles}
-                    ref={costarTaskRef}
-                    isReplayMode={isReplayMode}
-                    setShowTaskView={setShowTaskView}
-                  />
-                </motion.div>
+                <TaskLoader />
               )}
-            </AnimatePresence>
-          </motion.div>
-        </motion.div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="execution"
+              className="w-full max-w-6xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
+              <CostarTask
+                isTaskCompleted={taskStatus === "completed"}
+                files={completedFiles}
+                ref={costarTaskRef}
+                isReplayMode={isReplayMode}
+                setShowTaskView={setShowTaskView}
+              />
+            </motion.div>
+          )}
+        </TaskLayout>
       )}
     </AnimatePresence>
   );

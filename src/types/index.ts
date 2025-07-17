@@ -69,7 +69,7 @@ export interface FeatureTab {
 }
 
 export interface TaskStep {
-  step: string;
+  name: string;
   status: string;
 }
 

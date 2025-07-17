@@ -1,16 +1,19 @@
 "use client";
 
-import { useState, useEffect, useCallback, useImperativeHandle } from "react";
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import CardDeckSwiper from "./card-deck-swiper";
-import CompletedTask from "./completed-task";
 import { PusherEventType, pusherManager } from "@/lib/pusher";
 import { File } from "@/types";
+import { AnimatePresence, motion } from "framer-motion";
+import React, {
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
+import CardDeckSwiper from "./card-deck-swiper";
+import CompletedTask from "./completed-task";
 
 interface CostarTaskProps {
-  steps: string[];
   onDownload?: () => void;
   isTaskCompleted?: boolean;
   files?: File[];
@@ -24,7 +27,6 @@ const CostarTaskComponent = React.forwardRef<
 >(
   (
     {
-      steps = [],
       onDownload,
       isTaskCompleted = false,
       files,
@@ -150,7 +152,6 @@ const CostarTaskComponent = React.forwardRef<
                 onDownload={onDownload}
                 taskTitle="Task"
                 completionTime="3 minutes"
-                filesGenerated={steps.length}
                 files={files}
               />
             </motion.div>

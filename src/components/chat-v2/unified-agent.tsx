@@ -14,6 +14,8 @@ import Task from "../task";
 import AgentChat from "./agent-chat";
 import UIOverlay from "./ui-overlay";
 import UnifiedToolHandler from "./unified-tool-handler";
+import { connect } from "http2";
+import { TasksStepsProvider } from "@/contexts/TasksStepsContext";
 
 type TaskStatus =
   | "created"
@@ -66,7 +68,6 @@ export default function UnifiedAgent() {
 
   // Task-related state (delegated to Task component)
   const [showTaskView, setShowTaskView] = useState(false);
-  const [taskStatus, setTaskStatus] = useState<TaskStatus>(null);
   const [isWaitingUserResponse, setIsWaitingUserResponse] = useState(false);
 
   // Replay-related state
@@ -111,11 +112,6 @@ export default function UnifiedAgent() {
 
   // Track if initialization has already happened to prevent multiple calls
   const hasInitialized = useRef(false);
-
-  // Handle task status changes from Task component
-  const handleTaskStatusChange = useCallback((status: TaskStatus) => {
-    setTaskStatus(status);
-  }, []);
 
   // Handle task view changes from Task component
   const handleTaskViewChange = useCallback((show: boolean) => {
@@ -206,6 +202,10 @@ export default function UnifiedAgent() {
       throw error;
     }
   };
+
+  useEffect(() => {
+    connectToPusher();
+  }, []);
 
   // Initialize conversation on component mount
   useEffect(() => {
@@ -392,16 +392,16 @@ export default function UnifiedAgent() {
               setIsWaitingUserResponse={setIsWaitingUserResponse}
               ref={agentChatRef}
             />
-
-            {/* Task Component - now handles all task-related logic */}
-            <Task
-              taskUuid={taskUuid}
-              connectionStatus={connectionStatus}
-              isReplayMode={isReplayMode}
-              onTaskStatusChange={handleTaskStatusChange}
-              onTaskViewChange={handleTaskViewChange}
-              onWaitingUserResponseChange={handleWaitingUserResponseChange}
-            />
+            <TasksStepsProvider>
+              {/* Task Component - now handles all task-related logic */}
+              <Task
+                setTaskUuid={setTaskUuid}
+                connectionStatus={connectionStatus}
+                isReplayMode={isReplayMode}
+                onTaskViewChange={handleTaskViewChange}
+                onWaitingUserResponseChange={handleWaitingUserResponseChange}
+              />
+            </TasksStepsProvider>
           </div>
         </div>
 

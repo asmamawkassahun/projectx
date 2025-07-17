@@ -2,7 +2,7 @@
 // In this context we want to handle logic for :
 // [] the active step, -> basic useState
 // [] step length, -> basic useState
-import { TaskStep } from "@/components/chat-v2/swiper_in_chat_updates/types";
+import { TaskStep } from "@/types";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface TasksStepsContextType {

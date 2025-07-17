@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check } from "lucide-react";
+import { useTasksSteps } from "@/contexts/TasksStepsContext";
 
 interface PlanStep {
   number: string;
@@ -11,26 +12,33 @@ interface PlanStep {
 }
 
 interface TaskPlannerProps {
-  steps?: string[];
   setViewMode: (viewMode: "planner" | "execution") => void;
   setShowTaskView: (show: boolean) => void;
 }
 
 export default function TaskPlanner({
-  steps = [],
   setViewMode,
   setShowTaskView,
 }: TaskPlannerProps) {
+  const { steps } = useTasksSteps();
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const [visibleSteps, setVisibleSteps] = useState<number[]>([]);
-  const [showPlanTitle, setShowPlanTitle] = useState(false);
-  const [showTimeline, setShowTimeline] = useState(false);
+  const [showPlanTitle, setShowPlanTitle] = useState(true);
+  const [showTimeline, setShowTimeline] = useState(true);
+
+  useEffect(() => {
+    // DEBUG for now
+    // setTimeout(() => {
+    //   setViewMode("execution");
+    // }, 1000);
+  }, []);
 
   // Convert dynamic steps to PlanStep format
   const planSteps: PlanStep[] = steps.map((step, index) => {
     // Split step into title and subtitle if possible
-    const parts = step.split(" - ");
-    const title = parts[0] || step;
+
+    const parts = step.name?.split(" - ");
+    const title = parts[0] || step.name;
     const subtitle = parts[1] || "";
 
     return {
@@ -40,52 +48,6 @@ export default function TaskPlanner({
         subtitle.length > 40 ? subtitle.substring(0, 40) + "..." : subtitle,
     };
   });
-
-  console.log("TASK PLANNER RENDERED");
-
-  // Animation sequence
-  useEffect(() => {
-    if (planSteps.length === 0) return;
-
-    // Show intro message
-    const introTimer = setTimeout(() => {
-      // Show plan title and timeline container together
-      setShowPlanTitle(true);
-
-      // Show timeline with a slight delay after title starts appearing
-      setTimeout(() => {
-        setShowTimeline(true);
-
-        // Start revealing steps after timeline is visible
-        setTimeout(() => {
-          // Show first step immediately with timeline
-          setVisibleSteps([0]);
-
-          // Then continue with the rest of the steps
-          const interval = setInterval(() => {
-            setVisibleSteps((prev) => {
-              const nextStep = prev.length;
-              if (nextStep < planSteps.length) {
-                setActiveStepIndex(nextStep);
-                return [...prev, nextStep];
-              } else {
-                clearInterval(interval);
-                // Call setViewMode to switch to execution after all steps are shown
-                setTimeout(() => setViewMode("execution"), 2000);
-                return prev;
-              }
-            });
-          }, 1200);
-
-          return () => clearInterval(interval);
-        }, 300);
-      }, 200);
-    }, 2000);
-
-    return () => {
-      clearTimeout(introTimer);
-    };
-  }, [planSteps.length, setViewMode]);
 
   return (
     <div className="flex flex-col items-center justify-center h-full absolute inset-0 z-20">
