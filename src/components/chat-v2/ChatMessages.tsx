@@ -16,43 +16,28 @@ interface ChatMessagesProps {
 }
 
 const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
-  const { inputValue, setInputValue } = useInputValueContext();
+  const { inputValue } = useInputValueContext();
 
-  // TO DO : add a another variant if the input.length > 0 where we don't actually return a p but a form>textarea
-  if (inputValue.length > 0) {
-    return (
-      <div
-        className={`min-h-full flex flex-col justify-end w-full px-2 sm:max-w-2xl sm:mx-auto`}
-      >
-        <textarea
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          className={`w-full bg-transparent focus:outline-none font-semibold text-[24px] leading-[100%] mb-28 caret-white`}
-          autoFocus
-        />
+  if (inputValue.length > 0 || messages.length === 0) return null;
+
+  return (
+    <div
+      className={`fixed inset-0  flex flex-col justify-center sm:justify-end px-4 sm:px-0 pb-0 sm:pb-[164px]  pointer-events-none sm:max-w-2xl sm:mx-auto`}
+    >
+      <div className="relative">
+        <div className="absolute inset-0 scale-125 backdrop-blur-[40px] blur-[50px] bg-[#D9D9D903]" />
+        <motion.p
+          key={`message-${messages.length}`}
+          className="relative font-semibold text-[24px] leading-[100%]"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+        >
+          {messages[messages.length - 1]?.content}
+        </motion.p>
       </div>
-    );
-  } else if (messages.length > 0) {
-    return (
-      <div
-        className={`min-h-full flex flex-col justify-end w-full px-2 sm:max-w-2xl sm:mx-auto`}
-      >
-        <AnimatePresence initial={false} mode="wait">
-          <motion.p
-            key={`message-${messages.length}`}
-            className="font-semibold text-[24px] leading-[100%] mb-28"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-          >
-            {messages[messages.length - 1]?.content}
-          </motion.p>
-        </AnimatePresence>
-      </div>
-    );
-  } else {
-    return null;
-  }
+    </div>
+  );
 };
 
 export default ChatMessages;

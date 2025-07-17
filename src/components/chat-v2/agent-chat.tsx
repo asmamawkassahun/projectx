@@ -6,8 +6,9 @@ import {
   useSendMessage,
 } from "@/hooks/use-gemini-api";
 import { useIntentDetection } from "@/hooks/use-intent-detection";
-import { UseStreamingManager } from "@/hooks/use-streaming-manager";
+import { useStreamingManager } from "@/hooks/use-streaming-manager";
 import { PusherEventType, pusherManager } from "@/lib/pusher";
+import { useConversationStore } from "@/stores/conversation-store";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus, X } from "lucide-react";
 import React, {
@@ -21,9 +22,6 @@ import { toast } from "react-hot-toast";
 import InputWrapper from "../InputWrapper";
 import ChatMessages from "./ChatMessages";
 import { PopularExample } from "./popular-example";
-import VoiceMobileAgent from "./voice-mobile-agent";
-import { useConversationStore } from "@/stores/conversation-store";
-import VoiceModeManager from "./voice-mode-manager";
 
 // Define message type
 interface Message {
@@ -207,24 +205,6 @@ const AgentChatComponent = React.forwardRef<
       setTimeout(scrollToBottom, 10);
     }, [messages, isTyping, scrollToBottom]);
 
-    // Handle input change
-    const handleInputChange = useCallback(
-      (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = e.target.value;
-        setInputValue(newValue);
-
-        // Clear intent if input is empty
-        if (!newValue.trim()) {
-          clearIntent();
-          return;
-        }
-
-        // Trigger intent detection on input change
-        detectIntent(newValue);
-      },
-      [detectIntent, clearIntent]
-    );
-
     // Handle form submission
     const handleSubmit = useCallback(
       async (e?: React.FormEvent) => {
@@ -293,12 +273,7 @@ const AgentChatComponent = React.forwardRef<
         sessionId,
         connectionStatus,
         conversationId,
-        sendMessage,
-        setChatStarted,
-        setMessages,
-        setIsTyping,
         isWaitingUserResponse,
-        setIsWaitingUserResponse,
       ]
     );
 
@@ -307,22 +282,9 @@ const AgentChatComponent = React.forwardRef<
       setIsVoiceModeActive(isActive);
     }, []);
 
-    // Toggle voice mode
-    const startVoiceMode = useCallback(() => {
-      setIsVoiceModeActive(true);
-    }, []);
-
     // Handle voice transcript
     const handleVoiceTranscript = useCallback(
       (role: "user" | "model", text: string, timestamp: Date) => {
-        // Start chat if not already started - use functional update to avoid dependency
-        setChatStarted((prev) => {
-          if (!prev) {
-            return true;
-          }
-          return prev;
-        });
-
         // Handle based on role
         if (role === "user") {
           // Add user message to chat
@@ -452,9 +414,6 @@ const AgentChatComponent = React.forwardRef<
 
     // Create a self-contained audio data handler
     const handleAudioData = (data: any) => {
-      const url = new URL(window.location.href);
-      const params = new URLSearchParams(url.search);
-
       try {
         if (data.transcript.trim() && conversationId) {
           // Clean the transcript by trimming and removing noise tags
@@ -462,7 +421,6 @@ const AgentChatComponent = React.forwardRef<
             .trim()
             .replace(/<noise>.*?(<\/noise>|$)/g, "")
             .trim();
-
           // Only proceed if we have a meaningful transcript after cleaning
           if (cleanedTranscript) {
             // Call the API to store the transcript and audio
@@ -487,7 +445,7 @@ const AgentChatComponent = React.forwardRef<
       }
     };
 
-    const { stopStreaming, startStreaming } = UseStreamingManager({
+    const { stopStreaming, startStreaming } = useStreamingManager({
       onAudioData: handleAudioData,
       onVoiceModeChange: handleVoiceModeChange,
       autoStart: true,
@@ -502,7 +460,6 @@ const AgentChatComponent = React.forwardRef<
           isVoiceModeActive={isVoiceModeActive}
           setIsVoiceModeActive={setIsVoiceModeActive}
           handleSubmit={handleSubmit}
-          handleInputChange={handleInputChange}
         />
         {/* Mobile Voice Agent - only render when needed */}
         {/* {isVoiceModeActive && isMobile && !isReplayMode && (
@@ -522,6 +479,9 @@ const AgentChatComponent = React.forwardRef<
             autoStart={true}
           />
         </div> */}
+
+        <ChatMessages messages={messages} />
+
         {/* Floating chat button when closed */}
         {isFloating &&
           !isFloatingOpen &&
@@ -567,7 +527,7 @@ const AgentChatComponent = React.forwardRef<
             <div
               className={`flex-1 flex flex-col h-full overflow-hidden p-4 w-full pt-20 md:pt-[232px] max-w-[689px] mx-auto`}
             >
-              {!chatStarted && <PopularExample />}
+              <PopularExample messages={messages} />
               {/* Messages area - centered big text */}
               <div className={"flex-1 flex flex-col"}>
                 <div
@@ -590,7 +550,6 @@ const AgentChatComponent = React.forwardRef<
                   }
                 >
                   {/* Messages container with proper spacing */}
-                  <ChatMessages messages={messages} />
                   <div ref={messagesEndRef} />
                 </div>
               </div>

@@ -1,7 +1,12 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { motion, type PanInfo, useAnimation, useMotionValue } from "framer-motion";
+import {
+  motion,
+  type PanInfo,
+  useAnimation,
+  useMotionValue,
+} from "framer-motion";
 import { Search } from "lucide-react";
 import { useIsMobile } from "../../hooks/use-mobile";
 import { PusherEventType, pusherManager } from "@/lib/pusher";
@@ -26,15 +31,17 @@ export default function CardDeckSwiper() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
   const dragX = useMotionValue(0);
-  const [dragDirection, setDragDirection] = useState<"left" | "right" | null>(null);
+  const [dragDirection, setDragDirection] = useState<"left" | "right" | null>(
+    null
+  );
   const [lastDragX, setLastDragX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
 
   // State for in-chat updates
   const [swiperItems, setSwiperItems] = useState<SwiperItem[]>([]);
-  const [inChatUpdatesById, setInChatUpdatesById] = useState<Map<string, InChatUpdate[]>>(
-    new Map()
-  );
+  const [inChatUpdatesById, setInChatUpdatesById] = useState<
+    Map<string, InChatUpdate[]>
+  >(new Map());
 
   const isMobile = useIsMobile();
   const itemsPerView = isMobile ? 1 : 2;
@@ -62,13 +69,16 @@ export default function CardDeckSwiper() {
 
     // For search tools, group by search session (detect new search by search_started event)
     let toolKey = update.tool;
-    if (update.tool === "web_search" && update.event_type === "search_started") {
+    if (
+      update.tool === "web_search" &&
+      update.event_type === "search_started"
+    ) {
       // Create a new search session key
       toolKey = `${update.tool}-${Date.now()}`;
     } else if (update.tool === "web_search") {
       // Find the most recent search session for this tool
-      const existingSessions = Array.from(inChatUpdatesById.keys()).filter((key) =>
-        key.startsWith("web_search-")
+      const existingSessions = Array.from(inChatUpdatesById.keys()).filter(
+        (key) => key.startsWith("web_search-")
       );
       if (existingSessions.length > 0) {
         toolKey = existingSessions[existingSessions.length - 1];
@@ -76,12 +86,15 @@ export default function CardDeckSwiper() {
     }
 
     // For video generation, create new session on generation_started
-    if (update.tool === "video_generation" && update.event_type === "generation_started") {
+    if (
+      update.tool === "video_generation" &&
+      update.event_type === "generation_started"
+    ) {
       toolKey = `${update.tool}-${Date.now()}`;
     } else if (update.tool === "video_generation") {
       // Find the most recent video generation session
-      const existingSessions = Array.from(inChatUpdatesById.keys()).filter((key) =>
-        key.startsWith("video_generation-")
+      const existingSessions = Array.from(inChatUpdatesById.keys()).filter(
+        (key) => key.startsWith("video_generation-")
       );
       if (existingSessions.length > 0) {
         toolKey = existingSessions[existingSessions.length - 1];
@@ -105,7 +118,9 @@ export default function CardDeckSwiper() {
 
     // Update the swiper items - replace item with same ID or add new one
     setSwiperItems((prevItems) => {
-      const existingItemIndex = prevItems.findIndex((item) => item.id === toolKey);
+      const existingItemIndex = prevItems.findIndex(
+        (item) => item.id === toolKey
+      );
 
       if (existingItemIndex >= 0) {
         // Replace existing item
@@ -121,17 +136,26 @@ export default function CardDeckSwiper() {
 
   // Set up event listener for InChatUpdates
   useEffect(() => {
-    pusherManager.addEventListener(PusherEventType.InChatUpdates, handleInChatUpdates);
+    pusherManager.addEventListener(
+      PusherEventType.InChatUpdates,
+      handleInChatUpdates
+    );
 
     // Also listen for replay events via custom events
     const handleReplayInChatUpdates = (event: CustomEvent) => {
       handleInChatUpdates(event.detail);
     };
 
-    window.addEventListener("replay-inchat-updates", handleReplayInChatUpdates as EventListener);
+    window.addEventListener(
+      "replay-inchat-updates",
+      handleReplayInChatUpdates as EventListener
+    );
 
     return () => {
-      pusherManager.removeEventListener(PusherEventType.InChatUpdates, handleInChatUpdates);
+      pusherManager.removeEventListener(
+        PusherEventType.InChatUpdates,
+        handleInChatUpdates
+      );
       window.removeEventListener(
         "replay-inchat-updates",
         handleReplayInChatUpdates as EventListener
@@ -209,14 +233,25 @@ export default function CardDeckSwiper() {
         // Sync dragX after animation completes
         dragX.set(targetX);
       });
-  }, [currentIndex, controls, width, itemsPerView, isMobile, dragX, swiperItems.length]);
+  }, [
+    currentIndex,
+    controls,
+    width,
+    itemsPerView,
+    isMobile,
+    dragX,
+    swiperItems.length,
+  ]);
 
   const handleDragStart = () => {
     setIsDragging(true);
     setLastDragX(dragX.get());
   };
 
-  const handleDrag = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+  const handleDrag = (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
     const currentDragX = dragX.get();
     if (currentDragX > lastDragX) {
       setDragDirection("right");
@@ -226,7 +261,10 @@ export default function CardDeckSwiper() {
     setLastDragX(currentDragX);
   };
 
-  const handleDragEnd = (e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+  const handleDragEnd = (
+    e: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
     setIsDragging(false);
     setDragDirection(null);
     const slideWidth = width / itemsPerView;
@@ -245,12 +283,19 @@ export default function CardDeckSwiper() {
     // Determine direction based on drag distance or velocity
     if ((offset < -50 || velocity < -500) && currentIndex < maxIndex) {
       setCurrentIndex(currentIndex + 1);
-    } else if ((offset > 50 || velocity > 500) && currentIndex > (isMobile ? 0 : 1)) {
+    } else if (
+      (offset > 50 || velocity > 500) &&
+      currentIndex > (isMobile ? 0 : 1)
+    ) {
       setCurrentIndex(currentIndex - 1);
     } else {
       // Snap back to current index
       const offsetIndex =
-        swiperItems.length === 1 ? 0 : isMobile ? currentIndex : Math.max(0, currentIndex - 1);
+        swiperItems.length === 1
+          ? 0
+          : isMobile
+          ? currentIndex
+          : Math.max(0, currentIndex - 1);
       controls.start({
         x: -offsetIndex * slideWidth,
         transition: { type: "spring", stiffness: 300, damping: 30 },
@@ -290,7 +335,11 @@ export default function CardDeckSwiper() {
     // Calculate drag progress (0 to 1)
     const slideWidth = width / itemsPerView;
     const dragProgress = Math.min(
-      Math.max(Math.abs(dragX.get() - -Math.max(0, currentIndex - 1) * slideWidth) / slideWidth, 0),
+      Math.max(
+        Math.abs(dragX.get() - -Math.max(0, currentIndex - 1) * slideWidth) /
+          slideWidth,
+        0
+      ),
       1
     );
 
@@ -381,7 +430,10 @@ export default function CardDeckSwiper() {
     <div className="w-full h-full  flex flex-col">
       <div className="flex-1 flex items-center justify-center px-4">
         {/* Main swiper container with overflow hidden to prevent third item from showing */}
-        <div className="relative overflow-hidden w-full max-w-5xl mx-auto" ref={carouselRef}>
+        <div
+          className="relative overflow-hidden w-full max-w-5xl mx-auto"
+          ref={carouselRef}
+        >
           {swiperItems.length > 0 ? (
             <motion.div
               className="flex"
@@ -390,7 +442,11 @@ export default function CardDeckSwiper() {
                 left:
                   swiperItems.length <= 1
                     ? 0
-                    : -width * Math.max(0, (swiperItems.length - itemsPerView) / itemsPerView),
+                    : -width *
+                      Math.max(
+                        0,
+                        (swiperItems.length - itemsPerView) / itemsPerView
+                      ),
                 right: 0,
               }}
               dragElastic={0.1}
@@ -435,8 +491,12 @@ export default function CardDeckSwiper() {
                 <div className="text-gray-400 mb-4">
                   <Search className="w-12 h-12 mx-auto mb-2" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-600 mb-2">No content available</h3>
-                <p className="text-sm text-gray-500">Waiting for in-chat updates to display...</p>
+                <h3 className="text-lg font-medium text-gray-600 mb-2">
+                  No content available
+                </h3>
+                <p className="text-sm text-gray-500">
+                  Waiting for in-chat updates to display...
+                </p>
               </div>
             </div>
           )}

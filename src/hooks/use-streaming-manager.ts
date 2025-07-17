@@ -12,7 +12,7 @@ type StreamingManagerProps = {
   autoStart?: boolean;
 };
 
-export const UseStreamingManager = ({
+export const useStreamingManager = ({
   onAudioData,
   onVoiceModeChange,
   autoStart = false,
@@ -33,10 +33,6 @@ export const UseStreamingManager = ({
       setIsMobile(mobileCheck);
     }
   }, []);
-
-  // Refs for video and canvas elements
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Access the LiveAPI context properly
   const { client, connected, connect, disconnect } = useLiveAPIContext();
@@ -61,17 +57,6 @@ export const UseStreamingManager = ({
   const { inVolume, audioRecorder } = useAudioManager({
     onAudioData: handleAudioData,
   });
-
-  // Use the video manager hook for webcam and screen sharing
-  const {
-    videoStreams,
-    activeVideoStream,
-    changeStreams,
-    setupVideoFrameCapture,
-  } = useVideoManager();
-
-  // Destructure video streams
-  const [webcam, screenCapture] = videoStreams;
 
   useEffect(() => {
     clientRef.current = client;
@@ -103,26 +88,6 @@ export const UseStreamingManager = ({
       );
     };
   }, []);
-
-  // Setup video frame capture and stream handling
-  useEffect(() => {
-    if (!connected || !isVoiceModeActive) {
-      return;
-    }
-
-    // Set up the video frame capture functionality
-    const cleanup = setupVideoFrameCapture(
-      videoRef,
-      canvasRef,
-      (data) => {
-        console.log("[VOICE MODE MANAGER] Sending video frame to server");
-        client.sendRealtimeInput([{ mimeType: "image/jpeg", data }]);
-      },
-      connected
-    )();
-
-    return cleanup;
-  }, [videoRef, canvasRef, client, connected, isVoiceModeActive]);
 
   // Set volume CSS variable for animation
   useEffect(() => {
@@ -224,18 +189,6 @@ export const UseStreamingManager = ({
 
   // Stop streaming and reset all media
   const stopStreaming = () => {
-    // Stop all media streams
-    // if (webcam.isStreaming) {
-    //   // changeStreams() returns a function that we need to call
-    //   const stopWebcam = changeStreams(); // No arg means "stop current stream"
-    //   stopWebcam();
-    // }
-
-    // if (screenCapture.isStreaming) {
-    //   const stopScreenCapture = changeStreams(); // No arg means "stop current stream"
-    //   stopScreenCapture();
-    // }
-
     console.log(
       "[USE STREAMING MANAGER] stopping the stream ...",
       audioRecorder
@@ -263,8 +216,5 @@ export const UseStreamingManager = ({
     isStreaming,
     isConnecting,
     isMobile,
-    videoStreams,
-    activeVideoStream,
-    changeStreams,
   };
 };

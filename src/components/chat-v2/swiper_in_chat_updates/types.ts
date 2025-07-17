@@ -17,4 +17,9 @@ export interface BaseSwiperItemProps {
   updates: InChatUpdate[];
   isActive: boolean;
   isDragging: boolean;
-} 
+}
+
+export interface TaskStep {
+  step: string;
+  status: string;
+}

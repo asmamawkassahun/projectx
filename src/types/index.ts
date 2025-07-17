@@ -1,22 +1,27 @@
-export type ViewMode = 'computer' | 'files' | 'markdown';
-export type ConnectionStatus = 'connected' | 'disconnected' | 'connecting';
+export type ViewMode = "computer" | "files" | "markdown";
+export type ConnectionStatus = "connected" | "disconnected" | "connecting";
 
 export interface Message {
-  role: 'user' | 'assistant' | 'system';
+  role: "user" | "assistant" | "system";
   content: string;
   timestamp: Date;
   requiresResponse?: boolean;
   clarificationId?: string;
   isClarification?: boolean;
-  files?: { name: string; path: string; }[];
-  markdownFiles?: { name: string; path: string; content: string; file_url?: string; }[];
+  files?: { name: string; path: string }[];
+  markdownFiles?: {
+    name: string;
+    path: string;
+    content: string;
+    file_url?: string;
+  }[];
   type?: string;
   toolName?: string;
-  markdownData?: { 
-    filename: string; 
-    path: string; 
-    file_url?: string; 
-    content?: string; 
+  markdownData?: {
+    filename: string;
+    path: string;
+    file_url?: string;
+    content?: string;
   };
   inChatUpdates?: any[];
 }
@@ -31,7 +36,7 @@ export interface StatusUpdate {
 
 export interface Task {
   step: string;
-  status: 'pending' | 'processing' | 'completed' | 'failed';
+  status: "pending" | "processing" | "completed" | "failed";
   uuid?: string;
   query?: string;
   created_at?: string;
@@ -63,4 +68,9 @@ export interface FeatureTab {
   icon: string;
 }
 
-export * from './voice-agent'; 
+export interface TaskStep {
+  step: string;
+  status: string;
+}
+
+export * from "./voice-agent";

@@ -1,43 +1,47 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Check } from "lucide-react"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Check } from "lucide-react";
 
 interface PlanStep {
-  number: string
-  title: string
-  subtitle: string
+  number: string;
+  title: string;
+  subtitle: string;
 }
 
 interface TaskPlannerProps {
-  steps?: string[]
-  setViewMode: (viewMode: "planner" | "execution") => void
+  steps?: string[];
+  setViewMode: (viewMode: "planner" | "execution") => void;
+  setShowTaskView: (show: boolean) => void;
 }
 
 export default function TaskPlanner({
   steps = [],
   setViewMode,
+  setShowTaskView,
 }: TaskPlannerProps) {
-  const [activeStepIndex, setActiveStepIndex] = useState(0)
-  const [visibleSteps, setVisibleSteps] = useState<number[]>([])
-  const [showIntro, setShowIntro] = useState(true)
-  const [showPlanTitle, setShowPlanTitle] = useState(false)
-  const [showTimeline, setShowTimeline] = useState(false)
+  const [activeStepIndex, setActiveStepIndex] = useState(0);
+  const [visibleSteps, setVisibleSteps] = useState<number[]>([]);
+  const [showPlanTitle, setShowPlanTitle] = useState(false);
+  const [showTimeline, setShowTimeline] = useState(false);
 
   // Convert dynamic steps to PlanStep format
   const planSteps: PlanStep[] = steps.map((step, index) => {
     // Split step into title and subtitle if possible
-    const parts = step.split(' - ');
+    const parts = step.split(" - ");
     const title = parts[0] || step;
-    const subtitle = parts[1] || '';
-    
+    const subtitle = parts[1] || "";
+
     return {
-      number: String(index + 1).padStart(2, '0'),
-      title: title.length > 30 ? title.substring(0, 30) + '...' : title,
-      subtitle: subtitle.length > 40 ? subtitle.substring(0, 40) + '...' : subtitle,
+      number: String(index + 1).padStart(2, "0"),
+      title: title.length > 30 ? title.substring(0, 30) + "..." : title,
+      subtitle:
+        subtitle.length > 40 ? subtitle.substring(0, 40) + "..." : subtitle,
     };
   });
+
+  console.log("TASK PLANNER RENDERED");
 
   // Animation sequence
   useEffect(() => {
@@ -46,57 +50,55 @@ export default function TaskPlanner({
     // Show intro message
     const introTimer = setTimeout(() => {
       // Show plan title and timeline container together
-      setShowPlanTitle(true)
+      setShowPlanTitle(true);
 
       // Show timeline with a slight delay after title starts appearing
       setTimeout(() => {
-        setShowTimeline(true)
+        setShowTimeline(true);
 
         // Start revealing steps after timeline is visible
         setTimeout(() => {
           // Show first step immediately with timeline
-          setVisibleSteps([0])
+          setVisibleSteps([0]);
 
           // Then continue with the rest of the steps
           const interval = setInterval(() => {
             setVisibleSteps((prev) => {
-              const nextStep = prev.length
+              const nextStep = prev.length;
               if (nextStep < planSteps.length) {
-                setActiveStepIndex(nextStep)
-                return [...prev, nextStep]
+                setActiveStepIndex(nextStep);
+                return [...prev, nextStep];
               } else {
-                clearInterval(interval)
+                clearInterval(interval);
                 // Call setViewMode to switch to execution after all steps are shown
-                setTimeout(() => setViewMode("execution"), 2000)
-                return prev
+                setTimeout(() => setViewMode("execution"), 2000);
+                return prev;
               }
-            })
-          }, 1200)
+            });
+          }, 1200);
 
-          return () => clearInterval(interval)
-        }, 300)
-      }, 200)
-    }, 2000)
+          return () => clearInterval(interval);
+        }, 300);
+      }, 200);
+    }, 2000);
 
     return () => {
-      clearTimeout(introTimer)
-    }
-  }, [planSteps.length, setViewMode])
+      clearTimeout(introTimer);
+    };
+  }, [planSteps.length, setViewMode]);
 
   return (
     <div className="flex flex-col items-center justify-center h-full absolute inset-0 z-20">
       {/* Confirmation message */}
       <AnimatePresence>
-        {showIntro && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center text-[#1e1e1e]/70 max-w-lg px-4"
-          >
-            {/* Message can be customized here if needed */}
-          </motion.div>
-        )}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center text-[#1e1e1e]/70 max-w-lg px-4"
+        >
+          {/* Message can be customized here if needed */}
+        </motion.div>
       </AnimatePresence>
 
       {/* Plan title and timeline container */}
@@ -113,7 +115,9 @@ export default function TaskPlanner({
           animate={{ y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <h2 className="text-3xl font-medium text-[#1e1e1e] tracking-tight">Here's the plan I've created...</h2>
+          <h2 className="text-3xl font-medium text-[#1e1e1e] tracking-tight">
+            Here's the plan I've created...
+          </h2>
         </motion.div>
 
         {/* Creative Modern Steps Timeline */}
@@ -139,7 +143,10 @@ export default function TaskPlanner({
                 className="absolute top-[60px] left-0 h-[2px] bg-gradient-to-r from-[#1e1e1e]/40 to-[#1e1e1e]/80 rounded-full z-1"
                 initial={{ width: "0%" }}
                 animate={{
-                  width: `${Math.min(100, (activeStepIndex / (planSteps.length - 1)) * 100)}%`,
+                  width: `${Math.min(
+                    100,
+                    (activeStepIndex / (planSteps.length - 1)) * 100
+                  )}%`,
                 }}
                 transition={{ duration: 0.8, ease: "easeInOut" }}
               />
@@ -147,10 +154,10 @@ export default function TaskPlanner({
               <div className="flex justify-between items-start">
                 {/* Steps */}
                 {planSteps.map((step, index) => {
-                  const isVisible = visibleSteps.includes(index)
-                  const isActive = activeStepIndex === index
-                  const isPast = index < activeStepIndex
-                  const isFuture = index > activeStepIndex
+                  const isVisible = visibleSteps.includes(index);
+                  const isActive = activeStepIndex === index;
+                  const isPast = index < activeStepIndex;
+                  const isFuture = index > activeStepIndex;
 
                   return (
                     <div
@@ -178,8 +185,8 @@ export default function TaskPlanner({
                                 isActive
                                   ? "text-[#1e1e1e]"
                                   : isPast
-                                    ? "text-[#1e1e1e]/80"
-                                    : "text-[#1e1e1e]/40"
+                                  ? "text-[#1e1e1e]/80"
+                                  : "text-[#1e1e1e]/40"
                               } tracking-tight`}
                               initial={{ opacity: 0 }}
                               animate={{
@@ -190,7 +197,9 @@ export default function TaskPlanner({
                                 delay: 0.2,
                                 y: {
                                   duration: 2,
-                                  repeat: isActive ? Number.POSITIVE_INFINITY : 0,
+                                  repeat: isActive
+                                    ? Number.POSITIVE_INFINITY
+                                    : 0,
                                   repeatType: "reverse",
                                 },
                               }}
@@ -206,7 +215,10 @@ export default function TaskPlanner({
                                   className="absolute -inset-4 rounded-full bg-gradient-to-r from-[#1e1e1e]/5 to-[#1e1e1e]/10 blur-md"
                                   initial={{ opacity: 0 }}
                                   animate={{ opacity: [0.5, 0.8, 0.5] }}
-                                  transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
+                                  transition={{
+                                    duration: 3,
+                                    repeat: Number.POSITIVE_INFINITY,
+                                  }}
                                 />
                               )}
 
@@ -217,8 +229,8 @@ export default function TaskPlanner({
                                     isPast
                                       ? "bg-[#1e1e1e] text-white shadow-md"
                                       : isActive
-                                        ? "bg-white border-2 border-[#1e1e1e] shadow-lg"
-                                        : "bg-white border border-[#1e1e1e]/20"
+                                      ? "bg-white border-2 border-[#1e1e1e] shadow-lg"
+                                      : "bg-white border border-[#1e1e1e]/20"
                                   }`}
                                 initial={{ scale: 0.8, rotate: -10 }}
                                 animate={{
@@ -236,7 +248,10 @@ export default function TaskPlanner({
                                   type: "spring",
                                   stiffness: 300,
                                   damping: 20,
-                                  boxShadow: { duration: 2, repeat: Number.POSITIVE_INFINITY },
+                                  boxShadow: {
+                                    duration: 2,
+                                    repeat: Number.POSITIVE_INFINITY,
+                                  },
                                 }}
                                 whileHover={{ scale: 1.1 }}
                               >
@@ -306,8 +321,8 @@ export default function TaskPlanner({
                                   isActive
                                     ? "text-[#1e1e1e]"
                                     : isPast
-                                      ? "text-[#1e1e1e]"
-                                      : "text-[#1e1e1e]/60"
+                                    ? "text-[#1e1e1e]"
+                                    : "text-[#1e1e1e]/60"
                                 } tracking-tight`}
                               >
                                 {step.title}
@@ -341,21 +356,32 @@ export default function TaskPlanner({
                               <motion.div
                                 className="absolute inset-0 rounded-full border-2 border-[#1e1e1e]/10 border-t-[#1e1e1e]/40 border-r-[#1e1e1e]/30"
                                 animate={{ rotate: 360 }}
-                                transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                                transition={{
+                                  duration: 3,
+                                  repeat: Number.POSITIVE_INFINITY,
+                                  ease: "linear",
+                                }}
                               />
 
                               {/* Inner spinning ring - opposite direction */}
                               <motion.div
                                 className="absolute inset-[3px] rounded-full border-2 border-[#1e1e1e]/20 border-b-[#1e1e1e]/50 border-l-[#1e1e1e]/40"
                                 animate={{ rotate: -360 }}
-                                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                                transition={{
+                                  duration: 2,
+                                  repeat: Number.POSITIVE_INFINITY,
+                                  ease: "linear",
+                                }}
                               />
 
                               {/* Center dot with pulse */}
                               <motion.div
                                 className="absolute inset-0 flex items-center justify-center"
                                 animate={{ scale: [1, 1.2, 1] }}
-                                transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
+                                transition={{
+                                  duration: 1.5,
+                                  repeat: Number.POSITIVE_INFINITY,
+                                }}
                               >
                                 <div className="w-2 h-2 rounded-full bg-[#1e1e1e]/60" />
                               </motion.div>
@@ -364,7 +390,7 @@ export default function TaskPlanner({
                         )}
                       </AnimatePresence>
                     </div>
-                  )
+                  );
                 })}
               </div>
             </div>
@@ -372,5 +398,5 @@ export default function TaskPlanner({
         )}
       </motion.div>
     </div>
-  )
+  );
 }

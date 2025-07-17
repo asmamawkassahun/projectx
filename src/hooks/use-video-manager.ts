@@ -5,9 +5,18 @@ import { useScreenCapture } from "./use-screen-capture";
 
 type VideoManagerResult = {
   videoStreams: [UseMediaStreamResult, UseMediaStreamResult]; // [webcam, screenCapture]
-  activeVideoStream: MediaStream | null;
-  setActiveVideoStream: (stream: MediaStream | null) => void;
-  changeStreams: (next?: UseMediaStreamResult) => Promise<MediaStream | null>;
+  activeVideoStream: {
+    mediaStream: MediaStream | null;
+    type: "webcam" | "screencapture" | null;
+  };
+  setActiveVideoStream: (
+    stream: MediaStream | null,
+    type: "webcam" | "screencapture" | null
+  ) => void;
+  changeStreams: (next?: UseMediaStreamResult) => Promise<{
+    mediaStream: MediaStream | null;
+    type: "webcam" | "screencapture" | null;
+  }>;
   setupVideoFrameCapture: (
     videoRef: React.RefObject<HTMLVideoElement>,
     canvasRef: React.RefObject<HTMLCanvasElement>,
@@ -93,9 +102,19 @@ export function useVideoManager(): VideoManagerResult {
     screenCapture,
   ];
 
-  // State for the active video stream
-  const [activeVideoStream, setActiveVideoStream] =
-    useState<MediaStream | null>(null);
+  // State for the active video stream and its type
+  const [activeVideoStream, setActiveVideoStreamState] = useState<{
+    mediaStream: MediaStream | null;
+    type: "webcam" | "screencapture" | null;
+  }>({ mediaStream: null, type: null });
+
+  // Helper setter
+  const setActiveVideoStream = useCallback(
+    (stream: MediaStream | null, type: "webcam" | "screencapture" | null) => {
+      setActiveVideoStreamState({ mediaStream: stream, type });
+    },
+    []
+  );
 
   // Function to change between video sources
   const changeStreams = useCallback(
@@ -109,16 +128,19 @@ export function useVideoManager(): VideoManagerResult {
         });
 
         const mediaStream = await next.start();
-        setActiveVideoStream(mediaStream);
-        return mediaStream;
+        let type: "webcam" | "screencapture" | null = null;
+        if (next === webcam) type = "webcam";
+        else if (next === screenCapture) type = "screencapture";
+        setActiveVideoStream(mediaStream, type);
+        return { mediaStream, type };
       } else {
-        setActiveVideoStream(null);
+        setActiveVideoStream(null, null);
         // Stop all streams
         videoStreams.forEach((msr) => msr.stop());
-        return null;
+        return { mediaStream: null, type: null };
       }
     },
-    [videoStreams]
+    [videoStreams, webcam, screenCapture]
   );
 
   // Function to set up video frame capture for sending to the server
@@ -132,7 +154,7 @@ export function useVideoManager(): VideoManagerResult {
       // Return an effect cleanup function
       return () => {
         if (videoRef.current) {
-          videoRef.current.srcObject = activeVideoStream;
+          videoRef.current.srcObject = activeVideoStream.mediaStream;
         }
 
         let timeoutId = -1;
@@ -143,7 +165,7 @@ export function useVideoManager(): VideoManagerResult {
 
           if (!video || !canvas) {
             // If video element is missing, try again in 100ms
-            if (isConnected && activeVideoStream !== null) {
+            if (isConnected && activeVideoStream.mediaStream !== null) {
               timeoutId = window.setTimeout(sendVideoFrame, 100);
             }
             return;
@@ -151,7 +173,7 @@ export function useVideoManager(): VideoManagerResult {
 
           // Check if video has loaded and has dimensions
           if (video.videoWidth === 0 || video.videoHeight === 0) {
-            if (isConnected && activeVideoStream !== null) {
+            if (isConnected && activeVideoStream.mediaStream !== null) {
               timeoutId = window.setTimeout(sendVideoFrame, 100);
             }
             return;
@@ -193,7 +215,7 @@ export function useVideoManager(): VideoManagerResult {
           }
         }
 
-        if (isConnected && activeVideoStream !== null) {
+        if (isConnected && activeVideoStream.mediaStream !== null) {
           // Use a small delay to ensure the video element is rendered and ready
           setTimeout(() => {
             requestAnimationFrame(sendVideoFrame);

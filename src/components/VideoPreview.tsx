@@ -40,13 +40,27 @@ const VideoPreview: React.FC<VideoPreviewProps> = ({
             muted
           />
           {/* Gradient overlay at the bottom */}
-          <div
+          {/* <div
             className="absolute left-0 bottom-0 w-full h-[100px] pointer-events-none"
             style={{
               background:
                 "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.0) 100%)",
             }}
-          />
+          /> */}
+
+          <div className="absolute left-0 bottom-0 w-full h-[100px]  pointer-events-none">
+            {/* Layer 5: 32px blur */}
+            <div
+              className="h-full w-full"
+              style={{
+                backdropFilter: "blur(20px)",
+                WebkitBackdropFilter: "blur(20px)",
+                mask: "linear-gradient(to bottom, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 100%)",
+                WebkitMask:
+                  "linear-gradient(to bottom, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 100%)",
+              }}
+            />
+          </div>
         </div>
       </motion.div>
       {/* )}*/}
