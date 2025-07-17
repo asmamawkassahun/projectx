@@ -17,6 +17,7 @@ export function useTaskDebug(options: UseTaskDebugOptions = {}) {
     onChatEvent,
     onInChatUpdate,
     handleReplayEvent,
+
     prefix = "Task",
     showAdvancedControls = true,
   } = options;

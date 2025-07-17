@@ -40,6 +40,7 @@ const Task = ({
 }: TaskProps) => {
   // Task visualization state
   const [showTaskView, setShowTaskView] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState<TaskStatus>(null);
 
   // Task-related state
   const [viewMode, setViewMode] = useState<ViewMode>("planner");
@@ -84,6 +85,7 @@ const Task = ({
   const handleStatusUpdate = useCallback(
     (data: any) => {
       console.log("Task component: handleStatusUpdate called with data:", data);
+      setCurrentStatus(data);
       if (!data) return;
 
       // Handle waiting for user response type
@@ -211,7 +213,6 @@ const Task = ({
       acknowledgmentMessage,
       showTaskView,
       taskStatus,
-      onTaskViewChange,
     ]
   );
 
@@ -391,44 +392,59 @@ const Task = ({
       {taskStatus === "failed" ? (
         <TaskError />
       ) : (
-        <TaskLayout>
-          {viewMode === "planner" ? (
-            <motion.div
-              key="planner"
-              className="w-full max-w-6xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-            >
-              {steps.length > 0 ? (
-                <TaskPlanner
-                  setViewMode={setViewMode}
+        <motion.div
+          initial={{ y: "100%", opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: "100%", opacity: 0 }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 30,
+            duration: 0.6,
+          }}
+          className="fixed inset-0 flex z-30 bg-black text-white"
+        >
+          {/* SIDE BAR */}
+          <div className="bg-green-500">SIDE BAR</div>
+          <div className="flex flex-col justify-center w-full gap-[64px] max-w-[689px] mx-auto">
+            {viewMode === "planner" ? (
+              <motion.div
+                key="planner"
+                className="w-full max-w-6xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                {steps.length > 0 ? (
+                  <TaskPlanner
+                    setViewMode={setViewMode}
+                    setShowTaskView={setShowTaskView}
+                  />
+                ) : (
+                  <TaskLoader />
+                )}
+              </motion.div>
+            ) : (
+              <motion.div
+                key="execution"
+                className="w-full max-w-6xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <CostarTask
+                  isTaskCompleted={taskStatus === "completed"}
+                  files={completedFiles}
+                  ref={costarTaskRef}
+                  isReplayMode={isReplayMode}
                   setShowTaskView={setShowTaskView}
                 />
-              ) : (
-                <TaskLoader />
-              )}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="execution"
-              className="w-full max-w-6xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-            >
-              <CostarTask
-                isTaskCompleted={taskStatus === "completed"}
-                files={completedFiles}
-                ref={costarTaskRef}
-                isReplayMode={isReplayMode}
-                setShowTaskView={setShowTaskView}
-              />
-            </motion.div>
-          )}
-        </TaskLayout>
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
       )}
     </AnimatePresence>
   );
