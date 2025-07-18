@@ -1,7 +1,8 @@
-
 export interface ImageItem {
-  src: string
-  alt: string
-  width: number
-  height: number
+  title: string;
+  source: string;
+  original: string;
+  thumbnail: string;
+  original_width: number;
+  original_height: number;
 }

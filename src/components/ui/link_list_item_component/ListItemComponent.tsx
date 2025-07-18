@@ -31,7 +31,7 @@ const ListItemComponent = ({ linkItems }: ListItemComponentProps) => {
 
   return (
     <div className="w-full  space-y-4 bg-background text-foreground">
-      <div className="flex items-center justify-between w-20 text-sm font-semibold">
+      <div className="flex items-center w-full space-x-4 text-sm font-semibold">
         <span>Links</span>
         <span>{linkItems.length}</span>
       </div>

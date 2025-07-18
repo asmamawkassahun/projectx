@@ -13,6 +13,7 @@ import {
 import { BaseSwiperItemProps } from "./types";
 import { HotelSearchDetailedViewer } from "./index";
 import HotelsCardContent from "@/components/ui/hotel_components/HotelsCardContent";
+import HotelsCardSkeleton from "@/components/ui/hotel_components/HotelsCardSkeleton";
 
 const HotelSearchSwiperItem: React.FC<BaseSwiperItemProps> = ({
   updates,
@@ -36,9 +37,6 @@ const HotelSearchSwiperItem: React.FC<BaseSwiperItemProps> = ({
   // Extract search data
   const searchData = searchCompleteUpdate?.data || latestUpdate?.data || {};
   const { search_info, properties, total_properties_count } = searchData;
-
-  // Get the first few properties to display
-  const displayProperties = properties.slice(0, 2);
 
   // Format price
   const formatPrice = (price?: number) => {
@@ -87,7 +85,9 @@ const HotelSearchSwiperItem: React.FC<BaseSwiperItemProps> = ({
         </h2>
 
         <div className="relative h-[320px] w-full">
-          {searchCompleteUpdate ? (
+          {searchCompleteUpdate &&
+          total_properties_count > 0 &&
+          properties.length > 0 ? (
             <HotelsCardContent
               hotels={properties}
               totalResults={total_properties_count}
@@ -119,59 +119,7 @@ const HotelSearchSwiperItem: React.FC<BaseSwiperItemProps> = ({
               </div>
             </motion.div>
           ) : (
-            <motion.div className="absolute inset-0 rounded-xl overflow-hidden bg-gray-50 border border-gray-200 shadow-lg">
-              <div className="h-full flex flex-col items-center justify-center p-6">
-                <div className="relative mb-6">
-                  <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <MapPin className="w-8 h-8 text-gray-400" />
-                  </div>
-                  <div className="absolute inset-0 rounded-lg">
-                    <div className="absolute inset-0 rounded-lg border-2 border-gray-300 animate-ping"></div>
-                    <div
-                      className="absolute inset-2 rounded-lg border-2 border-gray-400 animate-ping"
-                      style={{ animationDelay: "0.5s" }}
-                    ></div>
-                  </div>
-                </div>
-
-                <h3 className="text-base font-medium text-gray-900 mb-2">
-                  Searching Hotels
-                </h3>
-                <p className="text-sm text-gray-600 text-center mb-4">
-                  Finding the best accommodations...
-                </p>
-
-                {search_info?.location && (
-                  <div className="mb-4 p-3 bg-white rounded-lg border border-gray-200">
-                    <div className="text-xs font-medium text-gray-700 mb-1">
-                      Location:
-                    </div>
-                    <p className="text-sm text-gray-600">
-                      {search_info.location}
-                    </p>
-                    {search_info.check_in && (
-                      <div className="text-xs text-gray-500 mt-1">
-                        {search_info.check_in} - {search_info.check_out}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                <div className="w-full max-w-xs">
-                  <div className="h-1 w-full overflow-hidden rounded-full bg-gray-200">
-                    <div
-                      className="h-full rounded-full bg-gray-400 animate-pulse"
-                      style={{ width: "70%" }}
-                    />
-                  </div>
-                  <div className="mt-2 text-center">
-                    <span className="text-xs text-gray-500">
-                      Searching properties...
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+            <HotelsCardSkeleton />
           )}
         </div>
       </div>

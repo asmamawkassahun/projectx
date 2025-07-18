@@ -5,6 +5,7 @@ import { BaseSwiperItemProps } from "./types";
 import { FlightSearchDetailedViewer } from "./index";
 import { FlightCardContent } from "@/components/ui/flight_card_components/FlightCardContent";
 import { Flight } from "@/types/flight";
+import { FlightCardSkeleton } from "@/components/ui/flight_card_components/FlightCardSkeleton";
 
 const FlightSearchSwiperItem: React.FC<BaseSwiperItemProps> = ({
   updates,
@@ -92,7 +93,7 @@ const FlightSearchSwiperItem: React.FC<BaseSwiperItemProps> = ({
         </h2>
 
         <div className="relative h-[320px] w-full">
-          {searchCompleteUpdate ? (
+          {searchCompleteUpdate && flightData.length > 0 ? (
             <FlightCardContent flights={flightData} />
           ) : errorUpdate ? (
             <></>
@@ -129,46 +130,7 @@ const FlightSearchSwiperItem: React.FC<BaseSwiperItemProps> = ({
             //   </div>
             // </motion.div>
             // Show progress state
-            <motion.div className="absolute inset-0 rounded-xl overflow-hidden bg-gray-50 border border-gray-200 shadow-lg">
-              <div className="h-full flex flex-col items-center justify-center p-6">
-                {/* Animated plane icon */}
-                <div className="relative mb-6">
-                  <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <Plane className="w-8 h-8 text-gray-400" />
-                  </div>
-                  {/* Animated flight path */}
-                  <div className="absolute inset-0 rounded-lg">
-                    <div className="absolute inset-0 rounded-lg border-2 border-gray-300 animate-ping"></div>
-                    <div
-                      className="absolute inset-2 rounded-lg border-2 border-gray-400 animate-ping"
-                      style={{ animationDelay: "0.5s" }}
-                    ></div>
-                  </div>
-                </div>
-
-                <h3 className="text-base font-medium text-gray-900 mb-2">
-                  Searching Flights
-                </h3>
-                <p className="text-sm text-gray-600 text-center mb-4">
-                  Finding the best flight options...
-                </p>
-
-                {/* Progress indicator */}
-                <div className="w-full max-w-xs">
-                  <div className="h-1 w-full overflow-hidden rounded-full bg-gray-200">
-                    <div
-                      className="h-full rounded-full bg-gray-400 animate-pulse"
-                      style={{ width: "55%" }}
-                    />
-                  </div>
-                  <div className="mt-2 text-center">
-                    <span className="text-xs text-gray-500">
-                      Searching airlines...
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+            <FlightCardSkeleton />
           )}
         </div>
       </div>
