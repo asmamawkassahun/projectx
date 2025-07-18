@@ -24,6 +24,9 @@ import {
   NewsSearchSwiperItem,
 } from "./swiper_in_chat_updates";
 import { InChatUpdate, SwiperItem } from "./swiper_in_chat_updates/types";
+import { TaskLayout } from "../task/task-layout";
+import { useTasksSteps } from "@/contexts/TasksStepsContext";
+import Task from "../task";
 
 export default function CardDeckSwiper() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -327,8 +330,8 @@ export default function CardDeckSwiper() {
     // Default styles when not dragging
     if (dragDirection === null) {
       return {
-        opacity: isActive ? 1 : isPreview ? 0.6 : isNext ? 0.3 : 0.2,
-        scale: isActive ? 1 : isPreview ? 0.85 : isNext ? 0.8 : 0.75,
+        opacity: isActive ? 1 : isPreview ? 0 : isNext ? 0.3 : 0.2,
+        scale: isActive ? 1 : isPreview ? 0.85 : isNext ? 0.5 : 0.75,
       };
     }
 
@@ -354,7 +357,7 @@ export default function CardDeckSwiper() {
       } else if (isPreview) {
         // Preview card fades out
         return {
-          opacity: 0.6 - dragProgress * 0.6,
+          opacity: 0,
           scale: 0.85 - dragProgress * 0.1,
         };
       } else if (isNext) {
@@ -376,7 +379,7 @@ export default function CardDeckSwiper() {
       } else if (isPreview) {
         // Preview card becomes more visible
         return {
-          opacity: 0.6 + dragProgress * 0.4,
+          opacity: 0,
           scale: 0.85 + dragProgress * 0.15,
         };
       } else if (index === currentIndex - 2) {
@@ -395,8 +398,11 @@ export default function CardDeckSwiper() {
     };
   };
 
+  const { steps } = useTasksSteps();
+
   // Render the appropriate swiper component based on tool type
   const renderSwiperItem = (item: SwiperItem, index: number) => {
+    console.log("RENDER SWIPER ITEM : ", item);
     const isActive = index === currentIndex;
     const commonProps = {
       updates: item.updates,
@@ -427,13 +433,10 @@ export default function CardDeckSwiper() {
   };
 
   return (
-    <div className="w-full h-full  flex flex-col">
+    <div className="w-full max-h-[80vh] overflow-auto  flex flex-col">
       <div className="flex-1 flex items-center justify-center px-4">
         {/* Main swiper container with overflow hidden to prevent third item from showing */}
-        <div
-          className="relative overflow-hidden w-full max-w-5xl mx-auto"
-          ref={carouselRef}
-        >
+        <div className="relative w-full max-w-5xl mx-auto" ref={carouselRef}>
           {swiperItems.length > 0 ? (
             <motion.div
               className="flex"
@@ -463,16 +466,14 @@ export default function CardDeckSwiper() {
               {swiperItems.map((item, index) => {
                 const dynamicStyles = getDynamicStyles(index);
                 const isActive = index === currentIndex;
+                if (index === 0) {
+                }
 
                 return (
                   <motion.div
                     key={item.id}
-                    className={`${
-                      swiperItems.length === 1
-                        ? "w-full max-w-2xl mx-auto bg-green-400"
-                        : isMobile
-                        ? "w-full"
-                        : "w-1/2"
+                    className={`w-full max-w-2xl mx-auto ${
+                      !isActive ? "absolute -translate-x-[100%]" : ""
                     } flex-shrink-0 px-4 md:px-8`}
                     style={{
                       opacity: dynamicStyles.opacity,
@@ -480,7 +481,9 @@ export default function CardDeckSwiper() {
                       transformOrigin: "center center",
                     }}
                   >
-                    {renderSwiperItem(item, index)}
+                    <TaskLayout step={index + 1} stepTitle={steps[index]?.name}>
+                      {renderSwiperItem(item, index)}
+                    </TaskLayout>
                   </motion.div>
                 );
               })}
@@ -488,13 +491,13 @@ export default function CardDeckSwiper() {
           ) : (
             <div className="flex items-center justify-center h-[400px]">
               <div className="text-center">
-                <div className="text-gray-400 mb-4">
+                <div className="mb-4">
                   <Search className="w-12 h-12 mx-auto mb-2" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-600 mb-2">
+                <h3 className="text-lg font-medium  mb-2">
                   No content available
                 </h3>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm ">
                   Waiting for in-chat updates to display...
                 </p>
               </div>

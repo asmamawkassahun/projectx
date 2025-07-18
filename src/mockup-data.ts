@@ -39,6 +39,8 @@ export const mockupData = {
       },
       timestamp: "2025-07-11T11:09:49.272121+00:00",
     },
+
+    // ----------------- CREATING THE TASK PLAN (STEP 0) -----------------
     {
       event_type: "status_update",
       event_data: {
@@ -174,6 +176,7 @@ export const mockupData = {
       },
       timestamp: "2025-07-11T11:10:44.217420+00:00",
     },
+    // ----------------- SEARCHIONG FOR FLIGHTS (STEP 1) -----------------
     {
       event_type: "in_chat_updates",
       event_data: {
@@ -186,6 +189,7 @@ export const mockupData = {
       },
       timestamp: "2025-07-11T11:10:56.902455+00:00",
     },
+
     {
       event_type: "in_chat_updates",
       event_data: {

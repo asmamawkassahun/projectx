@@ -1,8 +1,19 @@
 import clsx from "clsx";
 
-import { memo, ReactNode, RefObject, useEffect, useRef, useState, useCallback } from "react";
+import {
+  memo,
+  ReactNode,
+  RefObject,
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+} from "react";
 import { useLiveAPIContext } from "../../contexts/LiveAPIContext";
-import { useAudioManager, AudioDataCallback } from "../../hooks/use-audio-manager";
+import {
+  useAudioManager,
+  AudioDataCallback,
+} from "../../hooks/use-audio-manager";
 import { useVideoManager } from "../../hooks/use-video-manager";
 import { useAudioMessageAPI } from "../../hooks/use-audio-api";
 import AudioPulse from "../AudioPulse";
@@ -33,22 +44,33 @@ type MediaStreamButtonProps = {
  * button used for triggering webcam or screen-capture
  */
 const MediaStreamButton = memo(
-  ({ isStreaming, onIcon, offIcon, start, stop, label }: MediaStreamButtonProps) =>
+  ({
+    isStreaming,
+    onIcon,
+    offIcon,
+    start,
+    stop,
+    label,
+  }: MediaStreamButtonProps) =>
     isStreaming ? (
-      <button 
-        className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-secondary-300 bg-secondary-50 text-secondary-600 text-xl cursor-pointer transition-all duration-200 hover:bg-secondary-100 shadow-sm hover:shadow" 
+      <button
+        className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-secondary-300 bg-secondary-50 text-secondary-600 text-xl cursor-pointer transition-all duration-200 hover:bg-secondary-100 shadow-sm hover:shadow"
         onClick={stop}
         aria-label={`Stop ${label}`}
       >
-        <span className="material-symbols-outlined filled text-[20px]">{onIcon}</span>
+        <span className="material-symbols-outlined filled text-[20px]">
+          {onIcon}
+        </span>
       </button>
     ) : (
-      <button 
-        className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-stone-300 bg-stone-50 text-stone-600 text-xl cursor-pointer transition-all duration-200 hover:bg-stone-100 shadow-sm hover:shadow" 
+      <button
+        className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-stone-300 bg-stone-50 text-stone-600 text-xl cursor-pointer transition-all duration-200 hover:bg-stone-100 shadow-sm hover:shadow"
         onClick={start}
         aria-label={`Start ${label}`}
       >
-        <span className="material-symbols-outlined filled text-[20px]">{offIcon}</span>
+        <span className="material-symbols-outlined filled text-[20px]">
+          {offIcon}
+        </span>
       </button>
     )
 );
@@ -67,39 +89,41 @@ function ControlTray({
     videoStreams,
     activeVideoStream,
     changeStreams,
-    setupVideoFrameCapture
+    setupVideoFrameCapture,
   } = useVideoManager();
-  
+
   // Destructure video streams
   const [webcam, screenCapture] = videoStreams;
-  
+
   const [muted, setMuted] = useState(false);
   const renderCanvasRef = useRef<HTMLCanvasElement>(null);
   const exitButtonRef = useRef<HTMLButtonElement>(null);
-  
+
   const AUDIO_SAVE_URL = `${API_URL}/api/audio/message/add`;
   // Use the audio message API hook with configurable endpoint
   const { saveAudioMessage } = useAudioMessageAPI(AUDIO_SAVE_URL);
   // Create a callback for handling audio data
-  const handleAudioData = useCallback<AudioDataCallback>(async (data) => {
-    // If an external handler is provided, use it
-    if (onAudioData) {
-      return onAudioData(data);
-    }
-    // Otherwise use our internal API implementation
-    return saveAudioMessage(data);
-  }, [saveAudioMessage, onAudioData]);
-  
+  const handleAudioData = useCallback<AudioDataCallback>(
+    async (data) => {
+      // If an external handler is provided, use it
+      if (onAudioData) {
+        return onAudioData(data);
+      }
+      // Otherwise use our internal API implementation
+      return saveAudioMessage(data);
+    },
+    [saveAudioMessage, onAudioData]
+  );
+
   // Use the audio manager hook with callback
   const { inVolume } = useAudioManager({
-    muted,
-    conversationId,
-    onAudioData: handleAudioData
+    onAudioData: handleAudioData,
   });
-  
+
   const connectButtonRef = useRef<HTMLButtonElement>(null);
-  const { client, connected, connect, disconnect, volume } = useLiveAPIContext();
-  
+  const { client, connected, connect, disconnect, volume } =
+    useLiveAPIContext();
+
   // Add loading state for connection
   const [isConnecting, setIsConnecting] = useState(false);
 
@@ -135,13 +159,21 @@ function ControlTray({
       },
       connected
     )();
-    
+
     // Update parent component with the active stream
-    onVideoStreamChange(activeVideoStream);
-    
+    // onVideoStreamChange(activeVideoStream);
+
     return cleanup;
-  }, [setupVideoFrameCapture, videoRef, renderCanvasRef, client, connected, activeVideoStream, onVideoStreamChange]);
-  
+  }, [
+    setupVideoFrameCapture,
+    videoRef,
+    renderCanvasRef,
+    client,
+    connected,
+    activeVideoStream,
+    onVideoStreamChange,
+  ]);
+
   // Enhanced connect function with loading state
   const handleConnect = async () => {
     setIsConnecting(true);
@@ -149,17 +181,19 @@ function ControlTray({
       await connect();
       // Note: connected state is managed by the context and will trigger the useEffect above
     } catch (error) {
-      console.error('Connection failed:', error);
+      console.error("Connection failed:", error);
       setIsConnecting(false);
     }
   };
 
   return (
-    <div className={cn(
-      "flex flex-col items-center transition-all duration-300 ease-in-out"
-    )}>
+    <div
+      className={cn(
+        "flex flex-col items-center transition-all duration-300 ease-in-out"
+      )}
+    >
       <canvas style={{ display: "none" }} ref={renderCanvasRef} />
-      
+
       {/* Tray container with glass effect */}
       <div className="backdrop-blur-md bg-background/60 border border-stone-200 rounded-full px-4 py-2 shadow-lg">
         {/* Main control buttons in a horizontal row */}
@@ -168,8 +202,8 @@ function ControlTray({
           <button
             className={cn(
               "relative flex items-center justify-center w-10 h-10 rounded-full text-xl cursor-pointer transition-all duration-200 border-2 shadow-sm hover:shadow",
-              !muted 
-                ? "bg-primary-50 text-primary-600 border-primary-300 hover:bg-primary-100" 
+              !muted
+                ? "bg-primary-50 text-primary-600 border-primary-300 hover:bg-primary-100"
                 : "bg-stone-50 text-stone-600 border-stone-300 hover:bg-stone-100"
             )}
             onClick={() => setMuted(!muted)}
@@ -185,7 +219,7 @@ function ControlTray({
                   left: `calc(var(--volume) * -1)`,
                   width: `calc(100% + var(--volume) * 2)`,
                   height: `calc(100% + var(--volume) * 2)`,
-                  opacity: 0.35
+                  opacity: 0.35,
                 }}
               />
             )}
@@ -196,40 +230,44 @@ function ControlTray({
 
           {/* Volume visualization */}
           <div className="h-10 w-10 flex items-center justify-center bg-white/80 rounded-full overflow-hidden border-2 border-stone-200">
-            <AudioPulse volume={volume} isActive={connected} lightBackground={true} />
+            <AudioPulse
+              volume={volume}
+              isActive={connected}
+              lightBackground={true}
+            />
           </div>
 
           {/* Screen share and webcam buttons - using our hook now */}
           {supportsVideo && (
             <>
-              <MediaStreamButton
+              {/* <MediaStreamButton
                 isStreaming={screenCapture.isStreaming}
                 start={changeStreams(screenCapture)}
                 stop={changeStreams()}
                 onIcon="cancel_presentation"
                 offIcon="present_to_all"
                 label="screen sharing"
-              />
-              
+              /> */}
+
               {/* Webcam button */}
-              <MediaStreamButton
+              {/* <MediaStreamButton
                 isStreaming={webcam.isStreaming}
                 start={changeStreams(webcam)}
                 stop={changeStreams()}
                 onIcon="videocam_off"
                 offIcon="videocam"
                 label="webcam"
-              />
+              /> */}
             </>
           )}
-          
+
           {/* Exit button */}
           <button
             ref={exitButtonRef}
             className="flex items-center justify-center w-10 h-10 rounded-full border-2 bg-red-50 text-red-600 border-red-300 hover:bg-red-100 transition-all duration-200 shadow-sm hover:shadow"
             onClick={() => {
               disconnect();
-              window.location.href = '/';
+              window.location.href = "/";
             }}
             aria-label="Exit streaming"
             disabled={isConnecting}
@@ -245,8 +283,8 @@ function ControlTray({
               ref={connectButtonRef}
               className={cn(
                 "flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-200 shadow-sm hover:shadow",
-                isConnecting 
-                  ? "bg-indigo-400 text-white border-indigo-500 cursor-wait" 
+                isConnecting
+                  ? "bg-indigo-400 text-white border-indigo-500 cursor-wait"
                   : "bg-indigo-600 text-white border-indigo-700 hover:bg-indigo-700"
               )}
               onClick={handleConnect}
@@ -262,7 +300,7 @@ function ControlTray({
               )}
             </button>
           )}
-          
+
           {children}
         </div>
       </div>
@@ -270,4 +308,4 @@ function ControlTray({
   );
 }
 
-export default memo(ControlTray); 
+export default memo(ControlTray);

@@ -14,13 +14,9 @@ interface PlanStep {
 
 interface TaskPlannerProps {
   setViewMode: (viewMode: "planner" | "execution") => void;
-  setShowTaskView: (show: boolean) => void;
 }
 
-export default function TaskPlanner({
-  setViewMode,
-  setShowTaskView,
-}: TaskPlannerProps) {
+export default function TaskPlanner({ setViewMode }: TaskPlannerProps) {
   const { steps } = useTasksSteps();
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const [visibleSteps, setVisibleSteps] = useState<number[]>([]);

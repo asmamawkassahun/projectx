@@ -1,22 +1,22 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-  useMemo,
-} from "react";
-import { createPortal } from "react-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { Camera, Mic, MicOff, XCircle } from "lucide-react";
-import { useVideoManager } from "@/hooks/use-video-manager";
+import CenteredAudioPulse from "@/components/CenteredAudioPulse";
+import { VoiceSearchWidgets } from "@/components/voice_search_widgets";
 import { useLiveAPIContext } from "@/contexts/LiveAPIContext";
 import { useAudioManager } from "@/hooks/use-audio-manager";
 import { useConversationLLMHistory } from "@/hooks/use-gemini-api";
-import { useLocation, LocationCoordinates } from "@/hooks/use-location";
-import { toast } from "react-hot-toast";
-import CenteredAudioPulse from "@/components/CenteredAudioPulse";
-import { VoiceSearchWidgets } from "@/components/voice_search_widgets";
+import { useLocation } from "@/hooks/use-location";
+import { useVideoManager } from "@/hooks/use-video-manager";
 import { useConversationStore } from "@/stores/conversation-store";
+import { motion } from "framer-motion";
+import { Camera, Mic, MicOff, XCircle } from "lucide-react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { createPortal } from "react-dom";
+import { toast } from "react-hot-toast";
 import UIOverlay from "./ui-overlay";
 
 interface VoiceMobileAgentProps {
@@ -150,7 +150,6 @@ const VoiceMobileAgent: React.FC<VoiceMobileAgentProps> = ({
 
   // Use the audio manager hook
   const { inVolume, audioRecorder } = useAudioManager({
-    muted,
     onAudioData: handleAudioData,
   });
 
@@ -201,7 +200,7 @@ const VoiceMobileAgent: React.FC<VoiceMobileAgentProps> = ({
   // Setup video stream on video element
   useEffect(() => {
     if (videoRef.current && activeVideoStream) {
-      videoRef.current.srcObject = activeVideoStream;
+      videoRef.current.srcObject = activeVideoStream.mediaStream;
     }
   }, [activeVideoStream]);
 
@@ -295,20 +294,6 @@ const VoiceMobileAgent: React.FC<VoiceMobileAgentProps> = ({
 
   // Stop streaming and close
   const handleClose = useCallback(() => {
-    // Stop all media streams
-    if (webcam.isStreaming) {
-      const stopWebcam = changeStreams();
-      stopWebcam();
-    }
-
-    if (screenCapture.isStreaming) {
-      const stopScreenCapture = changeStreams();
-      stopScreenCapture();
-    }
-
-    // Stop audio recording
-    audioRecorder.stop();
-
     // Disconnect from API
     disconnect();
 
@@ -529,15 +514,7 @@ const VoiceMobileAgent: React.FC<VoiceMobileAgentProps> = ({
                     ? "bg-black text-white"
                     : "bg-gray-200 text-black/60"
                 }`}
-                onClick={() => {
-                  if (webcam.isStreaming) {
-                    const stopWebcam = changeStreams();
-                    stopWebcam();
-                  } else {
-                    const startWebcam = changeStreams(webcam);
-                    startWebcam();
-                  }
-                }}
+                onClick={() => {}}
                 aria-label={
                   webcam.isStreaming ? "Turn off camera" : "Turn on camera"
                 }
@@ -568,6 +545,8 @@ const VoiceMobileAgent: React.FC<VoiceMobileAgentProps> = ({
       </div>
     </motion.div>
   );
+
+  console.log("[VOICE MOBILE AGENT] Rendering mobile agent content");
 
   // Render in portal to ensure it's above everything else
   if (typeof window !== "undefined") {

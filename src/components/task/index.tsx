@@ -9,7 +9,6 @@ import { TaskError } from "./task-error";
 import { TaskLoader } from "./task-loader";
 import { TaskLayout } from "./task-layout";
 import { useTasksSteps } from "@/contexts/TasksStepsContext";
-import { TaskSidebar } from "./TaskSidebar";
 
 type ViewMode = "planner" | "execution";
 
@@ -81,13 +80,6 @@ const Task = ({
       window.removeEventListener("user-answer-sent", handleUserAnswerSent);
     };
   }, [onWaitingUserResponseChange]);
-
-  const stopTask = useCallback(() => {
-    console.log("Stopping task from Task component...");
-    setTaskStatus("failed"); // Set status to failed
-    setIsTaskActive(false); // Deactivate task
-    // In a real application, you might send an API call here to stop the backend process.
-  }, []);
 
   // Handle task plan updates from status_update events
   const handleStatusUpdate = useCallback(
@@ -413,9 +405,7 @@ const Task = ({
           className="fixed inset-0 flex z-30 bg-black text-white"
         >
           {/* SIDE BAR */}
-          <div className="flex-shrink-0 h-[100vh] w-[5.25rem]">
-            <TaskSidebar onStopTask={stopTask} />
-          </div>
+          <div className="bg-green-500">SIDE BAR</div>
           <div className="flex flex-col justify-center w-full gap-[64px] max-w-[689px] mx-auto">
             {viewMode === "planner" ? (
               <motion.div
@@ -427,10 +417,7 @@ const Task = ({
                 transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 {steps.length > 0 ? (
-                  <TaskPlanner
-                    setViewMode={setViewMode}
-                    setShowTaskView={setShowTaskView}
-                  />
+                  <TaskPlanner setViewMode={setViewMode} />
                 ) : (
                   <TaskLoader />
                 )}
