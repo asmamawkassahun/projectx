@@ -1,13 +1,26 @@
-export interface FlightCardContentProps {
-  departureTime: string;
-  arrivalTime: string;
-  departureCity: string;
-  arrivalCity: string;
-  departureDate: string;
-  arrivalDate: string;
+export interface Flight {
+  id: string;
+  airline: Airline;
+  departure: FlightDetails;
+  arrival: FlightDetails;
   duration: string;
-  price: string;
-  airlineLogo: string; // path to logo image
-  airlineName: string;
-  bookingUrl: string;
-} 
+  flightType: string;
+  price: Price;
+}
+
+export interface Airline {
+  name: string;
+  logo: string;
+  website: string;
+}
+
+export interface FlightDetails {
+  date: string;
+  time: string;
+  airport: string;
+}
+
+export interface Price {
+  amount: number;
+  currency: string;
+}

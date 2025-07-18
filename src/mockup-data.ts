@@ -206,9 +206,108 @@ export const mockupData = {
             travel_class: 1,
             type: 1,
           },
-          total_flights_count: 0,
-          has_flights: false,
-          has_price_insights: false,
+          total_flights_count: 4,
+          has_flights: true,
+          has_price_insights: true,
+          flights: [
+            {
+              id: "emirates_flight_1",
+              airline: {
+                name: "Emirates",
+                logo: "https://images.unsplash.com/photo-1730627667985-afed200aa517?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                website: "emirates.com",
+              },
+              departure: {
+                date: "Mon, Aug 11",
+                time: "3:20 pm",
+                airport: "DXB",
+              },
+              arrival: {
+                date: "Mon, Aug 11",
+                time: "5:50 pm",
+                airport: "BKK",
+              },
+              duration: "6h 45m",
+              flightType: "Direct",
+              price: {
+                amount: 1920.0,
+                currency: "USD",
+              },
+            },
+            {
+              id: "thai_airways_flight_1",
+              airline: {
+                name: "Thai Airways",
+                logo: "https://plus.unsplash.com/premium_photo-1679758629964-a9c201b95d15?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                website: "thaiairways.com",
+              },
+              departure: {
+                date: "Mon, Aug 11",
+                time: "11:00 am",
+                airport: "DXB",
+              },
+              arrival: {
+                date: "Mon, Aug 11",
+                time: "3:00 pm",
+                airport: "BKK",
+              },
+              duration: "7h 5m",
+              flightType: "Direct",
+              price: {
+                amount: 934.5,
+                currency: "USD",
+              },
+            },
+
+            {
+              id: "emirates_flight_1",
+              airline: {
+                name: "Emirates",
+                logo: "https://images.unsplash.com/photo-1730627667985-afed200aa517?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                website: "emirates.com",
+              },
+              departure: {
+                date: "Mon, Aug 11",
+                time: "3:20 pm",
+                airport: "DXB",
+              },
+              arrival: {
+                date: "Mon, Aug 11",
+                time: "5:50 pm",
+                airport: "BKK",
+              },
+              duration: "6h 45m",
+              flightType: "Direct",
+              price: {
+                amount: 1920.0,
+                currency: "USD",
+              },
+            },
+            {
+              id: "thai_airways_flight_1",
+              airline: {
+                name: "Thai Airways",
+                logo: "https://plus.unsplash.com/premium_photo-1679758629964-a9c201b95d15?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                website: "thaiairways.com",
+              },
+              departure: {
+                date: "Mon, Aug 11",
+                time: "11:00 am",
+                airport: "DXB",
+              },
+              arrival: {
+                date: "Mon, Aug 11",
+                time: "3:00 pm",
+                airport: "BKK",
+              },
+              duration: "7h 5m",
+              flightType: "Direct",
+              price: {
+                amount: 934.5,
+                currency: "USD",
+              },
+            },
+          ],
         },
       },
       timestamp: "2025-07-11T11:10:57.202286+00:00",
