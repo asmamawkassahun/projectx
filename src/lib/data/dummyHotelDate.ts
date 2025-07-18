@@ -1,6 +1,6 @@
-import { HotelData } from "@/types/hotelData";
+import { HotelsDataType } from "@/types/hotel";
 
-export const sampleHotels: HotelData[] = [
+export const sampleHotels: HotelsDataType[] = [
   {
     id: "1",
     name: "Stay Wellbeing & Lifestyle Resort",
