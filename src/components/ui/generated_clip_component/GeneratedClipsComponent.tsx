@@ -11,7 +11,7 @@ const ClipBox = ({ imageSrc, step, duration, resolution }: GeneratedClip) => (
   <div className="w-full sm:w-[13.563rem] h-[18.938rem] flex flex-col mb-4 sm:mb-0">
     <div className="w-full h-[16.25rem] rounded-[1.5rem] bg-gray-200 opacity-100 rotate-0 overflow-hidden flex items-center justify-center relative">
       <Image
-        src={imageSrc || "/placeholder.svg"}
+        src={imageSrc || "/images/placeholder.png"}
         alt={step}
         width={217}
         height={260}

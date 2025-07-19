@@ -29,6 +29,7 @@ export interface Place {
   gps_coordinates: GpsCoordinates;
   rating: number;
   reveiw: number;
+  imageurl?: string;
 }
 
 export interface LocalResults {

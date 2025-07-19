@@ -16,6 +16,11 @@ import UIOverlay from "./ui-overlay";
 import UnifiedToolHandler from "./unified-tool-handler";
 import { connect } from "http2";
 import { TasksStepsProvider } from "@/contexts/TasksStepsContext";
+import {
+  BackgroundProvider,
+  useBackground,
+} from "@/contexts/BackgroundContext";
+import BackgroundImage from "../BackgroundImage";
 
 type TaskStatus =
   | "created"
@@ -24,6 +29,29 @@ type TaskStatus =
   | "failed"
   | "waiting_user_response"
   | null;
+
+// Wrapper component to manage background state
+const BackgroundStateManager: React.FC<{
+  children: React.ReactNode;
+  showTaskView: boolean;
+  isReplayMode: boolean;
+  isProcessing: boolean;
+}> = ({ children, showTaskView, isReplayMode, isProcessing }) => {
+  const { setIsActive } = useBackground();
+
+  // Set background active state based on task view, replay mode, or processing
+  useEffect(() => {
+    const isActive = showTaskView || isReplayMode || isProcessing;
+    console.log("BackgroundStateManager: Setting isActive to:", isActive, {
+      showTaskView,
+      isReplayMode,
+      isProcessing,
+    });
+    setIsActive(isActive);
+  }, [showTaskView, isReplayMode, isProcessing, setIsActive]);
+
+  return <>{children}</>;
+};
 
 export default function UnifiedAgent() {
   // Get API key from environment variable
@@ -74,6 +102,9 @@ export default function UnifiedAgent() {
   const [isReplayMode, setIsReplayMode] = useState(false);
   const [showReplayButton, setShowReplayButton] = useState(false);
 
+  // Agent processing state
+  const [isProcessing, setIsProcessing] = useState(false);
+
   // Create a ref for the AgentChat component to add messages during replay
   const agentChatRef = useRef<{
     handleVoiceTranscript: (
@@ -121,6 +152,12 @@ export default function UnifiedAgent() {
   // Handle waiting user response changes from Task component
   const handleWaitingUserResponseChange = useCallback((waiting: boolean) => {
     setIsWaitingUserResponse(waiting);
+  }, []);
+
+  // Handle agent processing state changes
+  const handleProcessingChange = useCallback((processing: boolean) => {
+    console.log("Agent processing state changed to:", processing);
+    setIsProcessing(processing);
   }, []);
 
   // Set up the event handler for replay
@@ -288,148 +325,160 @@ export default function UnifiedAgent() {
 
   return (
     <LiveAPIProvider apiKey={API_KEY}>
-      <InputValueProvider>
-        {/* {isDebug && <Leva />} */}
-        {/* Initialize tool handler without wrapping components */}
-        <UnifiedToolHandler sessionId={sessionId} taskUuid={taskUuid} />
-        <Navbar />
-        {/* Main container with flex layout - prevent body scroll with useEffect */}
-        <div className="fixed inset-0 flex flex-col overflow-hidden">
-          {/* Always visible header - fixed to top */}
+      <BackgroundProvider>
+        <InputValueProvider>
+          <BackgroundImage />
+          {/* {isDebug && <Leva />} */}
+          {/* Initialize tool handler without wrapping components */}
+          <UnifiedToolHandler sessionId={sessionId} taskUuid={taskUuid} />
+          <Navbar />
+          <BackgroundStateManager
+            showTaskView={showTaskView}
+            isReplayMode={isReplayMode}
+            isProcessing={isProcessing}
+          >
+            {/* Main container with flex layout - prevent body scroll with useEffect */}
+            <div className="fixed inset-0 flex flex-col overflow-hidden">
+              {/* Always visible header - fixed to top */}
 
-          {/* Main content area that takes remaining height - add top padding to account for fixed header */}
-          <div className="flex-1 relative overflow-hidden pt-12">
-            {/* Big Centered Play Button for Replay */}
-            <AnimatePresence>
-              {isReplayMode && showReplayButton && !isReplaying && (
-                <motion.div
-                  className="absolute inset-0 flex items-center justify-center z-50 bg-white/80 backdrop-blur-sm"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <motion.div
-                    className="flex flex-col items-center space-y-8"
-                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.8, y: -20 }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                  >
-                    <div className="text-center">
-                      <h2 className="text-3xl font-light text-[#1e1e1e] mb-3">
-                        Ready to replay
-                      </h2>
-                      <p className="text-[#1e1e1e]/50 text-lg">
-                        {combinedEvents.length} events
-                      </p>
-                    </div>
-
-                    <button
-                      onClick={() => {
-                        setShowReplayButton(false);
-                        startReplay();
-                      }}
-                      className="group relative"
+              {/* Main content area that takes remaining height - add top padding to account for fixed header */}
+              <div className="flex-1 relative overflow-hidden pt-12">
+                {/* Big Centered Play Button for Replay */}
+                <AnimatePresence>
+                  {isReplayMode && showReplayButton && !isReplaying && (
+                    <motion.div
+                      className="absolute inset-0 flex items-center justify-center z-50 bg-white/80 backdrop-blur-sm"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
                     >
-                      <div className="w-24 h-24 bg-[#1e1e1e] hover:bg-[#1e1e1e]/90 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-105">
-                        <svg
-                          className="w-10 h-10 text-white ml-1"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
+                      <motion.div
+                        className="flex flex-col items-center space-y-8"
+                        initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.8, y: -20 }}
+                        transition={{ duration: 0.4, ease: "easeOut" }}
+                      >
+                        <div className="text-center">
+                          <h2 className="text-3xl font-light text-[#1e1e1e] mb-3">
+                            Ready to replay
+                          </h2>
+                          <p className="text-[#1e1e1e]/50 text-lg">
+                            {combinedEvents.length} events
+                          </p>
+                        </div>
+
+                        <button
+                          onClick={() => {
+                            setShowReplayButton(false);
+                            startReplay();
+                          }}
+                          className="group relative"
                         >
-                          <path
-                            fillRule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </div>
-                    </button>
+                          <div className="w-24 h-24 bg-[#1e1e1e] hover:bg-[#1e1e1e]/90 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-105">
+                            <svg
+                              className="w-10 h-10 text-white ml-1"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          </div>
+                        </button>
 
-                    <button
-                      onClick={() => {
-                        setShowReplayButton(false);
-                        jumpToEnd();
-                      }}
-                      className="text-[#1e1e1e]/40 hover:text-[#1e1e1e]/70 text-sm transition-colors underline"
+                        <button
+                          onClick={() => {
+                            setShowReplayButton(false);
+                            jumpToEnd();
+                          }}
+                          className="text-[#1e1e1e]/40 hover:text-[#1e1e1e]/70 text-sm transition-colors underline"
+                        >
+                          Skip to end
+                        </button>
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Loading indicator for replay initialization */}
+                <AnimatePresence>
+                  {isReplayLoading && (
+                    <motion.div
+                      className="absolute inset-0 flex items-center justify-center z-40 bg-white/80 backdrop-blur-sm"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
                     >
-                      Skip to end
-                    </button>
-                  </motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                      <div className="flex flex-col items-center space-y-4">
+                        <div className="w-8 h-8 border-4 border-[#1e1e1e]/20 border-t-[#1e1e1e] rounded-full animate-spin"></div>
+                        <p className="text-[#1e1e1e]/80 font-medium">
+                          Loading replay data...
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-            {/* Loading indicator for replay initialization */}
-            <AnimatePresence>
-              {isReplayLoading && (
-                <motion.div
-                  className="absolute inset-0 flex items-center justify-center z-40 bg-white/80 backdrop-blur-sm"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="flex flex-col items-center space-y-4">
-                    <div className="w-8 h-8 border-4 border-[#1e1e1e]/20 border-t-[#1e1e1e] rounded-full animate-spin"></div>
-                    <p className="text-[#1e1e1e]/80 font-medium">
-                      Loading replay data...
-                    </p>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                {/* Agent Chat Component - handles its own positioning */}
+                <AgentChat
+                  sessionId={sessionId}
+                  connectionStatus={connectionStatus}
+                  taskUuid={taskUuid}
+                  isFloating={showTaskView}
+                  isReplayMode={isReplayMode}
+                  isWaitingUserResponse={isWaitingUserResponse}
+                  setIsWaitingUserResponse={setIsWaitingUserResponse}
+                  onProcessingChange={handleProcessingChange}
+                  ref={agentChatRef}
+                />
+                <TasksStepsProvider>
+                  {/* Task Component - now handles all task-related logic */}
+                  <Task
+                    setTaskUuid={setTaskUuid}
+                    connectionStatus={connectionStatus}
+                    isReplayMode={isReplayMode}
+                    onTaskViewChange={handleTaskViewChange}
+                    onWaitingUserResponseChange={
+                      handleWaitingUserResponseChange
+                    }
+                  />
+                </TasksStepsProvider>
+              </div>
+            </div>
 
-            {/* Agent Chat Component - handles its own positioning */}
-            <AgentChat
-              sessionId={sessionId}
-              connectionStatus={connectionStatus}
-              taskUuid={taskUuid}
-              isFloating={showTaskView}
-              isReplayMode={isReplayMode}
-              isWaitingUserResponse={isWaitingUserResponse}
-              setIsWaitingUserResponse={setIsWaitingUserResponse}
-              ref={agentChatRef}
+            {/* Connection Status Indicator - subtle and non-intrusive */}
+            {connectionStatus !== "connected" && (
+              <div className="fixed bottom-4 right-4 px-3 py-1 bg-gray-800 text-white text-sm rounded-full shadow-lg opacity-80 z-50">
+                {connectionStatus === "connecting"
+                  ? "Connecting..."
+                  : "Disconnected"}
+              </div>
+            )}
+
+            {/* UI Generation Status Indicator */}
+            {isUIGenerating && currentUITool && (
+              <div className="fixed bottom-4 left-4 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg shadow-lg z-40 flex items-center gap-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                <span>
+                  Generating {currentUITool.replace(/_/g, " ")} interface...
+                </span>
+              </div>
+            )}
+
+            {/* UI Overlay for productivity tools */}
+            <UIOverlay
+              onLoadingStateChange={handleUILoadingStateChange}
+              onUIGenerated={handleUIGenerated}
             />
-            <TasksStepsProvider>
-              {/* Task Component - now handles all task-related logic */}
-              <Task
-                setTaskUuid={setTaskUuid}
-                connectionStatus={connectionStatus}
-                isReplayMode={isReplayMode}
-                onTaskViewChange={handleTaskViewChange}
-                onWaitingUserResponseChange={handleWaitingUserResponseChange}
-              />
-            </TasksStepsProvider>
-          </div>
-        </div>
-
-        {/* Connection Status Indicator - subtle and non-intrusive */}
-        {connectionStatus !== "connected" && (
-          <div className="fixed bottom-4 right-4 px-3 py-1 bg-gray-800 text-white text-sm rounded-full shadow-lg opacity-80 z-50">
-            {connectionStatus === "connecting"
-              ? "Connecting..."
-              : "Disconnected"}
-          </div>
-        )}
-
-        {/* UI Generation Status Indicator */}
-        {isUIGenerating && currentUITool && (
-          <div className="fixed bottom-4 left-4 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg shadow-lg z-40 flex items-center gap-2">
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-            <span>
-              Generating {currentUITool.replace(/_/g, " ")} interface...
-            </span>
-          </div>
-        )}
-
-        {/* UI Overlay for productivity tools */}
-        <UIOverlay
-          onLoadingStateChange={handleUILoadingStateChange}
-          onUIGenerated={handleUIGenerated}
-        />
-      </InputValueProvider>
+          </BackgroundStateManager>
+        </InputValueProvider>
+      </BackgroundProvider>
     </LiveAPIProvider>
   );
 }

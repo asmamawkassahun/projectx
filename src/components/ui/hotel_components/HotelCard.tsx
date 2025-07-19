@@ -26,11 +26,11 @@ export default function HotelCard({
     <div className="w-full space-y-6 dark:bg-[#1a1a1a] bg-black/10 text-foreground p-4 rounded-3xl">
       <div className="relative w-full aspect-[300/200] overflow-hidden">
         <Image
-          src={imageUrl || "/placeholder.svg"}
+          src={imageUrl || "/images/placeholder.png"}
           alt={`Image of ${name}`}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-xl"
+          width={300}
+          height={200}
+          className="rounded-xl object-cover"
         />
         <div className="absolute top-3 left-3 bg-background/40 backdrop-blur-[40px] rounded-full px-2 py-1 flex items-center gap-1 text-xs font-semibold">
           <Star className="h-3 w-3 fill-white text-white" />

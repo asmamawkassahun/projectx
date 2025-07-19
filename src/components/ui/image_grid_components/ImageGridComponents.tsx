@@ -21,7 +21,7 @@ export default function ImageGrid({ images, onImageClick }: ImageGridProps) {
           onClick={() => onImageClick(index)} // Call the handler on click
         >
           <Image
-            src={image.thumbnail || "/placeholder.svg"}
+            src={image.thumbnail}
             alt={image.source}
             width={image.original_width}
             height={image.original_height}

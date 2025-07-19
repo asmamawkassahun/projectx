@@ -436,7 +436,7 @@ export default function CardDeckSwiper() {
     <div className="w-full max-h-[80vh] overflow-auto  flex flex-col">
       <div className="flex-1 flex items-center justify-center px-4">
         {/* Main swiper container with overflow hidden to prevent third item from showing */}
-        <div className="relative w-full max-w-5xl mx-auto" ref={carouselRef}>
+        <div className="relative w-full max-w-7xl" ref={carouselRef}>
           {swiperItems.length > 0 ? (
             <motion.div
               className="flex"
@@ -472,7 +472,7 @@ export default function CardDeckSwiper() {
                 return (
                   <motion.div
                     key={item.id}
-                    className={`w-full max-w-2xl mx-auto ${
+                    className={`w-full max-w-7xl ${
                       !isActive ? "absolute -translate-x-[100%]" : ""
                     } flex-shrink-0 px-4 md:px-8`}
                     style={{

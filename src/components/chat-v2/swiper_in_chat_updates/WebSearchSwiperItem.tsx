@@ -5,6 +5,7 @@ import { BaseSwiperItemProps } from "./types";
 import { WebSearchDetailedViewer } from "./index";
 import ListItemComponent from "@/components/ui/link_list_item_component/ListItemComponent";
 import { formatRelative } from "date-fns";
+import ListItemSkeleton from "@/components/ui/link_list_item_component/ListItemSkeleton";
 
 const WebSearchSwiperItem: React.FC<BaseSwiperItemProps> = ({
   updates,
@@ -105,8 +106,10 @@ const WebSearchSwiperItem: React.FC<BaseSwiperItemProps> = ({
         {/* Animated dots */}
 
         <div className="relative  w-full">
-          {isComplete && allResults.length > 0 && (
+          {isComplete && allResults.length > 0 ? (
             <ListItemComponent linkItems={formatedResults} />
+          ) : (
+            <ListItemSkeleton />
           )}
         </div>
       </div>

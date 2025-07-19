@@ -22,6 +22,7 @@ import { toast } from "react-hot-toast";
 import InputWrapper from "../InputWrapper";
 import ChatMessages from "./ChatMessages";
 import { PopularExample } from "./popular-example";
+import { useBackground } from "@/contexts/BackgroundContext";
 
 // Define message type
 interface Message {
@@ -43,6 +44,7 @@ interface AgentChatProps {
     content: string,
     isWaitingUserResponse?: boolean
   ) => void;
+  onProcessingChange?: (processing: boolean) => void;
 }
 
 const AgentChatComponent = React.forwardRef<
@@ -64,6 +66,7 @@ const AgentChatComponent = React.forwardRef<
       isReplayMode = false,
       isWaitingUserResponse = false,
       setIsWaitingUserResponse,
+      onProcessingChange,
     }: AgentChatProps,
     ref
   ) => {
@@ -79,6 +82,8 @@ const AgentChatComponent = React.forwardRef<
     const { sendMessage, isLoading: isProcessingMessage } = useSendMessage();
     const { detectIntent, clearIntent } = useIntentDetection();
 
+    const { setIsActive } = useBackground();
+
     // Refs
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -93,6 +98,25 @@ const AgentChatComponent = React.forwardRef<
         setIsMobile(mobileCheck);
       }
     }, []);
+
+    // Update background when user starts typing or voice mode becomes active
+    useEffect(() => {
+      const hasUserInput = inputValue.trim().length > 0;
+      const hasMessages = messages.length > 0;
+      const isActive = hasUserInput || hasMessages || isVoiceModeActive;
+
+      setIsActive(isActive);
+    }, [inputValue, messages.length, isVoiceModeActive, setIsActive]);
+
+    // Notify parent component about processing state changes
+    useEffect(() => {
+      if (onProcessingChange) {
+        const isProcessing =
+          isProcessingMessage || isTyping || isVoiceModeActive;
+        console.log("AgentChat: Processing state changed to:", isProcessing);
+        onProcessingChange(isProcessing);
+      }
+    }, [isProcessingMessage, isTyping, isVoiceModeActive, onProcessingChange]);
 
     // Handle complete events - these come from Pusher
     const handleCompleteEvent = useCallback((data: any) => {

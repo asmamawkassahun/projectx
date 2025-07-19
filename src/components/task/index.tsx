@@ -414,8 +414,8 @@ const Task = ({
           {/* SIDE BAR */}
           <div className="flex-shrink-0 h-[100vh] w-[5.25rem]">
             <TaskSidebar onStopTask={stopTask} />
-          </div>{" "}
-          <div className="flex flex-col justify-center w-full gap-[64px] max-w-[689px] mx-auto">
+          </div>
+          <div className="flex flex-col justify-center w-full gap-16 max-w-6xl mx-auto">
             {viewMode === "planner" ? (
               <motion.div
                 key="planner"
