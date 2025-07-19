@@ -82,7 +82,7 @@ Focus on compact, layered information design that feels like a high-quality moda
     <title>Dynamic UI</title>
 </head>
 <body class="bg-transparent min-h-full w-full text-white p-0 m-0 overflow-x-hidden">
-    <div class="w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl bg-white">
+    <div class="w-full max-w-5xl max-h-[80vh] overflow-y-auto rounded-3xl shadow-2xl bg-white">
         <div class="p-6 space-y-4">
             <!-- Your content here with individual cards, light borders, emojis, and colors -->
             <!-- MANDATORY: Use bg-gray-50 border border-gray-200 rounded-xl p-6 OR bg-gray-100 border border-gray-300 rounded-xl p-6 for individual content cards -->
@@ -105,66 +105,170 @@ export function useUIAgent(): UIAgentHookResult {
 
       switch (functionName) {
         case "list_emails":
-          specificPrompt = `
-CONTEXT: Generate a creative, full-screen web email app interface (NOT a traditional inbox)
-
-GOAL: Create an innovative full-screen email visualization that adapts to the content
-
+          specificPrompt = `CONTEXT: Generate a creative, full-screen web email app interface (NOT a traditional inbox) for displaying emails.
+GOAL: Create an innovative full-screen email visualization that adapts to the content.
 FULL-SCREEN ADAPTIVE DESIGN APPROACH:
-- If SINGLE EMAIL: Create a beautiful full-screen email reader with complete content display
-- If MULTIPLE EMAILS: Design creative full-screen email visualization (timeline, cards, stories, magazine-style, etc.)
-- AVOID traditional inbox layouts - be innovative and engaging
-- Think beyond lists - consider full-screen timelines, story formats, conversation flows, visual summaries
-- Design like a complete web email app screen
+- If the API response contains a SINGLE, comprehensive email object, render a detailed, immersive view of that email, similar to a "Last Email" or "Email Details" screen.
+- If the API response contains MULTIPLE email objects, design a creative full-screen email visualization (timeline, cards, stories, magazine-style, etc.) displaying a list of individual email cards.
+
+FOR A SINGLE, DETAILED EMAIL VIEW (when comprehensive data for one email is provided):
+- Display a prominent header indicating the sender and received timestamp (e.g., "Your last email was from [Sender Name], received [Timestamp]").
+- Create a main email content card that includes:
+    - Sender's avatar and name.
+    - A reply icon.
+    - The full subject line.
+    - The complete message body.
+    - A "Received" timestamp with a checkmark icon.
+- Conditionally include additional content cards based on the email's details:
+    - If event details are present (e.g., "Coffee and catch-up", date, time), create a dedicated event card with an associated avatar.
+    - If location data is present (e.g., "Starbucks"), embed a map card with a pin and location name.
+- Include a prominent "Reply" button at the bottom of the interface.
+- IMPORTANT: If any specific detail (e.g., event, location, full message body) is NOT provided in the API response, OMIT that section or render it as an empty string/hidden element, ensuring no placeholder or fake data is generated.
+
+FOR MULTIPLE EMAIL VIEWS (when a list of emails is provided):
+- Display a dynamic list or grid of individual email cards, each representing a single email.
+- Each card should clearly show the sender, subject, a concise snippet of content, and relevant metadata like timestamp and read/unread status.
+- Conditionally include rich visual elements within each card based on the email content:
+    - If an email has a call to action (CTA), include a "Reply" button.
+    - If an email has a longer preview, display a more extensive message body snippet.
+    - If an email has file attachments, show an attachment icon and the file name.
+    - If an email has event details, display the event date and time.
+    - If an email has a location, embed a small map preview.
+
+AVOID traditional inbox layouts - be innovative and engaging.
+Think beyond simple lists - consider full-screen timelines, story formats, conversation flows, or visual summaries.
+Design like a complete web email app screen, utilizing the full screen space for content discovery and easy consumption.
 
 FULL-SCREEN WEB GUIDELINES:
-- Design for immersive full-screen email reading/browsing experience
-- Use iOS-style modern components and spacing that fill the entire screen
-- Create visually engaging layouts that make emails feel fresh and utilize full screen space
-- Focus on content discovery and easy consumption across the entire screen
-- Think like designing the main screen of a web email app
+- Design for immersive full-screen email reading/browsing experience.
+- Use iOS-style modern components and spacing that fill the entire screen.
+- Create visually engaging layouts that make emails feel fresh and utilize full screen space.
+- Focus on content discovery and easy consumption across the entire screen.
+- Think like designing the main screen of a web email app.
 
 FULL-SCREEN CREATIVE IDEAS TO CONSIDER:
-- Full-screen email stories/timeline view for multiple emails
-- Magazine-style layouts with featured emails spanning the screen
-- Conversation thread visualizations that use full screen height
-- Visual email summaries with key highlights distributed across the screen
-- Card-based layouts with smart grouping that fills the screen
-- Focus on sender relationships and email importance in a full-screen layout
-
+- Full-screen email stories/timeline view for multiple emails.
+- Magazine-style layouts with featured emails spanning the screen.
+- Conversation thread visualizations that use full screen height.
+- Visual email summaries with key highlights distributed across the screen.
+- Card-based layouts with smart grouping that fills the screen.
+- Focus on sender relationships and email importance in a full-screen layout.
 BE CREATIVE: Design an innovative full-screen email app experience that's nothing like a boring inbox!
 
 DATA TO RENDER:`;
           break;
 
         case "summarize_emails":
-          specificPrompt = `
-CONTEXT: Generate a creative email insights dashboard (NOT just statistics)
-
-GOAL: Create an engaging email intelligence interface that tells the story of email activity
-
+          specificPrompt = `CONTEXT: Generate a creative email insights dashboard (NOT just statistics) or a detailed email summary view.
+GOAL: Create an engaging email intelligence interface that tells the story of email activity, either as a dashboard of insights or a comprehensive summary of a single email.
 CREATIVE APPROACH:
-- Transform email data into visual stories and insights
-- Create email relationship maps, activity timelines, or insight cards
-- Show email patterns, important conversations, and key highlights
-- Use infographic-style visualization with iOS modern design
-- Make email data feel alive and meaningful
+- If the API response provides data for a single, detailed email summary (e.g., from a specific query or context), render a comprehensive summary view for that email.
+- If the API response provides aggregated data or multiple summaries, create an engaging email intelligence dashboard with various distinct summary cards.
+
+FOR A SINGLE, DETAILED EMAIL SUMMARY VIEW (when comprehensive data for one email summary is provided, as per the screenshot):
+- Display a conversational context header if available (e.g., "Gustavo asked if you were planning anything for your 39th birthday").
+- Create a main email summary card that includes:
+    - Sender's avatar and name.
+    - The subject line.
+    - A concise message snippet.
+    - A "Received" timestamp with a checkmark icon.
+- Conditionally include additional content cards based on the email summary's details:
+    - If event details are present (e.g., "Coffee and catch-up", date, time), create a dedicated event card with an associated avatar.
+    - If location data is present (e.g., "Starbucks"), embed a map card with a pin and location name.
+    - If file attachments are present, create an attachments section with file icons and names.
+- Include a prominent "Reply" button at the bottom of the interface.
+- IMPORTANT: If any specific detail (e.g., conversational context, event, location, attachments) is NOT provided in the API response, OMIT that section or render it as an empty string/hidden element, ensuring no placeholder or fake data is generated.
+
+FOR AN EMAIL INSIGHTS DASHBOARD (when aggregated or multiple summaries are provided):
+- Transform email data into visual stories and insights, presented as multiple, distinct summary cards.
+- Each card should represent a specific type of summary or insight, as depicted in the provided examples (e.g., minimal summary, summary with CTA, summary with email preview, summary with file attachment, summary with event/location map).
+- Conditionally render elements within cards based on the presence of data:
+    - For a minimal summary, show sender, subject, and a brief snippet.
+    - For a summary with CTA, include a "Reply" button.
+    - For a summary with email preview, display a more extensive message body.
+    - For a summary with file attachment, show an attachment icon and file name.
+    - For a summary with event details, display event date and time.
+    - For a summary with location, embed a small map preview.
+- Use infographic-style visualization with iOS modern design.
+- Make email data feel alive and meaningful, focusing on actionable insights and interesting patterns.
 
 WEB GUIDELINES:
-- Design for quick insight consumption and discovery
-- Use iOS-style modern components and visual hierarchy
-- Create engaging data stories rather than boring charts
-- Focus on actionable insights and interesting patterns
-
+- Design for quick insight consumption and discovery.
+- Use iOS-style modern components and visual hierarchy.
+- Create engaging data stories rather than boring charts.
+- Focus on actionable insights and interesting patterns.
 CREATIVE VISUALIZATION IDEAS:
-- Email relationship networks showing key contacts
-- Activity heatmaps and timeline visualizations
-- Important conversation highlights and summaries
-- Email sentiment and tone analysis displays
-- Personal email analytics with beautiful metrics
-- Communication pattern insights
-
+- Email relationship networks showing key contacts.
+- Activity heatmaps and timeline visualizations.
+- Important conversation highlights and summaries.
+- Email sentiment and tone analysis displays.
+- Personal email analytics with beautiful metrics.
+- Communication pattern insights.
 BE CREATIVE: Design an email intelligence interface that reveals hidden insights beautifully!
+DATA TO RENDER:`;
+          break;
+        case "last_unread_emails":
+          specificPrompt = `
+CONTEXT: Generate a clean, modern web interface for displaying the last unread email notifications (NOT a traditional inbox).
+GOAL: Create an engaging, compact, card-based visualization of the most recent unread emails that:
+1. Clearly indicates the number of unread emails.
+2. Displays each email with essential metadata.
+3. Shows just enough preview content to be useful.
+4. Maintains visual hierarchy and scannability.
+
+FULL-SCREEN ADAPTIVE DESIGN APPROACH:
+- If the API response contains MULTIPLE unread email objects, design a vertical stack of individual email cards, representing the most recent unread emails.
+- Each card should clearly show:
+  - A sender avatar (if provided in the API response).
+  - The sender's name (primary focus, bold/emphasized).
+  - The email subject line (secondary text).
+  - The first ~40 characters of the email content as a preview.
+  - A timestamp (relative or absolute) indicating when the email was received.
+  - A visual indicator (e.g., checkmark or arrow icon) to mark the email as unread.
+- Display a prominent header at the top indicating the total number of unread emails (e.g., "You have X unread emails").
+- Conditionally include additional visual elements within each card based on the email content:
+  - If an email has event details (e.g., date, time), display the event information.
+  - If an email has a call to action (CTA), highlight it with a visual indicator (e.g., badge) without interactive elements.
+- For multiple emails:
+  - Show the most recent at the top.
+  - Group by time (Today/Yesterday/This Week/etc.) if helpful based on the API response data.
+- AVOID traditional inbox layouts - focus on a modern, vertical card stack design.
+- Think beyond simple lists - consider a visually appealing flow with subtle shadows or overlay effects for depth.
+- Design like a complete web app screen, utilizing the full screen space for content discovery and easy consumption.
+
+FULL-SCREEN WEB GUIDELINES:
+- Design for an immersive full-screen email browsing experience.
+- Use iOS-style modern components and spacing that fill the entire screen.
+- Create visually engaging layouts that make unread emails feel fresh and utilize full screen space.
+- Focus on content discovery and easy consumption across the entire screen.
+- Think like designing the main screen of a web email app.
+- Prioritize readability, information density, clear visual hierarchy, and quick comprehension.
+
+FULL-SCREEN CREATIVE IDEAS TO CONSIDER:
+- Vertical card stack with rounded corners and subtle shadow effects for depth.
+- Highlighted unread status with a distinct icon (e.g., checkmark or arrow) on each card.
+- Timeline-inspired layout with timestamps aligned to the bottom of each card.
+- Visual emphasis on sender details (avatar and name) as the card anchor.
+- Use of colored text or badges (e.g., blue for timestamps) to enhance readability.
+
+VISUAL DESIGN REQUIREMENTS:
+- Use proper spacing between emails.
+- Maintain clear visual hierarchy with bold sender names and secondary subject text.
+- Support quick scanning with concise previews and aligned metadata.
+- Indicate unread status with a visual cue (e.g., icon or badge).
+
+AVOID:
+- Full email bodies.
+- Complex interaction elements (e.g., buttons or links).
+- Overly decorative elements that reduce scannability.
+
+PRIORITIZE:
+- Readability.
+- Information density.
+- Clear visual hierarchy.
+- Quick comprehension.
+
+BE CREATIVE: Design an innovative, read-only full-screen interface for the last unread emails that's nothing like a boring inbox!
 
 DATA TO RENDER:`;
           break;

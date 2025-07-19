@@ -30,6 +30,7 @@ const UnifiedToolHandler = ({
   const shouldGenerateUI = useCallback((functionName: string) => {
     switch (functionName) {
       case "list_emails":
+      case "last_unread_emails":
       case "summarize_emails":
       case "write_draft_for_new_email":
       case "write_draft_for_reply":
