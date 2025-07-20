@@ -1,9 +1,39 @@
-<svg width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="1440" height="1024" fill="url(#paint0_linear_83_7166)"/>
+<svg width="1440" height="960" viewBox="0 0 1440 960" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_2077_851)">
+<g clip-path="url(#clip1_2077_851)">
+<rect width="1440" height="960" fill="#F5F4F2"/>
+<g filter="url(#filter0_f_2077_851)">
+<ellipse cx="-247.018" cy="1086.95" rx="669" ry="289.428" transform="rotate(15 -247.018 1086.95)" fill="#FCF5E5" fill-opacity="0.5"/>
+</g>
+<g filter="url(#filter1_f_2077_851)">
+<ellipse cx="1121.61" cy="135.389" rx="669" ry="298.038" transform="rotate(120 1121.61 135.389)" fill="#FCF5E5" fill-opacity="0.5"/>
+</g>
+<g filter="url(#filter2_f_2077_851)">
+<ellipse cx="1533.03" cy="603.342" rx="669" ry="298.038" transform="rotate(105 1533.03 603.342)" fill="#FEEFF5"/>
+</g>
+</g>
+</g>
 <defs>
-<linearGradient id="paint0_linear_83_7166" x1="720" y1="0" x2="720" y2="1024" gradientUnits="userSpaceOnUse">
-<stop stop-color="#D3D3D3"/>
-<stop offset="1" stop-color="#9B9B9B"/>
-</linearGradient>
+<filter id="filter0_f_2077_851" x="-1697.61" y="-41.9395" width="2901.19" height="2257.78" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="400" result="effect1_foregroundBlur_2077_851"/>
+</filter>
+<filter id="filter1_f_2077_851" x="-100.918" y="-1262.98" width="2445.05" height="2796.75" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="400" result="effect1_foregroundBlur_2077_851"/>
+</filter>
+<filter id="filter2_f_2077_851" x="397.038" y="-847.514" width="2271.98" height="2901.71" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="400" result="effect1_foregroundBlur_2077_851"/>
+</filter>
+<clipPath id="clip0_2077_851">
+<rect width="1440" height="960" fill="white"/>
+</clipPath>
+<clipPath id="clip1_2077_851">
+<rect width="1440" height="960" fill="white"/>
+</clipPath>
 </defs>
 </svg>

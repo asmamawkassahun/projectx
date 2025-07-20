@@ -44,8 +44,10 @@ export const BackgroundProvider: React.FC<BackgroundProviderProps> = ({
     } else {
       // Inactive state - use theme-appropriate first screen background
       return resolvedTheme === "light"
-        ? "/icons/background_first_screen_light.svg"
-        : "/icons/background_first_screen.svg";
+        ? // ? "/icons/background_first_screen_light.svg"
+          // : "/icons/background_first_screen.svg";
+          "/icons/background_light.svg"
+        : "/icons/background.svg";
     }
   })();
 
