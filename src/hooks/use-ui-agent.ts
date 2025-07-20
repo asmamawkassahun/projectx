@@ -105,107 +105,70 @@ export function useUIAgent(): UIAgentHookResult {
 
       switch (functionName) {
         case "list_emails":
-          specificPrompt = `CONTEXT: Generate a creative, full-screen web email app interface (NOT a traditional inbox) for displaying emails.
-GOAL: Create an innovative full-screen email visualization that adapts to the content.
-FULL-SCREEN ADAPTIVE DESIGN APPROACH:
-- If the API response contains a SINGLE, comprehensive email object, render a detailed, immersive view of that email, similar to a "Last Email" or "Email Details" screen.
-- If the API response contains MULTIPLE email objects, design a creative full-screen email visualization (timeline, cards, stories, magazine-style, etc.) displaying a list of individual email cards.
+          specificPrompt = `Generate a single HTML page with a dark theme for an 'Email List' UI. The page should be centered and have a maximum width suitable for mobile viewing, with overall 1.5rem rounded corners and a background color of #333333 for the main content area. Use the 'Neue Haas Grotesk Display Pro' font, loaded from https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro.
 
-FOR A SINGLE, DETAILED EMAIL VIEW (when comprehensive data for one email is provided):
-- Display a prominent header indicating the sender and received timestamp (e.g., "Your last email was from [Sender Name], received [Timestamp]").
-- Create a main email content card that includes:
-    - Sender's avatar and name.
-    - A reply icon.
-    - The full subject line.
-    - The complete message body.
-    - A "Received" timestamp with a checkmark icon.
-- Conditionally include additional content cards based on the email's details:
-    - If event details are present (e.g., "Coffee and catch-up", date, time), create a dedicated event card with an associated avatar.
-    - If location data is present (e.g., "Starbucks"), embed a map card with a pin and location name.
-- Include a prominent "Reply" button at the bottom of the interface.
-- IMPORTANT: If any specific detail (e.g., event, location, full message body) is NOT provided in the API response, OMIT that section or render it as an empty string/hidden element, ensuring no placeholder or fake data is generated.
+The UI should consist of the following components, stacked vertically with 1rem spacing between them:
 
-FOR MULTIPLE EMAIL VIEWS (when a list of emails is provided):
-- Display a dynamic list or grid of individual email cards, each representing a single email.
-- Each card should clearly show the sender, subject, a concise snippet of content, and relevant metadata like timestamp and read/unread status.
-- Conditionally include rich visual elements within each card based on the email content:
-    - If an email has a call to action (CTA), include a "Reply" button.
-    - If an email has a longer preview, display a more extensive message body snippet.
-    - If an email has file attachments, show an attachment icon and the file name.
-    - If an email has event details, display the event date and time.
-    - If an email has a location, embed a small map preview.
+Header/Title:
 
-AVOID traditional inbox layouts - be innovative and engaging.
-Think beyond simple lists - consider full-screen timelines, story formats, conversation flows, or visual summaries.
-Design like a complete web email app screen, utilizing the full screen space for content discovery and easy consumption.
+A text-xl sized, font-semibold white text that reads: "Email List".
 
-FULL-SCREEN WEB GUIDELINES:
-- Design for immersive full-screen email reading/browsing experience.
-- Use iOS-style modern components and spacing that fill the entire screen.
-- Create visually engaging layouts that make emails feel fresh and utilize full screen space.
-- Focus on content discovery and easy consumption across the entire screen.
-- Think like designing the main screen of a web email app.
+Email List Items (repeated multiple times to form a list):
+Each email list item should be visually separated by a thin horizontal line with a color of #474747 and vertical margins of 1rem. Each item should have the following internal structure:
 
-FULL-SCREEN CREATIVE IDEAS TO CONSIDER:
-- Full-screen email stories/timeline view for multiple emails.
-- Magazine-style layouts with featured emails spanning the screen.
-- Conversation thread visualizations that use full screen height.
-- Visual email summaries with key highlights distributed across the screen.
-- Card-based layouts with smart grouping that fills the screen.
-- Focus on sender relationships and email importance in a full-screen layout.
-BE CREATIVE: Design an innovative full-screen email app experience that's nothing like a boring inbox!
+Top Row (Flex Container):
 
-DATA TO RENDER:`;
+Sender Avatar: A 40x40px, rounded avatar. Use a placeholder image (e.g., https://placehold.co/40x40/CCCCCC/FFFFFF?text=AV).
+
+Sender Name: A font-semibold, text-sm white text with a background of #484848, p-1 padding, and rounded-sm corners. This is where the sender's name would appear.
+
+Reply Icon: A small, rounded, dark gray background (#484848) button on the right with a white curved arrow SVG icon (e.g., <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clip-rule="evenodd"></path><path fill-rule="evenodd" d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>).
+
+Subject: A text-xl, font-bold white heading. This is where the email subject would appear.
+
+Email Body/Snippet: A text-base, text-gray-300 paragraph. This is where a snippet of the email body would appear.
+
+Status/Timestamp: A text-lg, text-gray-400 line with a blue checkmark SVG icon (<svg class="icon-checkmark text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>) preceding the text. This is where the received status and timestamp would appear.
+
+Ensure all elements are responsive and use Tailwind CSS for styling, with custom CSS for specific rounded corner values as needed.`;
           break;
 
         case "summarize_emails":
-          specificPrompt = `CONTEXT: Generate a creative email insights dashboard (NOT just statistics) or a detailed email summary view.
-GOAL: Create an engaging email intelligence interface that tells the story of email activity, either as a dashboard of insights or a comprehensive summary of a single email.
-CREATIVE APPROACH:
-- If the API response provides data for a single, detailed email summary (e.g., from a specific query or context), render a comprehensive summary view for that email.
-- If the API response provides aggregated data or multiple summaries, create an engaging email intelligence dashboard with various distinct summary cards.
+          specificPrompt = `Create a single HTML page with a dark theme. The page should be centered and have a maximum width suitable for mobile viewing, with overall 1.5rem rounded corners and a background color of #333333 for the main content area. Use the 'Neue Haas Grotesk Display Pro' font, loaded from https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro.
 
-FOR A SINGLE, DETAILED EMAIL SUMMARY VIEW (when comprehensive data for one email summary is provided, as per the screenshot):
-- Display a conversational context header if available (e.g., "Gustavo asked if you were planning anything for your 39th birthday").
-- Create a main email summary card that includes:
-    - Sender's avatar and name.
-    - The subject line.
-    - A concise message snippet.
-    - A "Received" timestamp with a checkmark icon.
-- Conditionally include additional content cards based on the email summary's details:
-    - If event details are present (e.g., "Coffee and catch-up", date, time), create a dedicated event card with an associated avatar.
-    - If location data is present (e.g., "Starbucks"), embed a map card with a pin and location name.
-    - If file attachments are present, create an attachments section with file icons and names.
-- Include a prominent "Reply" button at the bottom of the interface.
-- IMPORTANT: If any specific detail (e.g., conversational context, event, location, attachments) is NOT provided in the API response, OMIT that section or render it as an empty string/hidden element, ensuring no placeholder or fake data is generated.
+Implement a text area for JSON input and a 'Generate UI' button. The UI should dynamically render components based on the presence of data in the JSON input. If a component's required data is missing, that component should not be rendered. Include error handling for invalid JSON.
 
-FOR AN EMAIL INSIGHTS DASHBOARD (when aggregated or multiple summaries are provided):
-- Transform email data into visual stories and insights, presented as multiple, distinct summary cards.
-- Each card should represent a specific type of summary or insight, as depicted in the provided examples (e.g., minimal summary, summary with CTA, summary with email preview, summary with file attachment, summary with event/location map).
-- Conditionally render elements within cards based on the presence of data:
-    - For a minimal summary, show sender, subject, and a brief snippet.
-    - For a summary with CTA, include a "Reply" button.
-    - For a summary with email preview, display a more extensive message body.
-    - For a summary with file attachment, show an attachment icon and file name.
-    - For a summary with event details, display event date and time.
-    - For a summary with location, embed a small map preview.
-- Use infographic-style visualization with iOS modern design.
-- Make email data feel alive and meaningful, focusing on actionable insights and interesting patterns.
+The UI should conditionally render the following components, stacked vertically with 1rem spacing between them:
 
-WEB GUIDELINES:
-- Design for quick insight consumption and discovery.
-- Use iOS-style modern components and visual hierarchy.
-- Create engaging data stories rather than boring charts.
-- Focus on actionable insights and interesting patterns.
-CREATIVE VISUALIZATION IDEAS:
-- Email relationship networks showing key contacts.
-- Activity heatmaps and timeline visualizations.
-- Important conversation highlights and summaries.
-- Email sentiment and tone analysis displays.
-- Personal email analytics with beautiful metrics.
-- Communication pattern insights.
-BE CREATIVE: Design an email intelligence interface that reveals hidden insights beautifully!
-DATA TO RENDER:`;
+Header/Title: Renders if header.senderName, header.receivedTime, and header.receivedDate are present. It should be text-xl sized, font-semibold white text. The sender's name and received time should be bolded.
+
+Horizontal Spacer Line: Renders if either the header or emailCard data is present. It should be a thin horizontal line with a color of #474747 and vertical margins of 1rem.
+
+Email Card (Main): Renders if emailCard.senderAvatar, emailCard.senderName, emailCard.subject, emailCard.bodySnippet, and emailCard.statusTime are present. This section is part of the main container's background (#333333) and should not have its own distinct card background.
+
+Sender Information: An avatar (40x40px, rounded, with a grey border, using a placeholder image) aligned with the sender's name. The name should be font-semibold, text-sm, have a background of #484848, p-1 padding, and rounded-sm corners.
+
+Subject: A text-xl, font-bold heading.
+
+Email Body/Snippet: A text-base, text-gray-300 paragraph.
+
+Status/Timestamp: A text-lg, text-gray-400 line with a blue checkmark SVG icon preceding the text.
+
+Event/Meeting Card: Renders if eventCard.title, eventCard.dateTime, and eventCard.participantAvatar are present. It should be a card with 1rem rounded corners (card-custom-inner-rounded), 1rem padding, a background color of #444444, and text-white. It should be a flex container with content justified between the start and end.
+
+Title: A text-lg, font-bold heading.
+
+Date & Time: A text-sm, text-gray-300 paragraph.
+
+Participant Avatar: A 40x40px, rounded avatar with a black border on the right side, using a placeholder image.
+
+Map Card: Renders if mapCard.locationName and mapCard.mapImageUrl are present. It should be a card with 1rem rounded corners (card-custom-inner-rounded), overflow-hidden, and a background color of #333333.
+
+Map Placeholder: A w-full h-48 div with a bg-gray-600 background, containing a placeholder image with opacity-70. Centered on top of this image, include a white map pin SVG icon and the location name in font-semibold, text-lg.
+
+Action Button: Renders if actionButton.label is present. It should be a full-width button with 1.5rem rounded corners (card-custom-rounded), a white background (bg-white), black text (text-black), py-3 px-4 padding, font-semibold, text-lg, and a hover:bg-black effect (changing text to white on hover).
+
+Ensure all elements are responsive and use Tailwind CSS for styling, with custom CSS for specific rounded corner values as needed. The JavaScript should also populate the input text area with a comprehensive example JSON structure on page load and automatically render the UI.`;
           break;
         case "last_unread_emails":
           specificPrompt = `
