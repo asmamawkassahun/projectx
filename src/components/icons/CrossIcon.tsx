@@ -1,4 +1,4 @@
-export const CrossIcon = () => (
+export const CrossIcon = ({ fillColor }: { fillColor: string }) => (
   <svg
     width="19"
     height="18"
@@ -8,14 +8,14 @@ export const CrossIcon = () => (
   >
     <path
       d="M1.5 17.0001L17.5 1.16089"
-      stroke="white"
+      stroke={fillColor}
       stroke-width="1.61627"
       stroke-linecap="round"
       stroke-linejoin="round"
     />
     <path
       d="M1.5 1L17.5 16.8392"
-      stroke="white"
+      stroke={fillColor}
       stroke-width="1.61627"
       stroke-linecap="round"
       stroke-linejoin="round"

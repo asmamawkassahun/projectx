@@ -6,10 +6,20 @@ import { useRouter } from "next/navigation";
 import UnionLogo from "./chat-v2/union-logo";
 import { BooksIcon } from "./icons/BooksIcon";
 import { LayersIcon } from "./icons/LayersIcon";
+import { useTheme } from "next-themes";
 
 const Navbar = () => {
   const router = useRouter();
   const { user, logout, isLoggedIn } = useJWTAuthContext();
+  const { resolvedTheme } = useTheme();
+
+  let fillColor = "";
+
+  if (resolvedTheme === "dark") {
+    fillColor = "#FFFFFF";
+  } else {
+    fillColor = "#BDC1C6";
+  }
 
   // Handle login/logout
   const handleLogin = () => {
@@ -56,18 +66,18 @@ const Navbar = () => {
             variant="primary"
             size="md"
             aria-label="Tasks history"
-            className="bg-white/20 hover:bg-white/30 text-white "
+            className="bg-white dark:bg-white/20 hover:bg-white/80 dark:hover:bg-white/30 text-foreground "
           >
-            <LayersIcon />
+            <LayersIcon fillColor={fillColor} />
           </Button>
           <Button
             onClick={handleNewChat}
             variant="primary"
             size="md"
             aria-label="Tutorial page"
-            className="bg-white/20 hover:bg-white/30 text-white "
+            className="bg-white dark:bg-white/20 hover:bg-white/80 dark:hover:bg-white/30 text-foreground "
           >
-            <BooksIcon />
+            <BooksIcon fillColor={fillColor} />
           </Button>
           {isLoggedIn ? (
             <Button

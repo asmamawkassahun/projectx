@@ -9,6 +9,7 @@ import { CrossIcon } from "./icons/CrossIcon";
 import { ScreenRecordingIcon } from "./icons/ScreenRecordingIcon";
 import { Button } from "./ui";
 import VideoPreview from "./VideoPreview";
+import { useTheme } from "next-themes";
 
 interface InputWrapperProps {
   isVoiceModeActive?: boolean;
@@ -33,6 +34,15 @@ const InputWrapper: React.FC<InputWrapperProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const { detectIntent, clearIntent } = useIntentDetection();
+
+  const { resolvedTheme } = useTheme();
+  let fillColor = "";
+
+  if (resolvedTheme === "dark") {
+    fillColor = "#FFFFFF";
+  } else {
+    fillColor = "#BDC1C6";
+  }
 
   // Use the video manager hook for webcam and screen sharing
   const {
@@ -145,12 +155,13 @@ const InputWrapper: React.FC<InputWrapperProps> = ({
           variant="primary"
           size="md"
           aria-label="Open text input"
+          className="bg-white dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 text-foreground "
         >
-          <CameraIcon />
+          <CameraIcon fillColor={fillColor} />
         </Button>
         {connected ? (
           <button
-            className="flex flex-0 bg-white/10 items-center justify-center text-white w-16 h-16 bg-white rounded-full  transition-all duration-300 hover:bg-white/30 hover:bg:white/20"
+            className="flex flex-0 bg-background dark:bg-white/10 items-center justify-center text-foreground w-16 h-16 rounded-full  transition-all duration-300 hover:bg-background/80 dark:hover:bg-white/30"
             onClick={(e) => {
               if (activeVideoStream.mediaStream) stopWebcam();
               stopStreaming();
@@ -158,11 +169,11 @@ const InputWrapper: React.FC<InputWrapperProps> = ({
             title="Stop voice mode"
             aria-label="Stop voice mode"
           >
-            <CrossIcon />
+            <CrossIcon fillColor={fillColor} />
           </button>
         ) : (
           <button
-            className="flex flex-0 items-center justify-center text-black w-16 h-16 bg-white rounded-full  transition-all duration-300 hover:bg-white/30 hover:text-white"
+            className="flex flex-0 items-center justify-center text-black w-16 h-16 bg-white rounded-full  transition-all duration-300 hover:bg-white/80 hover:text-white/10"
             onClick={(e) => {
               startStreaming();
             }}
@@ -202,8 +213,9 @@ const InputWrapper: React.FC<InputWrapperProps> = ({
           variant="primary"
           size="md"
           aria-label="Open text input"
+          className="bg-white dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 text-foreground "
         >
-          <ScreenRecordingIcon />
+          <ScreenRecordingIcon fillColor={fillColor} />
         </Button>
       </div>
       <>
