@@ -100,6 +100,13 @@ const InputWrapper: React.FC<InputWrapperProps> = ({
     });
   }, []);
 
+  useEffect(() => {
+    if (!inputValue.startsWith("\n")) {
+      setInputValue("\n");
+    }
+    // eslint-disable-next-line
+  }, []);
+
   // Add autoResize function
   const autoResize = () => {
     if (textarea.current) {
@@ -114,17 +121,21 @@ const InputWrapper: React.FC<InputWrapperProps> = ({
 
   // Keep only this updated handleInputChange:
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInputValue(e.target.value);
+    let value = e.target.value;
+    if (!value.startsWith("\n")) {
+      value = "\n" + value.replace(/^\n*/, ""); // Remove any leading newlines, then add two
+    }
+    setInputValue(value);
     autoResize();
 
-    // Clear intent if input is empty
-    if (!inputValue.trim()) {
+    // Clear intent if input is empty (excluding the two newlines)
+    if (value.trim() === "") {
       clearIntent();
       return;
     }
 
     // Trigger intent detection on input change
-    detectIntent(inputValue);
+    detectIntent(value);
   };
 
   // Setup video frame capture and stream handling
@@ -208,10 +219,18 @@ const InputWrapper: React.FC<InputWrapperProps> = ({
             }}
             disabled={isVoiceModeActive}
             onKeyDown={(e) => {
+              if (
+                (e.key === "Backspace" || e.key === "Delete") &&
+                textarea.current &&
+                textarea.current.selectionStart <= 1
+              ) {
+                e.preventDefault();
+                return;
+              }
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
                 handleSubmit(e as any); // Cast to any to satisfy TS, or refactor handleSubmit to accept KeyboardEvent
-                setInputValue("");
+                setInputValue("\n");
                 setTimeout(() => {
                   textarea.current?.blur();
                   autoResize();
