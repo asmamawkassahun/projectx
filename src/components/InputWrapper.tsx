@@ -173,7 +173,7 @@ const InputWrapper: React.FC<InputWrapperProps> = ({
           </button>
         ) : (
           <button
-            className="flex flex-0 items-center justify-center text-black w-16 h-16 bg-white rounded-full  transition-all duration-300 hover:bg-white/80 hover:text-white/10"
+            className="flex flex-0 items-center justify-center text-black w-16 h-16 bg-white rounded-full  transition-all duration-300 hover:bg-white/80 hover:text-black/80"
             onClick={(e) => {
               startStreaming();
             }}
