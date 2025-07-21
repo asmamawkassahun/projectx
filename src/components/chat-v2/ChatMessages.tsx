@@ -2,6 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInputValueContext } from "@/contexts/InputValueContext";
 import ReactMarkdown, { Components } from "react-markdown";
+import { useTheme } from "next-themes";
 
 export interface ChatMessage {
   type: "user" | "model" | "agent";
@@ -97,6 +98,7 @@ const components: Components = {
 
 const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
   const { inputValue } = useInputValueContext();
+  const { resolvedTheme } = useTheme();
 
   if (inputValue.length > 0 || messages.length === 0) return null;
 
@@ -108,7 +110,20 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
         <div className="absolute inset-0 scale-125 backdrop-blur-[40px] blur-[50px] bg-[#D9D9D903]" />
         <motion.p
           key={`message-${messages.length}`}
-          className="relative font-semibold text-[24px] leading-[100%]"
+          className="relative font-semibold text-2xl leading-[100%]"
+          style={{
+            background:
+              resolvedTheme === "dark"
+                ? "linear-gradient(to bottom, #FFFFFF00, #FFFFFF)"
+                : "linear-gradient(to bottom, #00000000, #222222)",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            color: "transparent",
+            maxHeight: "100px",
+            overflowY: "auto",
+            // caretColor: resolvedTheme === "dark" ? "#fff" : "#111",
+            // lineHeight: "1",
+          }}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
