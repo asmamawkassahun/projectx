@@ -192,7 +192,20 @@ const InputWrapper: React.FC<InputWrapperProps> = ({
             ref={textarea}
             value={inputValue}
             onChange={handleInputChange}
-            className={`w-full resize-none bg-transparent focus:outline-none font-semibold text-[20px] sm:text-[24px] leading-none caret-white`}
+            className={`w-full resize-none bg-transparent focus:outline-none font-semibold text-xl sm:text-2xl leading-none inline-block text-transparent bg-clip-text`}
+            style={{
+              background:
+                resolvedTheme === "dark"
+                  ? "linear-gradient(to bottom, #FFFFFF00, #FFFFFF)"
+                  : "linear-gradient(to bottom, #00000000, #222222)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+              maxHeight: "100px",
+              overflowY: "auto",
+              caretColor: resolvedTheme === "dark" ? "#fff" : "#111",
+              lineHeight: "1",
+            }}
             disabled={isVoiceModeActive}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
