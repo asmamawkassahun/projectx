@@ -409,10 +409,10 @@ const Task = ({
             damping: 30,
             duration: 0.6,
           }}
-          className="fixed inset-0 flex z-30 bg-black text-white"
+          className="fixed inset-0 flex z-30 bg-transparent text-foreground"
         >
           {/* SIDE BAR */}
-          <div className="flex-shrink-0 h-[100vh] w-[5.25rem]">
+          <div className="flex-shrink-0 h-[100vh] w-[5.25rem] bg-transparent">
             <TaskSidebar onStopTask={stopTask} />
           </div>
           <div className="flex flex-col justify-center w-full gap-16 max-w-6xl mx-auto">

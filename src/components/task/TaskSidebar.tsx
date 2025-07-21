@@ -6,6 +6,7 @@ import Button from "../ui/Button";
 import { cn } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "next-themes";
 
 interface TaskSidebarProps {
   onStopTask: () => void;
@@ -15,6 +16,15 @@ export const TaskSidebar = ({ onStopTask }: TaskSidebarProps) => {
   const { steps, activeStep, setActiveStep } = useTasksSteps();
   const [prevActiveStep, setPrevActiveStep] = useState<number>(activeStep);
   const [direction, setDirection] = useState<"up" | "down">("up");
+  const { resolvedTheme } = useTheme();
+
+  let fillColor = "";
+
+  if (resolvedTheme === "dark") {
+    fillColor = "#FFFFFF";
+  } else {
+    fillColor = "#FF0022";
+  }
 
   useEffect(() => {
     if (activeStep !== prevActiveStep) {
@@ -54,15 +64,15 @@ export const TaskSidebar = ({ onStopTask }: TaskSidebarProps) => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center px-5 space-y-2.5 bg-background h-[100vh] w-[5.25rem] flex-shrink-0">
+    <div className="flex flex-col justify-center items-center px-5 space-y-2.5 bg-transparent h-[100vh] w-[5.25rem] flex-shrink-0">
       <Button
         onClick={handleStopResponse}
         variant="primary"
         size="md"
         aria-label="Stop Response"
-        className="bg-[#262626] hover:bg-[#333333]"
+        className="bg-white dark:bg-[#262626] hover:white/80 dark:hover:bg-[#333333]"
       >
-        <StopResponse />
+        <StopResponse fillColor={fillColor} />
       </Button>
 
       <div className="flex flex-col items-center space-2.5 relative">
@@ -77,7 +87,7 @@ export const TaskSidebar = ({ onStopTask }: TaskSidebarProps) => {
             variant="primary"
             size="sm"
             aria-label={`Previous Step ${activeStep - 1}`}
-            className="w-[2.125rem] h-[2.125rem] bg-[#262626] backdrop:blur-lg text-lg font-medium leading-[125%] text-center disabled:bg-transparent disabled:hover:bg-transparent text-white"
+            className="w-[2.125rem] h-[2.125rem] bg-white/40 dark:bg-[#262626] backdrop:blur-lg text-lg font-medium leading-[125%] text-center disabled:bg-transparent disabled:hover:bg-transparent text-[#676E7F66] dark:text-[#FFFFFF]"
             disabled={isFirstStep}
           >
             {isFirstStep ? "" : activeStep - 1}
@@ -114,7 +124,7 @@ export const TaskSidebar = ({ onStopTask }: TaskSidebarProps) => {
                 size="md"
                 aria-label={`Current Step ${activeStep + 1}`}
                 className={cn(
-                  "bg-foreground hover:bg-foreground/80 text-background text-2xl font-medium leading-[125%] text-center",
+                  "bg-black/60 dark:bg-foreground hover:bg-foreground/80 text-background text-2xl font-medium leading-[125%] text-center",
                   currentStep?.status === "processing" &&
                     "border-2 border-gray-400"
                 )}
@@ -136,7 +146,7 @@ export const TaskSidebar = ({ onStopTask }: TaskSidebarProps) => {
             variant="primary"
             size="md"
             aria-label={`Next Step ${activeStep + 1}`}
-            className="backdrop:blur-lg rounded-full text-lg font-medium leading-[125%] text-center disabled:bg-transparent disabled:hover:bg-transparent"
+            className="backdrop:blur-lg rounded-full text-lg text-[#676E7F66] dark:text-[#FFFFFF] font-medium leading-[125%] text-center disabled:bg-transparent disabled:hover:bg-transparent"
             disabled={isLastStep}
           >
             {isLastStep ? "" : activeStep + 1}

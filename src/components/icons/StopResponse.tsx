@@ -1,4 +1,4 @@
-export const StopResponse = () => (
+export const StopResponse = ({fillColor}:{fillColor:string}) => (
   <svg
     width="16"
     height="16"
@@ -6,6 +6,6 @@ export const StopResponse = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect x="1" y="1" width="14" height="14" rx="1" fill="white" />
+    <rect x="1" y="1" width="14" height="14" rx="1" fill={fillColor} />
   </svg>
 );
