@@ -177,8 +177,7 @@ Apply font-family: 'Neue Haas Grotesk Display Pro', sans-serif; to the body. Ens
 "`;
           break;
         case "web_search_weather":
-          specificPrompt = `please adapt the data provided don't change anything from the ui and Create a single HTML page for a 'Weather' UI, using Tailwind CSS for styling and JavaScript for dynamic, conditional rendering. HTML Structure: Standard HTML5 boilerplate with meta charset and viewport. title should be 'Weather'. Link to import the 'Neue Haas Grotesk Display Pro' font from https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro. Include the Tailwind CSS CDN script from https://cdn.tailwindcss.com. CSS Styling (within ⟨style$\rangle$ tags): Apply font-family: "Neue Haas Grotesk Display Pro", Arial, sans-serif; to the body and all elements within the main UI container. Ensure text within the main content container prevents overflow with overflow: hidden;, word-wrap: break-word;, and overflow-wrap: break-word; for all direct children and specific text elements (paragraphs, headings, spans, and divs). Body Layout (using Tailwind classes): body should be flex justify-center items-start min-h-screen m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border. Main UI Container (id="main-weather-container"): This will be the primary container for the weather information. Structure: A div with relative p-6 rounded-[22px] bg-[#333333] shadow-lg shadow-black/30 w-full max-w-[453px] h-[324px] overflow-hidden flex flex-col justify-center. The flex flex-col justify-center classes will vertically center the content, while allowing horizontal content alignment to be controlled by child elements. This container should dynamically render its content based on the weatherData object. JavaScript Logic (within ⟨script$\rangle$ tags, at the end of body): renderWeatherUI(data) Function: This function takes a data object as its argument. It should get the main-weather-container element. If not found, log an error and return. It must clear the innerHTML of the container before rendering new content. Conditional Rendering Logic for each component: Location and Temperature Section: Condition: Renders if data.location, data.temperature, and data.unit are present. Structure: A div with flex flex-col items-start mb-2. The items-start class ensures content is aligned to the left. Location: A span with text-lg text-gray-400. Displays [Location] from data.location. Temperature: A div with text-5xl font-bold text-white flex items-start. span for temperature value: Displays [Temperature] from data.temperature. span for unit: text-3xl font-normal. Displays [Unit] from data.unit. Weather Condition: Condition: Renders if data.condition is present. Structure: A p with text-2xl font-semibold text-white mb-4. Displays [Condition] from data.condition. The text should be limited to 2 words or less (e.g., "Partly cloudy", "Sunny", "Rainy"). Humidity and Precipitation Section: Condition: Renders if data.humidity and data.precipitation are present. Structure: A div with flex items-center gap-6. Humidity: A div with flex items-center gap-2 text-base text-gray-300. An SVG icon (width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg") with the path: ⟨path d="M11.6295 12.0005H5.73518C2.57276 12.0005 0 9.30893 0 6.00049C0 2.69205 2.57276 0.000488281 5.73518 0.000488281C7.79698 0.000488281 9.65506 1.12489 10.6827 2.96438C10.9933 2.89217 11.3102 2.85586 11.6295 2.85586C14.0396 2.85586 16 4.90703 16 7.42818C16 9.94932 14.0394 12.0005 11.6295 12.0005Z" fill="#898BA9"/\rangle$. span for humidity percentage: Displays [Humidity]% from data.humidity. Precipitation: A div with flex items-center gap-2 text-base text-gray-300. An SVG icon (width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg") with the path: ⟨path d="M7.12274 3.07431L5.00001 0.000488281L2.87728 3.07431C1.80228 4.62872 0 7.49667 0 9.2302C0 11.8593 2.24318 14.0005 5.00001 14.0005C7.75683 14.0005 10 11.8593 10 9.2302C10 7.49667 8.19774 4.62872 7.12274 3.07431ZM4.03182 3.72902L5.00001 2.32902L5.96819 3.72902C6.13935 3.97222 6.30603 4.2179 6.46816 4.46597C7.20328 5.59069 6.34365 7.00049 5.00001 7.00049C3.65636 7.00049 2.79673 5.59068 3.53185 4.46597C3.69399 4.2179 3.86067 3.97222 4.03182 3.72902Z" fill="#898BA9" fill-opacity="0.3"/\rangle$. span for precipitation percentage: Displays [Precipitation]% from data.precipitation. Main Weather Icon (Large Cloud/Sun): Condition: Renders if data.isSunny is present. Structure: An img tag with absolute top-1/2 -translate-y-1/2 right-[-20px] w-[300px] h-[300px] object-contain pointer-events-none. The right-[-20px] value positions the image slightly off the right edge, creating a visual gap with the left-aligned text content. The src attribute should be https://finden.bekurtechnologies.com/Sunny.png if data.isSunny is true, otherwise https://finden.bekurtechnologies.com/PartyCloudy.png.
-`;
+          specificPrompt = `Extract the necessary weather data from the provided data content, understand the structure and meaning, and generate a single complete HTML page for a 'Weather' UI. Do not write any <script> or JavaScript. Only use the optimized weather data you understand from the input. Do not invent or hallucinate data.\n\nFollow all UI and layout rules in this prompt: Create a single HTML page for a 'Weather' UI, using Tailwind CSS for styling. HTML Structure: Standard HTML5 boilerplate with meta charset and viewport. Title should be 'Weather'. Link to import the 'Neue Haas Grotesk Display Pro' font from https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro. Include the Tailwind CSS CDN script from https://cdn.tailwindcss.com. CSS Styling (within <style> tags): Apply font-family: 'Neue Haas Grotesk Display Pro', Arial, sans-serif; to the body and all elements within the main UI container. Ensure text within the main content container prevents overflow with overflow: hidden;, word-wrap: break-word;, and overflow-wrap: break-word; for all direct children and specific text elements (paragraphs, headings, spans, and divs). Body Layout (using Tailwind classes): body should be flex justify-center items-start min-h-screen m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border. Main UI Container (id='main-weather-container'): This will be the primary container for the weather information. Structure: A div with relative p-6 rounded-[22px] bg-[#333333] shadow-lg shadow-black/30 w-full max-w-[453px] h-[324px] overflow-hidden flex flex-col justify-center. The flex flex-col justify-center classes will vertically center the content, while allowing horizontal content alignment to be controlled by child elements. This container should render the weather data you extracted.\n\nRender the following sections if the data is available: Location and Temperature (location, temperature, unit), Weather Condition (condition), Humidity and Precipitation (humidity, precipitation), Main Weather Icon (isSunny: https://finden.bekurtechnologies.com/Sunny.png if true, otherwise https://finden.bekurtechnologies.com/PartyCloudy.png). Do not add any <script> or JavaScript. Do not invent data.`;
           break;
         case "web_search_event":
           specificPrompt = "";
@@ -637,7 +636,7 @@ DATA TO RENDER:`;
           break;
       }
 
-      return UI_CONSTITUTION+"\n\n"+ specificPrompt;
+      return UI_CONSTITUTION + "\n\n" + specificPrompt;
     },
     []
   );
@@ -645,24 +644,31 @@ DATA TO RENDER:`;
   const extractHTMLContent = useCallback(
     (fullResponse: string): string | null => {
       try {
-        // Look for ```html blocks
-        const htmlMatch = fullResponse.match(/```html\s*([\s\S]+?)```/);
-        if (htmlMatch) {
-          return htmlMatch[1].trim();
-        }
-
-        // Fallback: look for any HTML document structure
-        const htmlStart = fullResponse.indexOf("<!DOCTYPE html>");
-        if (htmlStart !== -1) {
-          const htmlEnd = fullResponse.lastIndexOf("</html>");
-          if (htmlEnd !== -1 && htmlEnd > htmlStart) {
-            return fullResponse.substring(htmlStart, htmlEnd + 7); // +7 for "</html>"
+        let cleaned = fullResponse;
+        // Remove ```html ... ``` or any triple-backtick code block
+        const htmlBlock = cleaned.match(/```html\s*([\s\S]+?)```/);
+        if (htmlBlock) {
+          cleaned = htmlBlock[1];
+        } else {
+          const genericBlock = cleaned.match(/```[a-zA-Z]*\s*([\s\S]+?)```/);
+          if (genericBlock) {
+            cleaned = genericBlock[1];
           }
         }
+        // Fallback: look for any HTML document structure
+        const htmlStart = cleaned.indexOf("<!DOCTYPE html>");
+        if (htmlStart !== -1) {
+          const htmlEnd = cleaned.lastIndexOf("</html>");
+          if (htmlEnd !== -1 && htmlEnd > htmlStart) {
+            cleaned = cleaned.substring(htmlStart, htmlEnd + 7);
+          } else {
+            cleaned = cleaned.slice(htmlStart);
+          }
+        }
+        return cleaned.trim();
       } catch (error) {
         console.warn("Error extracting HTML content:", error);
       }
-
       // Return the full response as fallback
       return fullResponse;
     },
@@ -722,6 +728,14 @@ DATA TO RENDER:`;
         console.log("📊 Prompt Length:", fullPrompt.length, "characters");
 
         // Create request body for Gemini API
+        // Warn if prompt+data is very large (Gemini 1.5 Flash max input is ~32k tokens, but keep safe margin)
+        if (fullPrompt.length > 24000) {
+          console.warn(
+            "⚠️ Gemini prompt+data is very large (",
+            fullPrompt.length,
+            "chars). This may cause truncation or incomplete output."
+          );
+        }
         const requestBody = {
           contents: [
             {
@@ -734,7 +748,7 @@ DATA TO RENDER:`;
           ],
           generationConfig: {
             temperature: 0.3, // Slightly higher temperature for creative but consistent UI generation
-            maxOutputTokens: 4000, // Reduced for flash-lite model
+            maxOutputTokens: 8192, // Use the max allowed for Gemini 1.5 Flash
             topK: 40,
             topP: 0.95,
           },
@@ -798,6 +812,7 @@ DATA TO RENDER:`;
 
         if (generatedUI && generatedUI.trim()) {
           console.log("✅ UI generated successfully");
+          console.log("🎨 Gemm Generated UI Content:", generatedUI);
           return {
             success: true,
             generatedUI,
