@@ -111,27 +111,96 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
         );
       }
 
-      // Set tool name for search
-      const searchToolName = "web_search";
-      setCurrentToolName(searchToolName);
-
-      // Notify parent about loading state
-      onLoadingStateChange?.(true, searchToolName);
-
-      // Don't show overlay until UI is generated - let blue toast handle loading
-      // setIsVisible(true);
+      // Ask Gemini to classify the sub_use_case for web_search
       setGeneratedHTML(null); // Clear previous UI
+      setCurrentToolName("web_search_classifying");
+      onLoadingStateChange?.(true, "web_search_classifying");
 
       try {
+        // Compose a prompt for Gemini to classify the sub_use_case
+        const classificationPrompt = `You are an expert at classifying web search API responses for UI rendering. Given the following JSON data, classify it as one of these predefined sub_use_cases: generic, articles, products, qa, calendar, weather, event, personal_biograph, contact, hospitality.\n\n- generic: Use if the data does not fit any other category.\n- articles: Use if the data contains a list of news, blog, or document articles.\n- products: Use if the data contains a list of products, items for sale, or shopping results.\n- qa: Use if the data contains question-answer pairs, FAQs, or direct answers.\n- calendar: Use if the data contains calendar events, schedules, or appointments.\n- weather: Use if the data contains weather information, forecasts, or climate data.\n- event: Use if the data contains event details, invitations, or RSVPs.\n- personal_biograph: Use if the data contains personal biography, profile, or background information.\n- contact: Use if the data contains contact information, address book entries, or people details.\n- hospitality: Use if the data contains hotel, restaurant, travel, or hospitality-related information.\n\nReturn ONLY the sub_use_case string (one of: generic, articles, products, qa, calendar, weather, event, personal_biograph, contact, hospitality). Do not return any explanation, formatting, or code block.\n\nDATA:\n${JSON.stringify(
+          searchData
+        )}`;
+
+        // Call Gemini API directly for classification
+        const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "";
+        const GEMINI_API_URL =
+          "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite-preview-06-17:generateContent";
+        const requestBody = {
+          contents: [
+            {
+              parts: [
+                {
+                  text: classificationPrompt,
+                },
+              ],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.0,
+            maxOutputTokens: 20,
+            topK: 5,
+            topP: 0.8,
+          },
+        };
+
+        let scenario = "generic";
+        try {
+          const response = await fetch(
+            `${GEMINI_API_URL}?key=${GEMINI_API_KEY}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(requestBody),
+            }
+          );
+          if (response.ok) {
+            const geminiResp = await response.json();
+            let text =
+              geminiResp.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+            if (text) {
+              // Clean up any code block or formatting
+              text = text.replace(/[`\n\r]/g, "").toLowerCase();
+              if (
+                [
+                  "generic",
+                  "articles",
+                  "products",
+                  "qa",
+                  "calendar",
+                  "weather",
+                  "event",
+                  "personal_biograph",
+                  "contact",
+                  "hospitality",
+                ].includes(text)
+              ) {
+                scenario = text;
+              }
+            }
+          }
+        } catch (e) {
+          console.warn(
+            "Gemini classification failed, falling back to generic.",
+            e
+          );
+        }
+
+        const searchToolName = `web_search_${scenario}`;
+        setCurrentToolName(searchToolName);
+        onLoadingStateChange?.(true, searchToolName);
+
         console.log(
-          "🎨 UIOverlay: Sending search data to UI agent for processing..."
+          `🎨 UIOverlay: Sending search data to UI agent for processing (scenario: ${scenario})...`
         );
 
-        // Generate UI directly with search data
+        // Generate UI directly with search data and scenario
         const uiResult = await generateUI(
           searchToolName,
           searchData,
-          "search_" + Date.now()
+          `search_${scenario}_` + Date.now()
         );
 
         if (uiResult.success && uiResult.generatedUI) {
@@ -263,7 +332,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
   const LoadingState = () => (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="flex flex-col items-center gap-4 text-white">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-white" />
         <div className="text-center">
           <p className="text-lg font-medium">Generating Interface</p>
           <p className="text-sm text-gray-400 mt-1">
@@ -289,19 +358,17 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
-        >
+          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
           {/* Close button */}
           <button
             onClick={handleClose}
             className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors backdrop-blur-sm"
-            aria-label="Close UI"
-          >
+            aria-label="Close UI">
             <X className="w-5 h-5" />
           </button>
 
-          {/* Generated UI content as the modal itself */}
-          <div className="relative">
+          {/* Generated UI content as the modal itself with hidden scrollbar */}
+          <div className="relative  overflow-y-auto scrollbar-hide rounded-[1.5rem] h-full max-h-[75vh] p-0">
             <HTMLRenderer htmlContent={generatedHTML} />
           </div>
         </motion.div>
