@@ -285,7 +285,7 @@ when u do so because I don't want you to edit anything in the ui in the template
       `;
 
           break;
-          
+
         case "web_search_building_details":
           specificPrompt = `please reference the image I attached to understand what I meant by in my prompt, before you try to generate the ui please deeply analyse the data provided and do couple of researches to get the building images and provide that for the html generation please don't add script or javascript. here is my prompt and replace all place holders with the actual data you analysed : "As a senior frontend developer please generate an html with Objective
 Generate a complete static HTML page for a 'Building Details' UI that precisely replicates the visual layout and styling of the provided image. This UI will display key information about a prominent skyscraper, the Burj Khalifa.
@@ -378,7 +378,7 @@ Image Placeholders (replace with actual URLs)
 
 [URL_TO_MAIN_BURJ_KHALIFA_IMAGE]`;
           break;
-          case "web_search_event":
+        case "web_search_event":
           specificPrompt = "";
           break;
         case "web_search_sport":
@@ -482,7 +482,117 @@ Logos: Publicly available team logo URLs.
 Report URL: Link to the home team’s official match report page."`;
           break;
         case "web_search_personal_biograph":
-          specificPrompt = "";
+          specificPrompt = `You are an expert frontend developer and I want you to generate me an html with this templeate I provided, before trying to generate the code please understand the data and you can remove the optional components if there data isn't availible in the data provided, be cautious about the data you include.
+when u do so because I don't want you to edit anything in the ui in the template has to be as it is. and please change all placeholder contents because that is your main job to substitute the contents"<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Doe's Professional Profile</title>
+    <!-- Link to Neue Haas Grotesk Display Pro font -->
+    <link href="https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro" rel="stylesheet">
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for font and avatar styling */
+        body {
+            font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+        }
+        /* Ensure profile-avatar img fills its container and covers the area */
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* Custom styling for text-based avatars */
+        .text-avatar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #555555;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 50%; /* Ensure text avatars are rounded */
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border">
+
+    <!-- Main UI Container: Hardcoded static content -->
+    <div id="profile-card" class="w-full max-w-[450px] flex flex-col gap-4 p-5 rounded-[1.5rem] bg-white/10 shadow-xl">
+
+        <!-- Profile Header Section -->
+        <div class="bg-white/10 rounded-xl p-0 flex items-start gap-4">
+            <div class="w-11 h-11 overflow-hidden flex-shrink-0 profile-avatar rounded-full">
+                <!-- Example: Image Avatar -->
+                <img src="https://placehold.co/44x44/FFD700/000000?text=JD" alt="Profile Avatar" class="w-full h-full object-cover rounded-full">
+                <!-- Example: Text Avatar (uncomment and remove img tag to use) -->
+                <!-- <div class="w-full h-full text-avatar">JD</div> -->
+                <!-- Example: Placeholder if no avatar or name (uncomment and remove img/text-avatar to use) -->
+                <!-- <img src="https://via.placeholder.com/44/CCCCCC/808080?text=No+Image" alt="Placeholder Avatar" class="w-full h-full object-cover rounded-full"> -->
+            </div>
+            <div class="flex-grow flex flex-col justify-center py-2">
+                <p class="text-white text-lg font-bold leading-tight">Senior Software Engineer | AI/ML Enthusiast | Tech Lead</p>
+            </div>
+        </div>
+
+        <!-- Experience Section -->
+        <!-- Experience 1 with logo -->
+        <div class="bg-white/10 rounded-[16px] p-4 flex items-start gap-3">
+            <div class="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0">
+                <img src="https://placehold.co/44x44/007BFF/FFFFFF?text=ABC" alt="ABC Tech Solutions Logo" class="w-full h-full object-cover rounded-full">
+            </div>
+            <div class="flex-grow space-y-1">
+                <p class="font-semibold text-white">Lead Software Engineer</p>
+                <div class="flex justify-between items-center w-full">
+                    <p class="text-sm" style="color: #FFFFFF99;">ABC Tech Solutions</p>
+                    <p class="text-xs" style="color: #FFFFFF99;">Jan 2022 - Present</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experience 2 without logo -->
+        <div class="bg-white/10 rounded-[16px] p-4 flex items-start gap-3">
+            <!-- No logo div here as per requirements for null logoUrl -->
+            <div class="flex-grow">
+                <p class="font-semibold text-white">Software Developer</p>
+                <div class="flex justify-between items-center w-full">
+                    <p class="text-sm" style="color: #FFFFFF99;">XYZ Innovations</p>
+                    <p class="text-xs" style="color: #FFFFFF99;">Mar 2019 - Dec 2021</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experience 3 with logo -->
+        <div class="bg-white/10 rounded-[16px] p-4 flex items-start gap-3">
+            <div class="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0">
+                <img src="https://placehold.co/44x44/28A745/FFFFFF?text=PQR" alt="PQR Systems Logo" class="w-full h-full object-cover rounded-full">
+            </div>
+            <div class="flex-grow">
+                <p class="font-semibold text-white">Junior Developer</p>
+                <div class="flex justify-between items-center w-full">
+                    <p class="text-sm" style="color: #FFFFFF99;">PQR Systems</p>
+                    <p class="text-xs" style="color: #FFFFFF99;">Aug 2017 - Feb 2019</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action Button -->
+        <button class="w-full bg-white text-black py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors" onclick="window.open('https://www.linkedin.com/in/johndoe', '_blank')">
+            Connect on LinkedIn
+        </button>
+
+        <!-- To test "No profile information available." message, replace the entire content above with this div: -->
+        <!-- <div class="text-center text-gray-400 p-4 bg-[#333333] rounded-[16px]">No profile information available.</div> -->
+
+    </div>
+
+</body>
+</html>
+"`;
           break;
         case "web_search_contact":
           specificPrompt = `"Generate a complete HTML page for a 'Contact' UI, using Tailwind CSS for styling and JavaScript for dynamic, conditional rendering. This UI should display a single contact's details in a prominent card format.
@@ -529,7 +639,146 @@ This section should only be appended if it contains at least one detail (i.e., i
 No Contact Message: If data.contact is not present, display a div with text-center text-gray-400 p-4 bg-[#333333] rounded-xl and text 'No contact information available.'`;
           break;
         case "web_search_hospitality":
-          specificPrompt = "";
+          specificPrompt = `
+          IMPORTANT: Use only the actual data provided in the API response. Do not use any static, sample, or placeholder data from this prompt. Every field in the UI must come from the real API response make the response match with the ui. If a field is missing, omit that field and on current cond replace static data with the response and use real image of the Restaurant and hotels and don't change any ui style just understand the response and make show the content in ui and also when you ask for resturant please use Restaurant ui part , if you ask for hotels you should use hotels ui.
+          IMPORTANT: Use actual and real image of Restaurant or hotel if it fail use placeholder image 
+          "Generate a complete HTML page for a UI that can display either 'Restaurant Details' or 'Hotel Listings, or Hotel Detail with list of image', using Tailwind CSS for styling. The UI should be capable of displaying both a single restaurant entry and a list of hotel entries.
+
+HTML Structure:
+
+    Standard HTML5 boilerplate with meta charset and viewport.
+
+    title should be 'Restaurant & Hotel Details Sample'.
+
+    Link to import the 'Neue Haas Grotesk Display Pro' font from https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro.
+
+    Link to Font Awesome for icons (utensils, star, clock, bed, globe, map-marker, phone, dumbbell, eye, wrench, info-circle) from https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css.
+
+    Include the Tailwind CSS CDN script from https://cdn.tailwindcss.com.
+
+CSS Styling (within <style> tags):
+
+    Apply font-family: "Neue Haas Grotesk Display Pro", Arial, sans-serif; to the body.
+
+    Ensure .restaurant-image img and .hotel-image img have width: 100%; height: 100%; object-fit: cover; border-radius: 1rem;.
+
+    Add a custom class .text-shadow-custom for text-shadow: 1px 1px 3px rgba(0,0,0,0.7);.
+
+Body Layout (using Tailwind classes):
+
+    body should be flex justify-center items-start  m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border.
+
+Main UI Container (id="main-content-container"):
+
+    A div with container w-full max-w-[450px] flex flex-col gap-4 p-5 rounded-[1.5rem] bg-white/10 shadow-xl.
+
+    This div will contain either the restaurant or hotel content.
+
+Content Sections (Static HTML, commented out to switch between views):
+
+1. Restaurant Details Sample or (list of Restaurant):
+
+    Top Bar (Introductory Text with Icon):
+
+        Structure: A div with flex items-start gap-3 mb-2.
+
+        Icon div: w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white text-xl font-bold flex-shrink-0. Inside, a Font Awesome icon (i tag) like fas fa-utensils.
+
+        Text div: text-lg font-bold text-white leading-tight flex-grow.e,g( Set its textContent to 'put response match to this ', this is for sample for you to understandable like this for other placeholder value).
+
+    Restaurant Image Card:
+
+        Structure: A div with restaurant-image card bg-[#333333] rounded-xl p-0 overflow-hidden relative h-56.
+
+       optional img (if no image omit the image and bottom button in ui): w-full h-full object-cover rounded-xl. Use a sample image URL when you get an error to load the image  (e.g., https://i.ibb.co/0pzY3nWB/placeholder-Hotels.png, if the actual image url is not provide or have error use this placeholder image).
+
+        Optional Rating Overlay: An absolute div with top-4 left-4 bg-black bg-opacity-50 text-white text-sm font-semibold py-1 px-3 rounded-full flex items-center gap-1. Inside, a Font Awesome star icon (fas fa-star) with text-yellow-400 and a span for the rating (e.g., '4.7').
+
+    Restaurant Details Card:
+
+        Structure: A div with card bg-white/10 rounded-xl p-4 flex flex-col gap-2.
+
+        Name and Distance div: flex justify-between items-center.
+
+            Name div: text-xl font-bold text-white (e.g., 'The Gastronome Grill' this is for sample for you to understandable like this for other placeholder value).
+
+            Distance div: text-sm text-gray-400 (e.g., '2.5 mi' this is for smaple for you to understandable like this for other placeholder value).
+
+        Food Type and Price Range div: text-base text-gray-400 flex items-center gap-2.
+
+            Font Awesome icon (i tag) (e.g., fas fa-burger).
+
+            span for food type and price range (e.g., 'Modern American • $$$$').
+
+        Open Status and Closing Time div: text-base flex items-center gap-2.
+
+            Font Awesome clock icon (fas fa-clock) with text-gray-400.
+
+            span for open/closed status: font-semibold. Apply text-green-400 if open, else text-red-400 (e.g., 'Open').
+
+            span for closing time: text-gray-400 (e.g., '• 10:00 PM').
+
+    Book A Table Button:
+
+        Structure: A button element. always white background and black text color
+
+        Styling: bg-[#FFFFFF] text-black py-3 px-6 border-none rounded-xl cursor-pointer text-base font-bold text-center transition-colors duration-300 w-[calc(100%-2rem)] self-center mt-2 hover:bg-gray-200. Set its textContent to 'Book A Table'.
+
+2. Hotel Listing Sample:
+
+    Top Bar (Introductory Text with Icon):
+
+        Structure: A div with flex items-start gap-3 mb-2.
+
+        Icon div: w-10 h-10 rounded-full bg-[#333333] flex items-center justify-center text-white text-xl font-bold flex-shrink-0. Inside, a Font Awesome icon (i tag) like fas fa-hotel.
+
+        Text div: text-lg font-bold text-white leading-tight flex-grow. Set its textContent to 'use the real api respose data that match with this.'.
+
+    Hotel Cards (List):
+
+        Create two sample hotel cards. For each hotel:
+
+            Structure: A div with card bg-[#333333] rounded-xl p-4 flex flex-col gap-3.
+
+            Optional  Hotel Image(if the no image omit in ui): A div with hotel-image rounded-xl overflow-hidden h-40. Inside, an img with w-full h-full object-cover. (e.g., https://i.ibb.co/0pzY3nWB/placeholder-Hotels.png, if the actual image url is not provide or have error use this placeholder image).
+
+            Location, Rating, Amenities Row: A div with flex justify-between items-center text-sm.
+
+                Left side div: flex items-center gap-2.
+
+                    Location span: text-gray-400 (e.g., 'New York').
+
+                    Star Rating span: flex items-center text-yellow-400. Render 5 Font Awesome star icons (fas fa-star), with text-gray-600 for unfilled stars based on a sample rating (e.g., 4.5).
+
+                    Numerical Rating span: text-white font-semibold (e.g., '4.5').
+
+                Right side div: flex items-center gap-2.
+
+                    For each amenity, create a div with w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-white text-sm. Inside, a Font Awesome icon (i tag) (e.g., fas fa-wifi, fas fa-dumbbell, fas fa-spa, fas fa-parking).
+
+            Hotel Name: A div with text-xl font-bold text-white (e.g., 'Grand Hyatt', 'The Cozy Inn',  as placeholder, please change it in real data as soon as you get the data).
+
+            Price: A div with text-base text-gray-400 (e.g., 'from $350 p/night as placeholder, please change it in real data as soon as you get the data').
+
+            Action Buttons Row: A div with flex justify-between items-center mt-2.
+
+                For each action, create an a tag (link) with flex items-center gap-2 bg-gray-700 text-white py-2 px-4 rounded-full text-sm font-semibold transition-colors duration-200 hover:bg-gray-600.
+
+                    Font Awesome icon (i tag) (e.g., fas fa-web, fas fa-phone, fas fa-map-marker-alt).
+
+                    span for action text (e.g., 'website','Direction', 'Call'). Set href to '#' or a sample tel: link.
+
+    Main Action Button (for hotel listing):
+
+        Structure: A button element.
+
+        Styling: bg-[#FFFFFF] text-black py-3 px-6 border-none rounded-xl cursor-pointer text-base font-bold text-center transition-colors duration-300 w-[calc(100%-2rem)] self-center mt-2 hover:bg-gray-200. Set its textContent to 'Explore More Hotels'.
+
+Instructions for switching views:
+
+    The generated HTML should contain both the restaurant and hotel sections.
+
+    One section should be commented out by default (e.g., the restaurant section) so that the other (e.g., hotel listing) is visible upon initial load. Users can uncomment the desired section and comment out the other to switch views."`;
           break;
         case "web_search_generic":
           specificPrompt = "";
