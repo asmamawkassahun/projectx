@@ -118,7 +118,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
 
       try {
         // Compose a prompt for Gemini to classify the sub_use_case
-        const classificationPrompt = `You are an expert at classifying web search API responses for UI rendering. Given the following JSON data, classify it as one of these predefined sub_use_cases: generic, articles, products, qa, calendar, weather, event, personal_biograph, contact, hospitality.\n\n- generic: Use if the data does not fit any other category.\n- articles: Use if the data contains a list of news, blog, or document articles.\n- products: Use if the data contains a list of products, items for sale, or shopping results.\n- qa: Use if the data contains question-answer pairs, FAQs, or direct answers.\n- calendar: Use if the data contains calendar events, schedules, or appointments.\n- weather: Use if the data contains weather information, forecasts, or climate data.\n- event: Use if the data contains event details, invitations, or RSVPs.\n- personal_biograph: Use if the data contains personal biography, profile, or background information.\n- contact: Use if the data contains contact information, address book entries, or people details.\n- hospitality: Use if the data contains hotel, restaurant, travel, or hospitality-related information.\n\nReturn ONLY the sub_use_case string (one of: generic, articles, products, qa, calendar, weather, event, personal_biograph, contact, hospitality). Do not return any explanation, formatting, or code block.\n\nDATA:\n${JSON.stringify(
+        const classificationPrompt = `You are an expert at classifying web search API responses for UI rendering. Given the following JSON data, classify it as one of these predefined sub_use_cases: generic, articles, products, qa, calendar, weather, event, personal_biograph, contact, hospitality, sport.\n\n- generic: Use if the data does not fit any other category.\n- articles: Use if the data contains a list of news, blog, or document articles.\n- products: Use if the data contains a list of products, items for sale, or shopping results.\n- qa: Use if the data contains question-answer pairs, FAQs, or direct answers.\n- calendar: Use if the data contains calendar events, schedules, or appointments.\n- weather: Use if the data contains weather information, forecasts, or climate data.\n- event: Use if the data contains event details, invitations, or RSVPs.\n- personal_biograph: Use if the data contains personal biography, profile, or background information.\n- contact: Use if the data contains contact information, address book entries, or people details.\n- hospitality: Use if the data contains hotel, restaurant, travel, or hospitality-related information.\n- sport: Use if the data contains sports scores, events, teams, players, or related information.\n\nReturn ONLY the sub_use_case string (one of: generic, articles, products, qa, calendar, weather, event, personal_biograph, contact, hospitality, sport). Do not return any explanation, formatting, or code block.\n\nDATA:\n${JSON.stringify(
           searchData
         )}`;
 
@@ -175,6 +175,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
                   "personal_biograph",
                   "contact",
                   "hospitality",
+                  "sport",
                 ].includes(text)
               ) {
                 scenario = text;
@@ -196,7 +197,23 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
           `🎨 UIOverlay: Sending search data to UI agent for processing (scenario: ${scenario})...`
         );
 
-        // Generate UI directly with search data and scenario
+        // If scenario is 'sport', fetch the sample image and attach it
+        let fileAttachment: File | null = null;
+        if (scenario === "sport") {
+          try {
+            const imgResp = await fetch("/sport-sample.png");
+            const imgBlob = await imgResp.blob();
+            fileAttachment = new File([imgBlob], "sport-sample.png", {
+              type: imgBlob.type || "image/png",
+            });
+          } catch (e) {
+            console.warn(
+              "Failed to fetch sport-sample.png for Gemini UI generation",
+              e
+            );
+          }
+        }
+
         const uiResult = await generateUI(
           searchToolName,
           searchData,
