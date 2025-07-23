@@ -10,7 +10,8 @@ interface UIAgentHookResult {
   generateUI: (
     functionName: string,
     apiResponse: any,
-    toolCallId: string
+    toolCallId: string,
+    fileAttachment?: File | null
   ) => Promise<UIGenerationResult>;
   isGenerating: boolean;
 }
@@ -30,6 +31,10 @@ NEVER add fictional emails, contacts, events, or any made-up content
 If no data is provided, show appropriate empty states
 Every piece of information displayed MUST come from the actual API response
 Use the exact data structure, names, dates, and content from the provided response
+Don't add script or use javascript while generating the HTML
+please try to search and get the spesfic images, logos, and other relevant datas needed in the html generation before preceding to the html generation, but be caustious about the data you include. don't halucinate or make up any data.
+please remove any vertical scroll the html content must be in full height of required the content height.
+if a refernce image is provied please use it as a ui refernce only don't use any data from it.
 DETAILED UI REQUIREMENTS:
 CREATE COMPREHENSIVE interfaces that showcase ALL available data
 UTILIZE every relevant field and property from the API response
@@ -45,11 +50,8 @@ NO clickable elements or navigation
 PURELY for data display and viewing
 Focus on presenting information clearly and beautifully
 CUSTOM DARK MODE OVERLAY DESIGN SYSTEM:
-BACKGROUND of the main container must be bg-white/10 (white with 10% opacity)
 Apply a backdrop-blur-[40px] filter to create a translucent, frosted-glass effect
 Apply p-6 (24px padding) and rounded-[22px] for all main containers
-Use ONLY dark mode colors: white text (text-white), and light grays (text-gray-100, text-gray-300, text-gray-400) for hierarchy
-Content blocks should use bg-white/5 or bg-white/10 with border border-white/20
 Maintain high contrast for readability
 Use visual indicators: emojis, status tags, icons, and colored badges (bg-blue-500, bg-green-500, bg-orange-500, bg-red-500)
 Add clear typographic hierarchy: text-xl, text-2xl, bold weights, and subtle labels in text-sm text-gray-400
@@ -77,7 +79,7 @@ Focus on compact, layered information design that feels like a high-quality moda
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="max-w-md, initial-scale=1.0, user-scalable=no">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Dynamic UI</title>
 </head>
@@ -177,11 +179,307 @@ Apply font-family: 'Neue Haas Grotesk Display Pro', sans-serif; to the body. Ens
 "`;
           break;
         case "web_search_weather":
-          specificPrompt = `please adapt the data provided don't change anything from the ui and Create a single HTML page for a 'Weather' UI, using Tailwind CSS for styling and JavaScript for dynamic, conditional rendering. HTML Structure: Standard HTML5 boilerplate with meta charset and viewport. title should be 'Weather'. Link to import the 'Neue Haas Grotesk Display Pro' font from https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro. Include the Tailwind CSS CDN script from https://cdn.tailwindcss.com. CSS Styling (within ⟨style$\rangle$ tags): Apply font-family: "Neue Haas Grotesk Display Pro", Arial, sans-serif; to the body and all elements within the main UI container. Ensure text within the main content container prevents overflow with overflow: hidden;, word-wrap: break-word;, and overflow-wrap: break-word; for all direct children and specific text elements (paragraphs, headings, spans, and divs). Body Layout (using Tailwind classes): body should be flex justify-center items-start min-h-screen m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border. Main UI Container (id="main-weather-container"): This will be the primary container for the weather information. Structure: A div with relative p-6 rounded-[22px] bg-[#333333] shadow-lg shadow-black/30 w-full max-w-[453px] h-[324px] overflow-hidden flex flex-col justify-center. The flex flex-col justify-center classes will vertically center the content, while allowing horizontal content alignment to be controlled by child elements. This container should dynamically render its content based on the weatherData object. JavaScript Logic (within ⟨script$\rangle$ tags, at the end of body): renderWeatherUI(data) Function: This function takes a data object as its argument. It should get the main-weather-container element. If not found, log an error and return. It must clear the innerHTML of the container before rendering new content. Conditional Rendering Logic for each component: Location and Temperature Section: Condition: Renders if data.location, data.temperature, and data.unit are present. Structure: A div with flex flex-col items-start mb-2. The items-start class ensures content is aligned to the left. Location: A span with text-lg text-gray-400. Displays [Location] from data.location. Temperature: A div with text-5xl font-bold text-white flex items-start. span for temperature value: Displays [Temperature] from data.temperature. span for unit: text-3xl font-normal. Displays [Unit] from data.unit. Weather Condition: Condition: Renders if data.condition is present. Structure: A p with text-2xl font-semibold text-white mb-4. Displays [Condition] from data.condition. The text should be limited to 2 words or less (e.g., "Partly cloudy", "Sunny", "Rainy"). Humidity and Precipitation Section: Condition: Renders if data.humidity and data.precipitation are present. Structure: A div with flex items-center gap-6. Humidity: A div with flex items-center gap-2 text-base text-gray-300. An SVG icon (width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg") with the path: ⟨path d="M11.6295 12.0005H5.73518C2.57276 12.0005 0 9.30893 0 6.00049C0 2.69205 2.57276 0.000488281 5.73518 0.000488281C7.79698 0.000488281 9.65506 1.12489 10.6827 2.96438C10.9933 2.89217 11.3102 2.85586 11.6295 2.85586C14.0396 2.85586 16 4.90703 16 7.42818C16 9.94932 14.0394 12.0005 11.6295 12.0005Z" fill="#898BA9"/\rangle$. span for humidity percentage: Displays [Humidity]% from data.humidity. Precipitation: A div with flex items-center gap-2 text-base text-gray-300. An SVG icon (width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg") with the path: ⟨path d="M7.12274 3.07431L5.00001 0.000488281L2.87728 3.07431C1.80228 4.62872 0 7.49667 0 9.2302C0 11.8593 2.24318 14.0005 5.00001 14.0005C7.75683 14.0005 10 11.8593 10 9.2302C10 7.49667 8.19774 4.62872 7.12274 3.07431ZM4.03182 3.72902L5.00001 2.32902L5.96819 3.72902C6.13935 3.97222 6.30603 4.2179 6.46816 4.46597C7.20328 5.59069 6.34365 7.00049 5.00001 7.00049C3.65636 7.00049 2.79673 5.59068 3.53185 4.46597C3.69399 4.2179 3.86067 3.97222 4.03182 3.72902Z" fill="#898BA9" fill-opacity="0.3"/\rangle$. span for precipitation percentage: Displays [Precipitation]% from data.precipitation. Main Weather Icon (Large Cloud/Sun): Condition: Renders if data.isSunny is present. Structure: An img tag with absolute top-1/2 -translate-y-1/2 right-[-20px] w-[300px] h-[300px] object-contain pointer-events-none. The right-[-20px] value positions the image slightly off the right edge, creating a visual gap with the left-aligned text content. The src attribute should be https://finden.bekurtechnologies.com/Sunny.png if data.isSunny is true, otherwise https://finden.bekurtechnologies.com/PartyCloudy.png.
-`;
+          specificPrompt = ` You are an expert frontend developer and I want you to generate me an html with this templeate I provided, before trying to generate the code please understand the data and you can remove the optional components if there data isn't availible in the data provided, be cautious about the data you include.
+when u do so because I don't want you to edit anything in the ui in the template has to be as it is. and please change all placeholder contents because that is your main job to substitute the contents the images in all the three weather senarios (raining: <img src="https://i.ibb.co/GvQCM1VZ/raining.png" alt="raining" border="0">), (sunny: <img src="https://i.ibb.co/4ZF2CxXb/Sunny.png" alt="Sunny" border="0">), (cloudy: <img src="https://i.ibb.co/nq8RHbhV/Party-Cloudy.png" alt="Party-Cloudy" border="0">). don't change any styling or the template structure.
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Dashboard</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Font -->
+    <link
+      href="https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro"
+      rel="stylesheet" />
+
+    <style>
+      /* Apply the custom font to the body */
+      body {
+        font-family: "Neue Haas Grotesk Display Pro", sans-serif;
+        /* No background image or color, just the card */
+        background: none;
+      }
+
+      /* Custom class for the glassmorphism effect on the weather card */
+      .weather-card {
+        background-color: rgba(255, 255, 255, 0.1);
+        /* Blur effect for the background */
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px); /* For Safari */
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        /* Ensure no content overflows from the card */
+        overflow: hidden;
+      }
+
+      /* Custom class to hide the scrollbar */
+      .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Main container for the weather card -->
+    <!-- The max-w-md and mx-auto classes are now directly on the weather-card -->
+    <div
+      class="weather-card w-full max-w-md mx-auto p-6 rounded-[1.5rem] shadow-lg text-white">
+      <!-- Top section: City, Temp, and Image -->
+      <div class="flex justify-between items-start">
+        <div>
+          <!-- Placeholder for city name -->
+          <p class="text-2xl font-medium">{{cityName}}</p>
+          <div class="flex  mt-1">
+            <!-- Placeholder for current temperature -->
+             <div class=" text-[40px] font-medium leading-[130%]"
+            style={{fontSize:'40px'}} >{{TempratureValue}}</div>
+            <div class="align-top mt-1 ml-1 text-[2.2rem]">&deg;F</div>
+          </div>
+        </div>
+        <div class="w-42 h-32 flex-shrink-0">
+          <!-- Placeholder for current weather icon -->
+          <!-- Image for current weather, will be replaced by dynamic data -->
+          <!-- Example: If current weather is sunny -->
+          <img
+            src="https://i.ibb.co/4ZF2CxXb/Sunny.png"
+            alt="{{currentWeatherDescription}}"
+            class="w-full h-full object-contain" />
+        </div>
+      </div>
+      <!-- Bottom section: Condition and Stats -->
+      <div class="mt-2">
+        <!-- Placeholder for weather condition -->
+        <p class="font-bold">{{weatherCondition}}</p>
+        <div class="flex items-center space-x-4 text-gray-200 text-sm mt-1">
+          <div class="flex items-center gap-2">
+            <!-- Icon for cloudiness percentage -->
+            <img
+              src="https://i.ibb.co/0RK8nnbv/Clouds-16.png"
+              alt="Clouds-16"
+              class="w-4 object-contain" />
+            <!-- Placeholder for cloudiness percentage -->
+            <span>{{cloudinessPercentage}}%</span>
+          </div>
+          <div class="flex items-center gap-2">
+            
+            <img
+              src="https://i.ibb.co/xRBb2hq/Humidity-16.png"
+              alt="Humidity"
+              class="w-4 object-contain" />
+            <!-- Placeholder for humidity percentage -->
+            <span>{{humidityPercentage}}%</span>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </body>
+</html>
+
+      `;
+
           break;
-        case "web_search_event":
+          
+        case "web_search_building_details":
+          specificPrompt = `please reference the image I attached to understand what I meant by in my prompt, before you try to generate the ui please deeply analyse the data provided and do couple of researches to get the building images and provide that for the html generation please don't add script or javascript. here is my prompt and replace all place holders with the actual data you analysed : "As a senior frontend developer please generate an html with Objective
+Generate a complete static HTML page for a 'Building Details' UI that precisely replicates the visual layout and styling of the provided image. This UI will display key information about a prominent skyscraper, the Burj Khalifa.
+
+The page will feature a concise descriptive text, a main image of the building, a section for core numerical statistics (floor and height), a detailed list of specifications, and a call-to-action button. All content should be static, with no dynamic placeholders needed for this specific UI. The content within the card should occupy its full height, eliminating any vertical scrollbars, and the card itself should have a minimum width of 480px.
+
+Technical Specifications
+HTML Structure
+Document Title: Set the <title> to "Burj Khalifa Details".
+
+Font Import: Link to import the 'Inter' font from Google Fonts: https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap.
+
+Icon Library: Link to Font Awesome for icons: https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css.
+
+Styling Framework: Include the Tailwind CSS CDN script: https://cdn.tailwindcss.com.
+
+CSS Styling (within <style> tags)
+Global Font: Apply font-family: 'Inter', sans-serif; to the body element.
+
+Image Sizing: Ensure .top-image img and .main-image img have width: 100%; height: 100%; object-fit: cover; for proper scaling and aspect ratio.
+
+Body Layout (Tailwind classes)
+Apply the following utility classes to the body element for centering and foundational styling: flex justify-center items-center min-h-screen m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border.
+
+Main UI Container (#building-details-card)
+Create a div with the ID building-details-card.
+
+Apply the following Tailwind classes for structural and aesthetic properties, ensuring a minimum width of 480px and no vertical scrolling: min-w-[480px] flex flex-col gap-4 rounded-[1.5rem] shadow-xl style="background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px);".
+
+Content Structure (within #building-details-card)
+Top Header Section
+A div with classes: flex items-center gap-3 p-5 pb-0.
+
+Small Image: A div (w-12 h-12 rounded-full overflow-hidden flex-shrink-0 top-image) containing an <img> with src="[URL_TO_SMALL_BURJ_KHALIFA_IMAGE]" and alt="Burj Khalifa Small Image".
+
+Description Text: A <p> element with the text "The Burj Khalifa is a megatall skyscraper located in Dubai, United Arab Emirates." Apply classes for clear, readable font (e.g., text-white text-base).
+
+Main Building Image Section
+A div with classes: p-5 pt-0.
+
+An <img> element with src="[URL_TO_MAIN_BURJ_KHALIFA_IMAGE]" and alt="Burj Khalifa Main Image". Apply classes for rounded corners and full width within its container (e.g., w-full rounded-xl main-image).
+
+Mid-Section - Floor and Height Statistics
+A div with classes: flex justify-between gap-4 p-5 pt-0.
+
+Floor Section (Left): A div with classes flex-1 flex flex-col items-center p-4 rounded-xl bg-[#333333].
+
+<p> with text "Floor" and appropriate text styling (e.g., text-gray-400 text-sm).
+
+<p> with text "154" and appropriate text styling (e.g., text-white text-5xl font-bold).
+
+Height Section (Right): A div with classes flex-1 flex flex-col items-center p-4 rounded-xl bg-[#333333].
+
+<p> with text "Height" and appropriate text styling (e.g., text-gray-400 text-sm).
+
+<p> with text "829.8" (text-white text-5xl font-bold) followed by a <span> with text "m" (text-gray-400 text-base).
+
+Bottom Section - Detailed Information List
+A div with classes: flex flex-col gap-3 p-5 pt-0.
+
+Height Item: A div with classes rounded-xl p-4 flex justify-between items-center bg-[#333333].
+
+Left <p> with text "Height" and appropriate text styling (e.g., text-gray-300 text-base).
+
+Right <p> with text "829.8 m" and appropriate text styling (e.g., text-white text-base font-semibold).
+
+Floors Item: A div with classes rounded-xl p-4 flex justify-between items-center bg-[#333333].
+
+Left <p> with text "Floors" and appropriate text styling (e.g., text-gray-300 text-base).
+
+Right <p> with text "154" and appropriate text styling (e.g., text-white text-base font-semibold).
+
+Elevators Item: A div with classes rounded-xl p-4 flex justify-between items-center bg-[#333333].
+
+Left <p> with text "Elevators" and appropriate text styling (e.g., text-gray-300 text-base).
+
+Right <p> with text "57" and appropriate text styling (e.g., text-white text-base font-semibold).
+
+Call to Action Button
+A div with classes: p-5 pt-0.
+
+A <button> with classes: w-full bg-white text-black py-3 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors shadow-lg.
+
+Button text: "View details".
+
+Implement an onclick event to navigate to a relevant URL (e.g., window.open('https://en.wikipedia.org/wiki/Burj_Khalifa', '_blank')).
+
+Image Placeholders (replace with actual URLs)
+[URL_TO_SMALL_BURJ_KHALIFA_IMAGE]
+
+[URL_TO_MAIN_BURJ_KHALIFA_IMAGE]`;
+          break;
+          case "web_search_event":
           specificPrompt = "";
+          break;
+        case "web_search_sport":
+          specificPrompt = `please reference the image I attached to understand what I meant by in my prompt, before you try to generate the ui please deeply analyse the data provided and do couple of researches to get thew logos and other relevant datas needed in the html generation pease don't add script or javascript. here is my prompt and replace all place holders with the actual data you analysed : "As a senior frontend developer please generate an html with Objective
+Generate a complete static HTML page for a 'Match Stats' UI. This interface will prominently display football match statistics for a game between {{ home_team.name }} and {{ away_team.name }}, presented within a dedicated card component.
+
+The UI must highlight the top-performing player from the match. This player's selection will be based on their highest statistical contributions (e.g., goals, assists, chances created, or duels won) derived from recent match data. The page will include the match score, a detailed list of the selected player’s statistics, and a clear call-to-action button. All dynamic data points will be represented using generic template placeholders (e.g., {{ variable }}), anticipating replacement by a server-side templating engine without reliance on any specific backend language. The content within the card should occupy its full height, eliminating any vertical scrollbars.
+
+Technical Specifications
+HTML Structure
+Document Title: Set the <title> dynamically to {{ match.title }}.
+
+Font Import: Link to import the 'Inter' font from Google Fonts: https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap.
+
+Icon Library: Link to Font Awesome for icons: https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css.
+
+Styling Framework: Include the Tailwind CSS CDN script: https://cdn.tailwindcss.com.
+
+CSS Styling (within <style> tags)
+Global Font: Apply font-family: 'Inter', sans-serif; to the body element.
+
+Statistic Item Background: Define custom styling for .stat-item-bg: background-color: #333333; border-radius: 1rem;.
+
+Image Sizing: Ensure .team-logo img and .player-avatar img have width: 100%; height: 100%; object-fit: cover; for proper scaling and aspect ratio.
+
+Body Layout (Tailwind classes)
+Apply the following utility classes to the body element for centering and foundational styling: flex justify-center items-center min-h-screen m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border.
+
+Main UI Container (#match-stats-card)
+Create a div with the ID match-stats-card.
+
+Apply the following Tailwind classes and inline style for structural and aesthetic properties, ensuring a minimum width of 480px and no vertical scrolling: min-w-[480px] flex flex-col gap-4 rounded-[1.5rem] shadow-xl style="background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px);".
+
+Content Structure (within #match-stats-card)
+Player Header Section
+A div with classes: flex items-center gap-3 p-5 pb-0.
+
+Player Avatar: A div (w-12 h-12 rounded-full overflow-hidden flex-shrink-0 player-avatar) containing an <img> with src="{{ player.avatar_url }}" and alt="{{ player.name }} Avatar".
+
+Player Info: A div (flex flex-col) containing:
+
+<p> for {{ player.name }} (text-white text-lg font-semibold).
+
+<p> for {{ player.position_team }} (text-gray-400 text-sm leading-tight).
+
+Match Score Section
+A div with classes: p-5 flex flex-col items-center justify-center.
+
+Teams Container: A div (flex justify-between items-center w-full max-w-[300px] mb-4).
+
+Home Team: A div (flex flex-col items-center gap-2) containing:
+
+Logo: A div (w-16 h-16 rounded-full overflow-hidden bg-white flex items-center justify-center team-logo) with an <img> src="{{ home_team.logo_url }}" and alt="{{ home_team.name }} Logo".
+
+Name: <p> for {{ home_team.name }} (text-white text-sm font-medium).
+
+Score and Status: A div (flex flex-col items-center) containing:
+
+Score: <p> for {{ match.score }} (text-white text-5xl font-bold).
+
+Status: <p> for {{ match.status }} (text-gray-300 text-sm font-medium).
+
+Away Team: Identical structure to the Home Team, featuring an <img> src="{{ away_team.logo_url }}" and alt="{{ away_team.name }} Logo", and <p> for {{ away_team.name }}.
+
+Statistics List Section
+A div with classes: flex flex-col gap-3 p-5 pt-0.
+
+Utilize a template loop (e.g., {% for stat in stats %} ... {% endfor %}) to render individual statistics for the selected player.
+
+Each statistic should be encapsulated within a div (stat-item-bg rounded-xl p-4 flex justify-between items-center), containing:
+
+Left <p> for {{ stat.name }} (text-gray-300 text-base).
+
+Right <p> for {{ stat.value }} (text-white text-base font-semibold).
+
+Call to Action Button
+A div with classes: p-5 pt-0.
+
+A <button> with classes: w-full bg-white text-black py-3 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors shadow-lg.
+
+Button text: "View Full Match Report".
+
+Implement an onclick event to navigate to {{ match.report_url }} in a new tab.
+
+Player Selection Logic
+The top-performing player should be selected based on the highest statistical contributions (e.g., goals, assists, chances created, duels won) from the specific match between {{ home_team.name }} and {{ away_team.name }}.
+
+Recent match data should be used for accurate top performer identification. In the absence of specific match data, default to a prominent player from either team with a strong historical performance against the opponent.
+
+Example Data (for contextual understanding only; replace with actual data)
+Match: {{ home_team.name }} vs {{ away_team.name }} (e.g., Manchester City vs Liverpool).
+
+Player: Top performer (e.g., Erling Haaland, based on goals/assists).
+
+Stats: Goals, Assists, Chances Created, Duels Won, etc.
+
+Team Colors: Home team’s primary colors (e.g., Manchester City: sky blue #6CABDD, white #FFFFFF).
+
+Logos: Publicly available team logo URLs.
+
+Report URL: Link to the home team’s official match report page."`;
           break;
         case "web_search_personal_biograph":
           specificPrompt = "";
@@ -637,7 +935,7 @@ DATA TO RENDER:`;
           break;
       }
 
-      return UI_CONSTITUTION+"\n\n"+ specificPrompt;
+      return UI_CONSTITUTION + "\n\n" + specificPrompt;
     },
     []
   );
@@ -645,24 +943,31 @@ DATA TO RENDER:`;
   const extractHTMLContent = useCallback(
     (fullResponse: string): string | null => {
       try {
-        // Look for ```html blocks
-        const htmlMatch = fullResponse.match(/```html\s*([\s\S]+?)```/);
-        if (htmlMatch) {
-          return htmlMatch[1].trim();
-        }
-
-        // Fallback: look for any HTML document structure
-        const htmlStart = fullResponse.indexOf("<!DOCTYPE html>");
-        if (htmlStart !== -1) {
-          const htmlEnd = fullResponse.lastIndexOf("</html>");
-          if (htmlEnd !== -1 && htmlEnd > htmlStart) {
-            return fullResponse.substring(htmlStart, htmlEnd + 7); // +7 for "</html>"
+        let cleaned = fullResponse;
+        // Remove ```html ... ``` or any triple-backtick code block
+        const htmlBlock = cleaned.match(/```html\s*([\s\S]+?)```/);
+        if (htmlBlock) {
+          cleaned = htmlBlock[1];
+        } else {
+          const genericBlock = cleaned.match(/```[a-zA-Z]*\s*([\s\S]+?)```/);
+          if (genericBlock) {
+            cleaned = genericBlock[1];
           }
         }
+        // Fallback: look for any HTML document structure
+        const htmlStart = cleaned.indexOf("<!DOCTYPE html>");
+        if (htmlStart !== -1) {
+          const htmlEnd = cleaned.lastIndexOf("</html>");
+          if (htmlEnd !== -1 && htmlEnd > htmlStart) {
+            cleaned = cleaned.substring(htmlStart, htmlEnd + 7);
+          } else {
+            cleaned = cleaned.slice(htmlStart);
+          }
+        }
+        return cleaned.trim();
       } catch (error) {
         console.warn("Error extracting HTML content:", error);
       }
-
       // Return the full response as fallback
       return fullResponse;
     },
@@ -673,7 +978,8 @@ DATA TO RENDER:`;
     async (
       functionName: string,
       apiResponse: any,
-      toolCallId: string
+      toolCallId: string,
+      fileAttachment?: File | null
     ): Promise<UIGenerationResult> => {
       console.log("🎨 Generating dynamic UI for function:", functionName);
 
@@ -721,20 +1027,56 @@ DATA TO RENDER:`;
         );
         console.log("📊 Prompt Length:", fullPrompt.length, "characters");
 
-        // Create request body for Gemini API
+        // Create request body for Gemini API, supporting optional file attachment
+        // Warn if prompt+data is very large (Gemini 1.5 Flash max input is ~32k tokens, but keep safe margin)
+        if (fullPrompt.length > 24000) {
+          console.warn(
+            "⚠️ Gemini prompt+data is very large (",
+            fullPrompt.length,
+            "chars). This may cause truncation or incomplete output."
+          );
+        }
+
+        let parts: any[] = [
+          {
+            text: fullPrompt,
+          },
+        ];
+
+        // If a file attachment is provided, add it as inlineData (base64-encoded)
+        if (fileAttachment) {
+          const fileData = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+              const result = reader.result;
+              if (typeof result === "string") {
+                // Remove the data:...;base64, prefix if present
+                const base64 = result.split(",").pop() || "";
+                resolve(base64);
+              } else {
+                reject(new Error("FileReader result is not a string"));
+              }
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(fileAttachment);
+          });
+          parts.push({
+            inlineData: {
+              mimeType: fileAttachment.type || "application/octet-stream",
+              data: fileData,
+            },
+          });
+        }
+
         const requestBody = {
           contents: [
             {
-              parts: [
-                {
-                  text: fullPrompt,
-                },
-              ],
+              parts,
             },
           ],
           generationConfig: {
             temperature: 0.3, // Slightly higher temperature for creative but consistent UI generation
-            maxOutputTokens: 4000, // Reduced for flash-lite model
+            maxOutputTokens: 8192, // Use the max allowed for Gemini 1.5 Flash
             topK: 40,
             topP: 0.95,
           },
@@ -798,6 +1140,7 @@ DATA TO RENDER:`;
 
         if (generatedUI && generatedUI.trim()) {
           console.log("✅ UI generated successfully");
+          console.log("🎨 Gemm Generated UI Content:", generatedUI);
           return {
             success: true,
             generatedUI,
