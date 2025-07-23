@@ -32,6 +32,9 @@ If no data is provided, show appropriate empty states
 Every piece of information displayed MUST come from the actual API response
 Use the exact data structure, names, dates, and content from the provided response
 Don't add script or use javascript while generating the HTML
+please try to search and get the spesfic images, logos, and other relevant datas needed in the html generation before preceding to the html generation, but be caustious about the data you include. don't halucinate or make up any data.
+please remove any vertical scroll the html content must be in full height of required the content height.
+if a refernce image is provied please use it as a ui refernce only don't use any data from it.
 DETAILED UI REQUIREMENTS:
 CREATE COMPREHENSIVE interfaces that showcase ALL available data
 UTILIZE every relevant field and property from the API response
