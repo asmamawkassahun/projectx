@@ -76,7 +76,7 @@ Focus on compact, layered information design that feels like a high-quality moda
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="max-w-md, initial-scale=1.0, user-scalable=no">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Dynamic UI</title>
 </head>
@@ -282,69 +282,201 @@ when u do so because I don't want you to edit anything in the ui in the template
       `;
 
           break;
-        case "web_search_event":
+          
+        case "web_search_building_details":
+          specificPrompt = `please reference the image I attached to understand what I meant by in my prompt, before you try to generate the ui please deeply analyse the data provided and do couple of researches to get the building images and provide that for the html generation please don't add script or javascript. here is my prompt and replace all place holders with the actual data you analysed : "As a senior frontend developer please generate an html with Objective
+Generate a complete static HTML page for a 'Building Details' UI that precisely replicates the visual layout and styling of the provided image. This UI will display key information about a prominent skyscraper, the Burj Khalifa.
+
+The page will feature a concise descriptive text, a main image of the building, a section for core numerical statistics (floor and height), a detailed list of specifications, and a call-to-action button. All content should be static, with no dynamic placeholders needed for this specific UI. The content within the card should occupy its full height, eliminating any vertical scrollbars, and the card itself should have a minimum width of 480px.
+
+Technical Specifications
+HTML Structure
+Document Title: Set the <title> to "Burj Khalifa Details".
+
+Font Import: Link to import the 'Inter' font from Google Fonts: https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap.
+
+Icon Library: Link to Font Awesome for icons: https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css.
+
+Styling Framework: Include the Tailwind CSS CDN script: https://cdn.tailwindcss.com.
+
+CSS Styling (within <style> tags)
+Global Font: Apply font-family: 'Inter', sans-serif; to the body element.
+
+Image Sizing: Ensure .top-image img and .main-image img have width: 100%; height: 100%; object-fit: cover; for proper scaling and aspect ratio.
+
+Body Layout (Tailwind classes)
+Apply the following utility classes to the body element for centering and foundational styling: flex justify-center items-center min-h-screen m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border.
+
+Main UI Container (#building-details-card)
+Create a div with the ID building-details-card.
+
+Apply the following Tailwind classes for structural and aesthetic properties, ensuring a minimum width of 480px and no vertical scrolling: min-w-[480px] flex flex-col gap-4 rounded-[1.5rem] shadow-xl style="background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px);".
+
+Content Structure (within #building-details-card)
+Top Header Section
+A div with classes: flex items-center gap-3 p-5 pb-0.
+
+Small Image: A div (w-12 h-12 rounded-full overflow-hidden flex-shrink-0 top-image) containing an <img> with src="[URL_TO_SMALL_BURJ_KHALIFA_IMAGE]" and alt="Burj Khalifa Small Image".
+
+Description Text: A <p> element with the text "The Burj Khalifa is a megatall skyscraper located in Dubai, United Arab Emirates." Apply classes for clear, readable font (e.g., text-white text-base).
+
+Main Building Image Section
+A div with classes: p-5 pt-0.
+
+An <img> element with src="[URL_TO_MAIN_BURJ_KHALIFA_IMAGE]" and alt="Burj Khalifa Main Image". Apply classes for rounded corners and full width within its container (e.g., w-full rounded-xl main-image).
+
+Mid-Section - Floor and Height Statistics
+A div with classes: flex justify-between gap-4 p-5 pt-0.
+
+Floor Section (Left): A div with classes flex-1 flex flex-col items-center p-4 rounded-xl bg-[#333333].
+
+<p> with text "Floor" and appropriate text styling (e.g., text-gray-400 text-sm).
+
+<p> with text "154" and appropriate text styling (e.g., text-white text-5xl font-bold).
+
+Height Section (Right): A div with classes flex-1 flex flex-col items-center p-4 rounded-xl bg-[#333333].
+
+<p> with text "Height" and appropriate text styling (e.g., text-gray-400 text-sm).
+
+<p> with text "829.8" (text-white text-5xl font-bold) followed by a <span> with text "m" (text-gray-400 text-base).
+
+Bottom Section - Detailed Information List
+A div with classes: flex flex-col gap-3 p-5 pt-0.
+
+Height Item: A div with classes rounded-xl p-4 flex justify-between items-center bg-[#333333].
+
+Left <p> with text "Height" and appropriate text styling (e.g., text-gray-300 text-base).
+
+Right <p> with text "829.8 m" and appropriate text styling (e.g., text-white text-base font-semibold).
+
+Floors Item: A div with classes rounded-xl p-4 flex justify-between items-center bg-[#333333].
+
+Left <p> with text "Floors" and appropriate text styling (e.g., text-gray-300 text-base).
+
+Right <p> with text "154" and appropriate text styling (e.g., text-white text-base font-semibold).
+
+Elevators Item: A div with classes rounded-xl p-4 flex justify-between items-center bg-[#333333].
+
+Left <p> with text "Elevators" and appropriate text styling (e.g., text-gray-300 text-base).
+
+Right <p> with text "57" and appropriate text styling (e.g., text-white text-base font-semibold).
+
+Call to Action Button
+A div with classes: p-5 pt-0.
+
+A <button> with classes: w-full bg-white text-black py-3 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors shadow-lg.
+
+Button text: "View details".
+
+Implement an onclick event to navigate to a relevant URL (e.g., window.open('https://en.wikipedia.org/wiki/Burj_Khalifa', '_blank')).
+
+Image Placeholders (replace with actual URLs)
+[URL_TO_SMALL_BURJ_KHALIFA_IMAGE]
+
+[URL_TO_MAIN_BURJ_KHALIFA_IMAGE]`;
+          break;
+          case "web_search_event":
           specificPrompt = "";
           break;
         case "web_search_sport":
-          specificPrompt = `please reference the image I attached to understand what I meant by in my prompt pease don't add script or javascript Generate a complete HTML page for a 'Match Stats' UI, using Tailwind CSS for styling and JavaScript for dynamic, conditional rendering. This UI should display football match statistics in a prominent card format, including player details, match score, a list of statistics, and a call-to-action button.
-HTML Structure:
-Standard HTML5 boilerplate with meta charset and viewport.
-title should be '[Dynamic content, e.g., Match Stats]'.
-Link to import the 'Inter' font from Google Fonts (https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap).
-Link to Font Awesome for icons from (https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css).
-Include the Tailwind CSS CDN script from (https://cdn.tailwindcss.com).
-CSS Styling (within <style> tags):
-Apply font-family: 'Inter', sans-serif; to the body.
-Add custom styling for .gradient-header with background: linear-gradient(to right, #D4AF37, #1E4E2C); (Gold for Al-Nassr, Dark Green for Al-Khaleej).
-Add custom styling for .stat-item-bg with background-color: #333333;.
-Ensure .team-logo img, .player-avatar img have width: 100%; height: 100%; object-fit: cover;.
-Body Layout (using Tailwind classes):
-body should be flex justify-center items-center min-h-screen m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border.
-Main UI Container (id='match-stats-card'):
-A div with id="match-stats-card" that acts as the main container for the stats.
-It should have the classes: w-full max-w-[450px] flex flex-col gap-4 rounded-[1.5rem] bg-[#222222] shadow-xl max-h-[95vh] overflow-y-auto.
-This div will be empty initially, as its content will be dynamically injected by JavaScript.
-JavaScript Logic (within <script> tags, at the end of body):
-renderMatchStatsUI(data) Function:
-This function takes a data object as its argument.
-It should get the match-stats-card element. If not found, log an error and return.
-It must clear the innerHTML of the container before rendering new content.
-The HTML page's <title> element should be updated with data.title if provided, otherwise default to 'Match Stats'.
-Conditional Rendering Logic for the stats card:
-Combined Header Section (Player and Match):
-Create a single wrapper div with gradient-header and rounded-t-[1.5rem].
-This wrapper's rounded-b-[1.5rem] class should be conditionally applied if it's the last content block (i.e., no data.stats or data.callToAction are present).
-Player Header Section: Renders inside the combined header wrapper if data.player object is present.
-Create a div with flex items-center gap-3 p-5 pb-0.
-Player Avatar: Create a div with w-12 h-12 rounded-full overflow-hidden flex-shrink-0 player-avatar.
-Use an img with src set to data.player.avatarUrl or a placeholder (https://placehold.co/48x48/CCCCCC/808080?text=P).
-Player Info: Create a div with flex flex-col.
-p for data.player.name with text-white text-lg font-semibold.
-p for data.player.description with text-gray-400 text-sm leading-tight.
-Match Score Section: Renders inside the combined header wrapper if data.match object is present.
-Create a div with p-5 flex flex-col items-center justify-center.
-Teams Container: Create a div with flex justify-between items-center w-full max-w-[300px] mb-4.
-Home Team: div with flex flex-col items-center gap-2.
-Logo: div with w-16 h-16 rounded-full overflow-hidden bg-white flex items-center justify-center team-logo.
-img with src set to data.match.homeTeam.logoUrl or a placeholder (https://placehold.co/64x64/CCCCCC/808080?text=H).
-Name: p for data.match.homeTeam.name with text-white text-sm font-medium.
-Score and Status: div with flex flex-col items-center.
-Score: p for \${data.match.homeTeam.score} - \${data.match.awayTeam.score} with text-white text-5xl font-bold.
-Status: p for data.match.status with text-gray-300 text-sm font-medium.
-Away Team: (Structure identical to Home Team, using data.match.awayTeam).
-Statistics List Section (Optional): If data.stats is an array and not empty, iterate through data.stats.
-Create a container div with flex flex-col gap-3 p-5 pt-0.
-For each statistic, create a div with stat-item-bg rounded-xl p-4 flex justify-between items-center.
-p for stat.label with text-gray-300 text-base.
-p for stat.value with text-white text-base font-semibold.
-Call to Action Button (Optional): If data.callToAction is present.
-Create a container div with p-5 pt-0.
-Create a button with w-full bg-white text-black py-3 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors shadow-lg.
-Set its textContent to data.callToAction.text.
-Add an onclick event to perform an action (e.g., window.open(data.callToAction.link, '_blank')).
-If no CTA button, add a div with pb-5 for bottom padding, but only if other content (player, match, or stats) is present.
-No Data Message: If data.player AND data.match AND (data.stats is not an array or is empty) are not present, display a div with text-center text-gray-400 p-4 bg-[#333333] rounded-xl and text 'No match statistics available.'
-`;
+          specificPrompt = `please reference the image I attached to understand what I meant by in my prompt, before you try to generate the ui please deeply analyse the data provided and do couple of researches to get thew logos and other relevant datas needed in the html generation pease don't add script or javascript. here is my prompt and replace all place holders with the actual data you analysed : "As a senior frontend developer please generate an html with Objective
+Generate a complete static HTML page for a 'Match Stats' UI. This interface will prominently display football match statistics for a game between {{ home_team.name }} and {{ away_team.name }}, presented within a dedicated card component.
+
+The UI must highlight the top-performing player from the match. This player's selection will be based on their highest statistical contributions (e.g., goals, assists, chances created, or duels won) derived from recent match data. The page will include the match score, a detailed list of the selected player’s statistics, and a clear call-to-action button. All dynamic data points will be represented using generic template placeholders (e.g., {{ variable }}), anticipating replacement by a server-side templating engine without reliance on any specific backend language. The content within the card should occupy its full height, eliminating any vertical scrollbars.
+
+Technical Specifications
+HTML Structure
+Document Title: Set the <title> dynamically to {{ match.title }}.
+
+Font Import: Link to import the 'Inter' font from Google Fonts: https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap.
+
+Icon Library: Link to Font Awesome for icons: https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css.
+
+Styling Framework: Include the Tailwind CSS CDN script: https://cdn.tailwindcss.com.
+
+CSS Styling (within <style> tags)
+Global Font: Apply font-family: 'Inter', sans-serif; to the body element.
+
+Statistic Item Background: Define custom styling for .stat-item-bg: background-color: #333333; border-radius: 1rem;.
+
+Image Sizing: Ensure .team-logo img and .player-avatar img have width: 100%; height: 100%; object-fit: cover; for proper scaling and aspect ratio.
+
+Body Layout (Tailwind classes)
+Apply the following utility classes to the body element for centering and foundational styling: flex justify-center items-center min-h-screen m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border.
+
+Main UI Container (#match-stats-card)
+Create a div with the ID match-stats-card.
+
+Apply the following Tailwind classes and inline style for structural and aesthetic properties, ensuring a minimum width of 480px and no vertical scrolling: min-w-[480px] flex flex-col gap-4 rounded-[1.5rem] shadow-xl style="background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px);".
+
+Content Structure (within #match-stats-card)
+Player Header Section
+A div with classes: flex items-center gap-3 p-5 pb-0.
+
+Player Avatar: A div (w-12 h-12 rounded-full overflow-hidden flex-shrink-0 player-avatar) containing an <img> with src="{{ player.avatar_url }}" and alt="{{ player.name }} Avatar".
+
+Player Info: A div (flex flex-col) containing:
+
+<p> for {{ player.name }} (text-white text-lg font-semibold).
+
+<p> for {{ player.position_team }} (text-gray-400 text-sm leading-tight).
+
+Match Score Section
+A div with classes: p-5 flex flex-col items-center justify-center.
+
+Teams Container: A div (flex justify-between items-center w-full max-w-[300px] mb-4).
+
+Home Team: A div (flex flex-col items-center gap-2) containing:
+
+Logo: A div (w-16 h-16 rounded-full overflow-hidden bg-white flex items-center justify-center team-logo) with an <img> src="{{ home_team.logo_url }}" and alt="{{ home_team.name }} Logo".
+
+Name: <p> for {{ home_team.name }} (text-white text-sm font-medium).
+
+Score and Status: A div (flex flex-col items-center) containing:
+
+Score: <p> for {{ match.score }} (text-white text-5xl font-bold).
+
+Status: <p> for {{ match.status }} (text-gray-300 text-sm font-medium).
+
+Away Team: Identical structure to the Home Team, featuring an <img> src="{{ away_team.logo_url }}" and alt="{{ away_team.name }} Logo", and <p> for {{ away_team.name }}.
+
+Statistics List Section
+A div with classes: flex flex-col gap-3 p-5 pt-0.
+
+Utilize a template loop (e.g., {% for stat in stats %} ... {% endfor %}) to render individual statistics for the selected player.
+
+Each statistic should be encapsulated within a div (stat-item-bg rounded-xl p-4 flex justify-between items-center), containing:
+
+Left <p> for {{ stat.name }} (text-gray-300 text-base).
+
+Right <p> for {{ stat.value }} (text-white text-base font-semibold).
+
+Call to Action Button
+A div with classes: p-5 pt-0.
+
+A <button> with classes: w-full bg-white text-black py-3 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors shadow-lg.
+
+Button text: "View Full Match Report".
+
+Implement an onclick event to navigate to {{ match.report_url }} in a new tab.
+
+Player Selection Logic
+The top-performing player should be selected based on the highest statistical contributions (e.g., goals, assists, chances created, duels won) from the specific match between {{ home_team.name }} and {{ away_team.name }}.
+
+Recent match data should be used for accurate top performer identification. In the absence of specific match data, default to a prominent player from either team with a strong historical performance against the opponent.
+
+Example Data (for contextual understanding only; replace with actual data)
+Match: {{ home_team.name }} vs {{ away_team.name }} (e.g., Manchester City vs Liverpool).
+
+Player: Top performer (e.g., Erling Haaland, based on goals/assists).
+
+Stats: Goals, Assists, Chances Created, Duels Won, etc.
+
+Team Colors: Home team’s primary colors (e.g., Manchester City: sky blue #6CABDD, white #FFFFFF).
+
+Logos: Publicly available team logo URLs.
+
+Report URL: Link to the home team’s official match report page."`;
           break;
         case "web_search_personal_biograph":
           specificPrompt = "";

@@ -118,7 +118,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
 
       try {
         // Compose a prompt for Gemini to classify the sub_use_case
-        const classificationPrompt = `You are an expert at classifying web search API responses for UI rendering. Given the following JSON data, classify it as one of these predefined sub_use_cases: generic, articles, products, qa, calendar, weather, event, personal_biograph, contact, hospitality, sport.\n\n- generic: Use if the data does not fit any other category.\n- articles: Use if the data contains a list of news, blog, or document articles.\n- products: Use if the data contains a list of products, items for sale, or shopping results.\n- qa: Use if the data contains question-answer pairs, FAQs, or direct answers.\n- calendar: Use if the data contains calendar events, schedules, or appointments.\n- weather: Use if the data contains weather information, forecasts, or climate data.\n- event: Use if the data contains event details, invitations, or RSVPs.\n- personal_biograph: Use if the data contains personal biography, profile, or background information.\n- contact: Use if the data contains contact information, address book entries, or people details.\n- hospitality: Use if the data contains hotel, restaurant, travel, or hospitality-related information.\n- sport: Use if the data contains sports scores, events, teams, players, or related information.\n\nReturn ONLY the sub_use_case string (one of: generic, articles, products, qa, calendar, weather, event, personal_biograph, contact, hospitality, sport). Do not return any explanation, formatting, or code block.\n\nDATA:\n${JSON.stringify(
+        const classificationPrompt = `You are an expert at classifying web search API responses for UI rendering. Given the following JSON data, classify it as one of these predefined sub_use_cases: generic, articles, products, qa, calendar, weather, event, personal_biograph, contact, hospitality, sport, building_details.\n\n- generic: Use if the data does not fit any other category.\n- articles: Use if the data contains a list of news, blog, or document articles.\n- products: Use if the data contains a list of products, items for sale, or shopping results.\n- qa: Use if the data contains question-answer pairs, FAQs, or direct answers.\n- calendar: Use if the data contains calendar events, schedules, or appointments.\n- weather: Use if the data contains weather information, forecasts, or climate data.\n- event: Use if the data contains event details, invitations, or RSVPs.\n- personal_biograph: Use if the data contains personal biography, profile, or background information.\n- contact: Use if the data contains contact information, address book entries, or people details.\n- hospitality: Use if the data contains hotel, restaurant, travel, or hospitality-related information.\n- sport: Use if the data contains sports scores, events, teams, players, or related information.\n- building_details: Use if the data contains information about buildings, properties, real estate, or architectural details.\n\nReturn ONLY the sub_use_case string (one of: generic, articles, products, qa, calendar, weather, event, personal_biograph, contact, hospitality, sport, building_details). Do not return any explanation, formatting, or code block.\n\nDATA:\n${JSON.stringify(
           searchData
         )}`;
 
@@ -176,6 +176,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
                   "contact",
                   "hospitality",
                   "sport",
+                  "building_details",
                 ].includes(text)
               ) {
                 scenario = text;
@@ -197,11 +198,11 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
           `🎨 UIOverlay: Sending search data to UI agent for processing (scenario: ${scenario})...`
         );
 
-        // If scenario is 'sport', fetch the sample image and attach it
+        // If scenario is 'sport' or 'building_details', fetch the sample image and attach it
         let fileAttachment: File | null = null;
         if (scenario === "sport") {
           try {
-            const imgResp = await fetch("/sport-sample.png");
+            const imgResp = await fetch("prompt-images/sport-sample.png");
             const imgBlob = await imgResp.blob();
             fileAttachment = new File([imgBlob], "sport-sample.png", {
               type: imgBlob.type || "image/png",
@@ -212,12 +213,26 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
               e
             );
           }
+        } else if (scenario === "building_details") {
+          try {
+            const imgResp = await fetch("prompt-images/building-details.png");
+            const imgBlob = await imgResp.blob();
+            fileAttachment = new File([imgBlob], "building-details.png", {
+              type: imgBlob.type || "image/png",
+            });
+          } catch (e) {
+            console.warn(
+              "Failed to fetch building-details.png for Gemini UI generation",
+              e
+            );
+          }
         }
 
         const uiResult = await generateUI(
           searchToolName,
           searchData,
-          `search_${scenario}_` + Date.now()
+          `search_${scenario}_` + Date.now(),
+          fileAttachment
         );
 
         if (uiResult.success && uiResult.generatedUI) {
@@ -385,7 +400,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
           </button>
 
           {/* Generated UI content as the modal itself with hidden scrollbar */}
-          <div className="relative  overflow-y-auto scrollbar-hide rounded-[1.5rem] h-full max-h-[75vh] p-0">
+          <div className="relative  overflow-y-auto scrollbar-hide rounded-[1.5rem] w-full h-full max-h-[75vh] max-w-[60vh] p-0 bg-transparent">
             <HTMLRenderer htmlContent={generatedHTML} />
           </div>
         </motion.div>
