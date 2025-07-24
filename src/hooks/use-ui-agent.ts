@@ -32,7 +32,7 @@ If no data is provided, show appropriate empty states
 Every piece of information displayed MUST come from the actual API response
 Use the exact data structure, names, dates, and content from the provided response
 Don't add script or use javascript while generating the HTML
-please try to search and get the spesfic images, logos, and other relevant datas needed in the html generation before preceding to the html generation, but be caustious about the data you include. don't halucinate or make up any data.
+please try to search and get the spesfic images, logos, and other relevant datas needed in the html generation before preceding to the html generation, but be caustious about the data you include. don't halucinate or make up any data. but if u fail to find a real data that directly resonates with the data provided in the API response, please don't add the corsponding ui components or widgets like images to the html that you are generating.
 please remove any vertical scroll the html content must be in full height of required the content height.
 if a refernce image is provied please use it as a ui refernce only don't use any data from it.
 DETAILED UI REQUIREMENTS:
@@ -285,100 +285,202 @@ when u do so because I don't want you to edit anything in the ui in the template
       `;
 
           break;
-          
+
         case "web_search_building_details":
-          specificPrompt = `please reference the image I attached to understand what I meant by in my prompt, before you try to generate the ui please deeply analyse the data provided and do couple of researches to get the building images and provide that for the html generation please don't add script or javascript. here is my prompt and replace all place holders with the actual data you analysed : "As a senior frontend developer please generate an html with Objective
-Generate a complete static HTML page for a 'Building Details' UI that precisely replicates the visual layout and styling of the provided image. This UI will display key information about a prominent skyscraper, the Burj Khalifa.
+          specificPrompt = `You are an expert HTML developer. Your task is to carefully analyze the provided data and the given HTML template. Extract all necessary information from the data to populate the template. Then, generate the *exact* HTML code from the template, but with all placeholder variables replaced by the real data you extracted. try to get the building image and if u fail or can't get the image for the building mentioned use this placeholder image https://i.ibb.co/V0VSQYyF/placeholderr.png in an img tag with alt="Building image". Ensure no template variables (e.g., \`\${variableName}\`) remain in the final HTML output.
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burj Khalifa Details</title>
+    <!-- Font Import -->
+    <link href="https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+            background-color: #333; /* Dark background for contrast with the card */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            box-sizing: border-box;
+            padding: 20px; /* Add some padding for smaller screens */
+        }
 
-The page will feature a concise descriptive text, a main image of the building, a section for core numerical statistics (floor and height), a detailed list of specifications, and a call-to-action button. All content should be static, with no dynamic placeholders needed for this specific UI. The content within the card should occupy its full height, eliminating any vertical scrollbars, and the card itself should have a minimum width of 480px.
+        /* Main Container Card */
+        .container {
+            background-color: rgba(255, 255, 255, 0.1); /* White with 10% opacity */
+            backdrop-filter: blur(10px); /* Blur effect */
+            border-radius: 1.5rem;
+            padding: 20px;
+            width: 100%; /* Full width on small screens */
+            max-width: 400px; /* Max width for larger screens */
+            color: #fff;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
 
-Technical Specifications
-HTML Structure
-Document Title: Set the <title> to "Burj Khalifa Details".
+        /* Header Section */
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-Font Import: Link to import the 'Inter' font from Google Fonts: https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap.
+        .header-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            background-color: #555; /* Placeholder background */
+            flex-shrink: 0; /* Prevent shrinking on smaller screens */
+        }
 
-Icon Library: Link to Font Awesome for icons: https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css.
+        .header-text {
+            font-size: 1.1em;
+            line-height: 1.4;
+            flex-grow: 1;
+        }
 
-Styling Framework: Include the Tailwind CSS CDN script: https://cdn.tailwindcss.com.
+        /* Main Image Section */
+        .main-image {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            height: 200px; /* Fixed height for consistency */
+            display: block; /* Ensures it behaves like a block element */
+        }
 
-CSS Styling (within <style> tags)
-Global Font: Apply font-family: 'Inter', sans-serif; to the body element.
+        /* Quick Info Section (Floor & Height) */
+        .quick-info {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+        }
 
-Image Sizing: Ensure .top-image img and .main-image img have width: 100%; height: 100%; object-fit: cover; for proper scaling and aspect ratio.
+        .info-item {
+            text-align: center;
+            flex: 1; /* Distribute space evenly */
+            min-width: 120px; /* Minimum width before wrapping */
+            margin: 10px 0; /* Add vertical margin for wrapped items */
+        }
 
-Body Layout (Tailwind classes)
-Apply the following utility classes to the body element for centering and foundational styling: flex justify-center items-center min-h-screen m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border.
+        .info-label {
+            font-size: 0.9em;
+            color: #ccc;
+            margin-bottom: 5px;
+        }
 
-Main UI Container (#building-details-card)
-Create a div with the ID building-details-card.
+        .info-value {
+            font-size: 2.2em;
+            font-weight: bold;
+        }
 
-Apply the following Tailwind classes for structural and aesthetic properties, ensuring a minimum width of 480px and no vertical scrolling: min-w-[480px] flex flex-col gap-4 rounded-[1.5rem] shadow-xl style="background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px);".
+        /* Detailed Info Section (Cards) */
+        .detailed-info .card {
+            background-color: rgba(255, 255, 255, 0.15); /* Slightly more opaque for inner cards */
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-Content Structure (within #building-details-card)
-Top Header Section
-A div with classes: flex items-center gap-3 p-5 pb-0.
+        .detailed-info .card-label {
+            font-size: 1em;
+            color: #ccc;
+        }
 
-Small Image: A div (w-12 h-12 rounded-full overflow-hidden flex-shrink-0 top-image) containing an <img> with src="[URL_TO_SMALL_BURJ_KHALIFA_IMAGE]" and alt="Burj Khalifa Small Image".
+        .detailed-info .card-value {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
 
-Description Text: A <p> element with the text "The Burj Khalifa is a megatall skyscraper located in Dubai, United Arab Emirates." Apply classes for clear, readable font (e.g., text-white text-base).
+        /* Note: The .view-details-button custom CSS is removed as Tailwind classes will be used directly on the button element. */
 
-Main Building Image Section
-A div with classes: p-5 pt-0.
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .header-text {
+                font-size: 1em;
+            }
+            .info-value {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main container card -->
+    <div class="container">
+        <!-- Header section with an icon and text description -->
+        <div class="header">
+            <!-- Placeholder for header icon. The browser will show a broken image icon if the link is invalid. -->
+            <img src="\${headerIconLink}" alt="Building Icon" class="header-icon">
+            <!-- Placeholder for the building's description -->
+            <p class="header-text">\${buildingDescription}</p>
+        </div>
 
-An <img> element with src="[URL_TO_MAIN_BURJ_KHALIFA_IMAGE]" and alt="Burj Khalifa Main Image". Apply classes for rounded corners and full width within its container (e.g., w-full rounded-xl main-image).
+        <!-- Main image of the building -->
+        <!-- Please add the building image here-->
+           <img src="\${buildingImageLink}" alt="Building image" class="main-image">
+          
 
-Mid-Section - Floor and Height Statistics
-A div with classes: flex justify-between gap-4 p-5 pt-0.
 
-Floor Section (Left): A div with classes flex-1 flex flex-col items-center p-4 rounded-xl bg-[#333333].
 
-<p> with text "Floor" and appropriate text styling (e.g., text-gray-400 text-sm).
+        <!-- Section displaying quick information like Floor and Height -->
+        <div class="quick-info">
+            <div class="info-item">
+                <div class="info-label">Floor</div>
+                <!-- Placeholder for quick floor value -->
+                <div class="info-value">\${quickFloorValue}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Height</div>
+                <!-- Placeholder for quick height value -->
+                <div class="info-value">\${quickHeightValue}</div>
+            </div>
+        </div>
 
-<p> with text "154" and appropriate text styling (e.g., text-white text-5xl font-bold).
+        <!-- Section for more detailed information cards -->
+        <div class="detailed-info">
+            <div class="card">
+                <span class="card-label">Height</span>
+                <!-- Placeholder for detailed height value -->
+                <span class="card-value">\${detailHeightValue}</span>
+            </div>
+            <div class="card">
+                <span class="card-label">Floors</span>
+                <!-- Placeholder for detailed floors value -->
+                <span class="card-value">\${detailFloorsValue}</span>
+            </div>
+            <div class="card">
+                <span class="card-label">Elevators</span>
+                <!-- Placeholder for detailed elevators value -->
+                <span class="card-value">\${detailElevatorsValue}</span>
+            </div>
+        </div>
 
-Height Section (Right): A div with classes flex-1 flex flex-col items-center p-4 rounded-xl bg-[#333333].
-
-<p> with text "Height" and appropriate text styling (e.g., text-gray-400 text-sm).
-
-<p> with text "829.8" (text-white text-5xl font-bold) followed by a <span> with text "m" (text-gray-400 text-base).
-
-Bottom Section - Detailed Information List
-A div with classes: flex flex-col gap-3 p-5 pt-0.
-
-Height Item: A div with classes rounded-xl p-4 flex justify-between items-center bg-[#333333].
-
-Left <p> with text "Height" and appropriate text styling (e.g., text-gray-300 text-base).
-
-Right <p> with text "829.8 m" and appropriate text styling (e.g., text-white text-base font-semibold).
-
-Floors Item: A div with classes rounded-xl p-4 flex justify-between items-center bg-[#333333].
-
-Left <p> with text "Floors" and appropriate text styling (e.g., text-gray-300 text-base).
-
-Right <p> with text "154" and appropriate text styling (e.g., text-white text-base font-semibold).
-
-Elevators Item: A div with classes rounded-xl p-4 flex justify-between items-center bg-[#333333].
-
-Left <p> with text "Elevators" and appropriate text styling (e.g., text-gray-300 text-base).
-
-Right <p> with text "57" and appropriate text styling (e.g., text-white text-base font-semibold).
-
-Call to Action Button
-A div with classes: p-5 pt-0.
-
-A <button> with classes: w-full bg-white text-black py-3 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors shadow-lg.
-
-Button text: "View details".
-
-Implement an onclick event to navigate to a relevant URL (e.g., window.open('https://en.wikipedia.org/wiki/Burj_Khalifa', '_blank')).
-
-Image Placeholders (replace with actual URLs)
-[URL_TO_SMALL_BURJ_KHALIFA_IMAGE]
-
-[URL_TO_MAIN_BURJ_KHALIFA_IMAGE]`;
+        <!-- Button to view more details -->
+        <!-- Tailwind classes applied for styling: full width, padding, background color, text color, rounded corners, font weight, and hover effect -->
+        <button class="w-full py-4 bg-white text-black rounded-full font-semibold mt-5 hover:bg-white-700 transition-colors duration-300">View details</button>
+    </div>
+</body>
+</html>
+`;
           break;
-          case "web_search_event":
+        case "web_search_cryptocurrency_trend":
+          specificPrompt = "";
+          break;
+
+        case "web_search_event":
           specificPrompt = "";
           break;
         case "web_search_sport":

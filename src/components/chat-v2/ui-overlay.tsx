@@ -213,20 +213,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
               e
             );
           }
-        } else if (scenario === "building_details") {
-          try {
-            const imgResp = await fetch("prompt-images/building-details.png");
-            const imgBlob = await imgResp.blob();
-            fileAttachment = new File([imgBlob], "building-details.png", {
-              type: imgBlob.type || "image/png",
-            });
-          } catch (e) {
-            console.warn(
-              "Failed to fetch building-details.png for Gemini UI generation",
-              e
-            );
-          }
-        }
+        } 
 
         const uiResult = await generateUI(
           searchToolName,
