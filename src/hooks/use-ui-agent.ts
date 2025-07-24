@@ -23,6 +23,7 @@ import { rescheduleMeetingPrompt } from "@/utils/prompts/rescheduleMeetingPrompt
 import { useCallback, useState } from "react";
 import { daySummaryPrompt } from "@/utils/prompts/daySummary";
 import { genericEventProcess } from "@/utils/prompts/genericEvent";
+import { productPrompt } from "@/utils/prompts/productDetailPrompt";
 
 interface UIGenerationResult {
   success: boolean;
@@ -169,7 +170,7 @@ export function useUIAgent(): UIAgentHookResult {
           specificPrompt = articlesPrompt;
           break;
         case "web_search_products":
-          specificPrompt = "";
+          specificPrompt = productPrompt;
           break;
         case "web_search_qa":
           specificPrompt = "";
