@@ -19,9 +19,10 @@ import {
   orderStatusPrompt,
 } from "@/utils/prompts/orderPrompt";
 import { setMeetingPrompt } from "@/utils/prompts/setMeetingPrompt";
-import {rescheduleMeetingPrompt} from "@/utils/prompts/rescheduleMeetingPrompt"
+import { rescheduleMeetingPrompt } from "@/utils/prompts/rescheduleMeetingPrompt";
 import { useCallback, useState } from "react";
 import { daySummaryPrompt } from "@/utils/prompts/daySummary";
+import { genericEventProcess } from "@/utils/prompts/genericEvent";
 
 interface UIGenerationResult {
   success: boolean;
@@ -107,7 +108,7 @@ Focus on compact, layered information design that feels like a high-quality moda
     <title>Dynamic UI</title>
 </head>
 <body class="bg-transparent min-h-full w-full text-white p-0 m-0 overflow-x-hidden">
-    <div class="w-full max-w-5xl max-h-[80vh] overflow-y-auto rounded-3xl shadow-2xl bg-white">
+    <div class="w-full h-full rounded-3xl shadow-2xl bg-white">
         <div class="p-6 space-y-4">
             <!-- Your content here with individual cards, light borders, emojis, and colors -->
             <!-- MANDATORY: Use bg-gray-50 border border-gray-200 rounded-xl p-6 OR bg-gray-100 border border-gray-300 rounded-xl p-6 for individual content cards -->
@@ -144,7 +145,7 @@ export function useUIAgent(): UIAgentHookResult {
           break;
 
         case "web_search_event":
-          specificPrompt = "";
+          specificPrompt = genericEventProcess;
           break;
         case "web_search_meetings":
           specificPrompt = nextMeetingPrompt;
@@ -201,20 +202,7 @@ export function useUIAgent(): UIAgentHookResult {
           break;
 
         case "list_events_genereic":
-          specificPrompt = `
-CONTEXT: Generate a creative web calendar events interface
-
-GOAL: Create an intuitive calendar view that makes events easy to understand
-
-WEB GUIDELINES:
-- Design for quick event scanning and time recognition
-- Use web-friendly chronological layout
-- Show event details clearly and accessibly
-- Create engaging time-based visualization
-
-BE CREATIVE: Design an innovative calendar interface that makes scheduling visual and delightful.
-
-DATA TO RENDER:`;
+          specificPrompt = genericEventProcess;
           break;
 
         case "check_availability":
@@ -242,20 +230,7 @@ DATA TO RENDER:`;
           break;
 
         case "find_contact":
-          specificPrompt = `
-CONTEXT: Generate a creative web contact interface
-
-GOAL: Create an engaging contact display optimized for web viewing
-
-WEB GUIDELINES:
-- Design for easy contact information scanning
-- Use web-friendly contact card layout
-- Show contact details clearly and accessibly
-- Create personal and professional presentation
-
-BE CREATIVE: Design an innovative contact interface that's both informative and visually appealing.
-
-DATA TO RENDER:`;
+          specificPrompt = contactPrompt;
           break;
 
         case "web_search":
