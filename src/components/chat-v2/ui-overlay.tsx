@@ -6,6 +6,10 @@ import { X, Loader2 } from "lucide-react";
 import { useLiveAPIContext } from "@/contexts/LiveAPIContext";
 import { useUIAgent } from "@/hooks/use-ui-agent";
 
+const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "";
+const GEMINI_API_URL =
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite-preview-06-17:generateContent";
+
 // Simple HTML renderer component for displaying generated UI
 const HTMLRenderer = ({ htmlContent }: { htmlContent: string }) => {
   return (
@@ -123,27 +127,6 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
         )}`;
 
         // Call Gemini API directly for classification
-        const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "";
-        const GEMINI_API_URL =
-          "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite-preview-06-17:generateContent";
-        const requestBody = {
-          contents: [
-            {
-              parts: [
-                {
-                  text: classificationPrompt,
-                },
-              ],
-            },
-          ],
-          generationConfig: {
-            temperature: 0.0,
-            maxOutputTokens: 20,
-            topK: 5,
-            topP: 0.8,
-          },
-        };
-
         let scenario = "generic";
         try {
           const response = await fetch(
@@ -153,7 +136,23 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify(requestBody),
+              body: JSON.stringify({
+                contents: [
+                  {
+                    parts: [
+                      {
+                        text: classificationPrompt,
+                      },
+                    ],
+                  },
+                ],
+                generationConfig: {
+                  temperature: 0.0,
+                  maxOutputTokens: 20,
+                  topK: 5,
+                  topP: 0.8,
+                },
+              }),
             }
           );
           if (response.ok) {
@@ -213,7 +212,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
               e
             );
           }
-        } 
+        }
 
         const uiResult = await generateUI(
           searchToolName,
@@ -252,14 +251,125 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
     },
     [generateUI, onLoadingStateChange, onUIGenerated]
   );
+  // --- Event List Classification Handler ---
+  const handleEventListClassification = useCallback(
+    async (eventListData: any) => {
+      // Define event subcategories to match use-ui-agent.ts event cases
+      const eventSubcategories = [
+        "cancel_meeting",
+        "set_meeting",
+        "reschedule_meeting",
+        "next_meeting",
+        "day_summary_meeting",
+        "generic",
+      ];
+
+      // Build classification prompt
+      const classificationPrompt = `You are an expert at classifying event lists for UI rendering. Given the following JSON data, classify it as one of these subcategories: ${eventSubcategories.join(
+        ", "
+      )}.
+- cancel_meeting: Events related to cancelling meetings or appointments.
+- set_meeting: Events related to setting up or scheduling new meetings.
+- reschedule_meeting: Events related to rescheduling or moving meetings.
+- next_meeting: The next upcoming meeting or event.
+- day_summary_meeting: A summary of meetings or events for a day.
+- generic: Use if the data does not fit any other category.
+
+Return ONLY the subcategory string (one of: ${eventSubcategories.join(
+        ", "
+      )}). Do not return any explanation, formatting, or code block.
+
+DATA:\n${JSON.stringify(eventListData)}`;
+
+      setGeneratedHTML(null); // Clear previous UI
+      setCurrentToolName("event_list_classifying");
+      onLoadingStateChange?.(true, "event_list_classifying");
+
+      let scenario = "generic";
+      try {
+        const requestBody = {
+          contents: [
+            {
+              parts: [
+                {
+                  text: classificationPrompt,
+                },
+              ],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.0,
+            maxOutputTokens: 20,
+            topK: 5,
+            topP: 0.8,
+          },
+        };
+        const response = await fetch(
+          `${GEMINI_API_URL}?key=${GEMINI_API_KEY}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
+          }
+        );
+        if (response.ok) {
+          const geminiResp = await response.json();
+          let text =
+            geminiResp.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+          if (text) {
+            text = text.replace(/[`\n\r]/g, "").toLowerCase();
+            if (eventSubcategories.includes(text)) {
+              scenario = text;
+            }
+          }
+        }
+      } catch (e) {
+        console.warn(
+          "Gemini event list classification failed, falling back to generic.",
+          e
+        );
+      }
+
+      const eventToolName = `event_list_${scenario}`;
+      setCurrentToolName(eventToolName);
+      onLoadingStateChange?.(true, eventToolName);
+
+      const uiResult = await generateUI(
+        eventToolName,
+        eventListData,
+        `event_${scenario}_` + Date.now()
+      );
+
+      if (uiResult.success && uiResult.generatedUI) {
+        setGeneratedHTML(uiResult.generatedUI);
+        setIsVisible(true); // Show overlay only when UI is ready
+        onLoadingStateChange?.(false);
+        onUIGenerated?.(eventToolName);
+      } else {
+        onLoadingStateChange?.(false);
+        setIsVisible(false);
+        setGeneratedHTML(null);
+        setCurrentToolName(null);
+        setPendingToolData(null);
+      }
+    },
+    [generateUI, onLoadingStateChange, onUIGenerated]
+  );
 
   // Handle tool responses with API data
   const handleToolResponse = useCallback(
     async (toolName: string, apiData: any, toolId: string) => {
       if (!shouldGenerateUI(toolName)) return;
 
-      console.log("🎨 UIOverlay: Generating UI for tool response:", toolName);
+      // Intercept event list tools for classification
+      if (toolName === "list_events") {
+        await handleEventListClassification(apiData);
+        return;
+      }
 
+      // Default: direct UI generation
       try {
         const uiResult = await generateUI(toolName, apiData, toolId);
 
@@ -279,7 +389,13 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
         setPendingToolData(null);
       }
     },
-    [shouldGenerateUI, generateUI, onLoadingStateChange, onUIGenerated]
+    [
+      shouldGenerateUI,
+      generateUI,
+      handleEventListClassification,
+      onLoadingStateChange,
+      onUIGenerated,
+    ]
   );
 
   // Listen to Live API events
@@ -377,12 +493,14 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
+        >
           {/* Close button */}
           <button
             onClick={handleClose}
             className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors backdrop-blur-sm"
-            aria-label="Close UI">
+            aria-label="Close UI"
+          >
             <X className="w-5 h-5" />
           </button>
 

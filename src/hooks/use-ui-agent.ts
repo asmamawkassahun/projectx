@@ -1,7 +1,27 @@
-import { articlesPrompt, buildingDetailsPrompt, calendarPrompt, contactPrompt, draftEmailPrompt, emailListPrompt, personalBiographyPrompt, sportPrompt, summerizedEmailPrompt, weatherPrompt } from "@/utils/prompts";
+import {
+  articlesPrompt,
+  buildingDetailsPrompt,
+  calendarPrompt,
+  contactPrompt,
+  draftEmailPrompt,
+  emailListPrompt,
+  personalBiographyPrompt,
+  sportPrompt,
+  summerizedEmailPrompt,
+  weatherPrompt,
+} from "@/utils/prompts";
+import { cancelMeetingPrompt } from "@/utils/prompts/cancelMettingPrompt";
+import { myAvailability } from "@/utils/prompts/checkAvailability";
 import { hospitalityPrompt } from "@/utils/prompts/hospitality.prompt";
-import build from "next/dist/build";
+import { nextMeetingPrompt } from "@/utils/prompts/nextMeeting";
+import {
+  orderReturnPrompt,
+  orderStatusPrompt,
+} from "@/utils/prompts/orderPrompt";
+import { setMeetingPrompt } from "@/utils/prompts/setMeetingPrompt";
+import {rescheduleMeetingPrompt} from "@/utils/prompts/rescheduleMeetingPrompt"
 import { useCallback, useState } from "react";
+import { daySummaryPrompt } from "@/utils/prompts/daySummary";
 
 interface UIGenerationResult {
   success: boolean;
@@ -126,8 +146,11 @@ export function useUIAgent(): UIAgentHookResult {
         case "web_search_event":
           specificPrompt = "";
           break;
+        case "web_search_meetings":
+          specificPrompt = nextMeetingPrompt;
+          break;
         case "web_search_sport":
-          specificPrompt = sportPrompt
+          specificPrompt = sportPrompt;
           break;
         case "web_search_personal_biograph":
           specificPrompt = personalBiographyPrompt;
@@ -142,8 +165,8 @@ export function useUIAgent(): UIAgentHookResult {
           specificPrompt = "";
           break;
         case "web_search_articles":
-          specificPrompt = articlesPrompt
-           break;
+          specificPrompt = articlesPrompt;
+          break;
         case "web_search_products":
           specificPrompt = "";
           break;
@@ -155,13 +178,21 @@ export function useUIAgent(): UIAgentHookResult {
           break;
         case "list_emails":
           specificPrompt = emailListPrompt;
-              break;
+          break;
+
+        case "list_orders_status":
+          specificPrompt = orderStatusPrompt;
+          break;
+
+        case "list_orders_return":
+          specificPrompt = orderReturnPrompt;
+          break;
 
         case "summarize_emails":
           specificPrompt = summerizedEmailPrompt;
           break;
         case "last_unread_emails":
-          specificPrompt = emailListPrompt; 
+          specificPrompt = emailListPrompt;
           break;
 
         case "write_draft_for_new_email":
@@ -169,7 +200,7 @@ export function useUIAgent(): UIAgentHookResult {
           specificPrompt = draftEmailPrompt;
           break;
 
-        case "list_events":
+        case "list_events_genereic":
           specificPrompt = `
 CONTEXT: Generate a creative web calendar events interface
 
@@ -187,20 +218,27 @@ DATA TO RENDER:`;
           break;
 
         case "check_availability":
-          specificPrompt = `
-CONTEXT: Generate a creative web availability interface
+          specificPrompt = myAvailability;
+          break;
 
-GOAL: Create a clear availability visualization for web users
+        case "list_events_cancel_meeting":
+          specificPrompt = cancelMeetingPrompt;
+          break;
 
-WEB GUIDELINES:
-- Design for quick availability scanning
-- Use intuitive visual indicators for different states
-- Show time information clearly on web
-- Create user-friendly availability display
+        case "list_events_set_meeting":
+          specificPrompt = setMeetingPrompt;
+          break;
 
-BE CREATIVE: Design an innovative availability interface that makes scheduling intuitive.
+        case "list_events_reschedule_meeting":
+          specificPrompt = rescheduleMeetingPrompt;
+          break;
 
-DATA TO RENDER:`;
+        case "list_events_next_meeting":
+          specificPrompt = nextMeetingPrompt;
+          break;
+
+        case "list_events_day_summary_meeting":
+          specificPrompt = daySummaryPrompt;
           break;
 
         case "find_contact":
