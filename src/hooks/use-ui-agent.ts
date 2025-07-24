@@ -584,54 +584,372 @@ Logos: Publicly available team logo URLs.
 Report URL: Link to the home team’s official match report page."`;
           break;
         case "web_search_personal_biograph":
-          specificPrompt = "";
+          specificPrompt = `You are an expert frontend developer and I want you to generate me an html with this templeate I provided, before trying to generate the code please understand the data and you can remove the optional components if there data isn't availible in the data provided, be cautious about the data you include.
+when u do so because I don't want you to edit anything in the ui in the template has to be as it is. and please change all placeholder contents because that is your main job to substitute the contents"<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Doe's Professional Profile</title>
+    <!-- Link to Neue Haas Grotesk Display Pro font -->
+    <link href="https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro" rel="stylesheet">
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for font and avatar styling */
+        body {
+            font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+        }
+        /* Ensure profile-avatar img fills its container and covers the area */
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* Custom styling for text-based avatars */
+        .text-avatar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #555555;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 50%; /* Ensure text avatars are rounded */
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border">
+
+    <!-- Main UI Container: Hardcoded static content -->
+    <div id="profile-card" class="w-full max-w-[450px] flex flex-col gap-4 p-5 rounded-[1.5rem] bg-white/10 shadow-xl">
+
+        <!-- Profile Header Section -->
+        <div class="bg-white/10 rounded-xl p-0 flex items-start gap-4">
+            <div class="w-11 h-11 overflow-hidden flex-shrink-0 profile-avatar rounded-full">
+                <!-- Example: Image Avatar -->
+                <img src="https://placehold.co/44x44/FFD700/000000?text=JD" alt="Profile Avatar" class="w-full h-full object-cover rounded-full">
+                <!-- Example: Text Avatar (uncomment and remove img tag to use) -->
+                <!-- <div class="w-full h-full text-avatar">JD</div> -->
+                <!-- Example: Placeholder if no avatar or name (uncomment and remove img/text-avatar to use) -->
+                <!-- <img src="https://via.placeholder.com/44/CCCCCC/808080?text=No+Image" alt="Placeholder Avatar" class="w-full h-full object-cover rounded-full"> -->
+            </div>
+            <div class="flex-grow flex flex-col justify-center py-2">
+                <p class="text-white text-lg font-bold leading-tight">Senior Software Engineer | AI/ML Enthusiast | Tech Lead</p>
+            </div>
+        </div>
+
+        <!-- Experience Section -->
+        <!-- Experience 1 with logo -->
+        <div class="bg-white/10 rounded-[16px] p-4 flex items-start gap-3">
+            <div class="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0">
+                <img src="https://placehold.co/44x44/007BFF/FFFFFF?text=ABC" alt="ABC Tech Solutions Logo" class="w-full h-full object-cover rounded-full">
+            </div>
+            <div class="flex-grow space-y-1">
+                <p class="font-semibold text-white">Lead Software Engineer</p>
+                <div class="flex justify-between items-center w-full">
+                    <p class="text-sm" style="color: #FFFFFF99;">ABC Tech Solutions</p>
+                    <p class="text-xs" style="color: #FFFFFF99;">Jan 2022 - Present</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experience 2 without logo -->
+        <div class="bg-white/10 rounded-[16px] p-4 flex items-start gap-3">
+            <!-- No logo div here as per requirements for null logoUrl -->
+            <div class="flex-grow">
+                <p class="font-semibold text-white">Software Developer</p>
+                <div class="flex justify-between items-center w-full">
+                    <p class="text-sm" style="color: #FFFFFF99;">XYZ Innovations</p>
+                    <p class="text-xs" style="color: #FFFFFF99;">Mar 2019 - Dec 2021</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experience 3 with logo -->
+        <div class="bg-white/10 rounded-[16px] p-4 flex items-start gap-3">
+            <div class="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0">
+                <img src="https://placehold.co/44x44/28A745/FFFFFF?text=PQR" alt="PQR Systems Logo" class="w-full h-full object-cover rounded-full">
+            </div>
+            <div class="flex-grow">
+                <p class="font-semibold text-white">Junior Developer</p>
+                <div class="flex justify-between items-center w-full">
+                    <p class="text-sm" style="color: #FFFFFF99;">PQR Systems</p>
+                    <p class="text-xs" style="color: #FFFFFF99;">Aug 2017 - Feb 2019</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action Button -->
+        <button class="w-full bg-white text-black py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors" onclick="window.open('https://www.linkedin.com/in/johndoe', '_blank')">
+            Connect on LinkedIn
+        </button>
+
+        <!-- To test "No profile information available." message, replace the entire content above with this div: -->
+        <!-- <div class="text-center text-gray-400 p-4 bg-[#333333] rounded-[16px]">No profile information available.</div> -->
+
+    </div>
+
+</body>
+</html>
+"`;
           break;
         case "web_search_contact":
-          specificPrompt = `"Generate a complete HTML page for a 'Contact' UI, using Tailwind CSS for styling and JavaScript for dynamic, conditional rendering. This UI should display a single contact's details in a prominent card format.
-HTML Structure:
-Standard HTML5 boilerplate with meta charset and viewport.
-title should be '[Dynamic content, e.g., Contact Details]'.
-Link to import the 'Neue Haas Grotesk Display Pro' font from https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro.
-Link to Font Awesome for icons from https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css.
-Include the Tailwind CSS CDN script from https://cdn.tailwindcss.com.
-CSS Styling (within <style> tags):
-Apply font-family: 'Neue Haas Grotesk Display Pro', sans-serif; to the body.
-Ensure .contact-avatar img has width: 100%; height: 100%; object-fit: cover;.
-Add a custom class .text-shadow-custom for text-shadow: 1px 1px 3px rgba(0,0,0,0.7);.
-Add custom styling for .text-avatar to display: flex; align-items: center; justify-content: center; background-color: #555555; color: #ffffff; font-size: 2.5rem; font-weight: bold;. (Note: text-transform: uppercase; is handled by JS for robustness).
-Body Layout (using Tailwind classes):
-body should be flex justify-center items-center min-h-screen m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border.
-Main UI Container (id="contact-card"):
-A div with id="contact-card" that acts as the main container and the contact card itself.
-It should have the classes: w-full max-w-[450px] flex flex-col items-center text-center relative overflow-hidden bg-[#333333] rounded-[1.5rem] p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto.
-This div will be empty initially, as its content will be dynamically injected by JavaScript.
-JavaScript Logic (within <script> tags, at the end of body):
-renderContactUI(data) Function:
-This function takes a data object as its argument.
-It should get the contact-card element. If not found, log an error and return.
-It must clear the innerHTML of the container before rendering new content.
-The HTML page's <title> element should be updated with data.title if provided, otherwise default to 'Contact Details'.
-Conditional Rendering Logic for a single contact card:
-Condition: Renders if data.contact object is present.
-Structure: Content is directly appended to the contact-card container.
-Top Bar (Introductory Text with Icon): If data.contact.intro is present, create a div with flex items-start gap-3 w-full.
-Icon div: w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-white text-xl font-bold flex-shrink-0. Inside, a Font Awesome icon (i tag) using data.contact.intro.iconClass or fas fa-user as fallback.
-Text div: text-base leading-[140%] font-semibold text-white leading-tight flex-grow text-left. Set its textContent to data.contact.intro.text or 'Contact information.' as fallback.
-Circular Avatar: Create a div with w-52 h-52 rounded-full overflow-hidden contact-avatar.
-Inside, if data.contact.avatarUrl is present, an img with w-full h-full object-cover. Use data.contact.avatarUrl for src.
-If data.contact.avatarUrl is not present but data.contact.name is present, create a div with w-full h-full text-avatar rounded-full. Set its textContent to the first two initials of data.contact.name (ensuring each initial is capitalized using .toUpperCase()).
-If neither avatarUrl nor name is present, use a placeholder image: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAAAOVBMVEX///+hoaGZmZmenp75+fmmpqbX19e3t7e/v7/t7e3n5+epqanNzc3KysqSkpL8/Pzf39/z8/OwsLBPkmpzAAAC40lEQVR4nO3a6W6rMBCGYbywmmDC/V9sTSAUEiASWGKQ3udXK3EQ3xmPF0qSAAAAAAAAAAAAAAAAAAAAAAAAAAAu4xNvY7o2TZZHVZRXhklNXNmFWbxSKmIUZeoLw1ildBVLWehLw4TKNPHu9iBMNIswYZ72/szdJIU5TUiYUBFbF0V9bpmQEiZpU2WUco8zdxMSJmlDkn7NUY/keNsICePNEEaptDp+NyFhska9FcfvJiRMod9ZTHf8bkLCdGYK447fTUiYx1QZdf/KVI1R6RBm/3F2j19CwiT5WBqT7j1u25m83J67hYTx3oXaKKPTnWdNWhdOLDtzt5Aw4afMGZM+9upSvqYJkz+3LhATJrSDfdq95d+O87euty6TE2Z3F9MfDTI1zt9ma6DJCfPjwtAw0+ydbmyu7xImKfP/pUgX621zlzD+Me0R+jTZ6pH0LmGmhhnTrLbNLcL4pHJaLbjnyoxxizDJs/jIovTainSLML7+zBL+Wft9ncgwtprPVmFWXjbMuNp8b3wkhql0o+fnzapbyRJOcV8DTWCYUpt+KZl+/26YcaB9tY24MN6613ayP9cMw2ilYcZJ4LNtxIWx46HTuHEpqdK1Qfa6RH1sBMSFad/vaUz+GkXzbcxXabrl/llWGJ+Us//4vm22GmZsm9rLDZPYWR1MmoVtjN4aZK9LmsW2RlYYXzfzR+3K7YYZL1F2VhtZYapm+ajdTsMMdG5lhvHPMLSWafbr0l+haz9NAqLC/KzDam3+20ZSmOxIlvmbNkFhykNZ+raRN8zs7wbZMJ0GxITxu6vjj9qMb2vEhDnWMAPjhhlNSphyd6X/WZrh77pCwnh3Jsu7bYSEOdEwY236tzUywrTN2Y+zdOeFVMam7jSVCQnzLCOoJITR8T43vTiM7Q+U0bhrP2v04XilY+kngivDJHkalTvx5c15ZRbVpVmiO/VZJAAAAAAAAAAAAAAAAAAAAAAAAABc4A+lUzEyY9gMcgAAAABJRU5ErkJggg==.
-This avatar section should always render if data.contact is present.
-Contact Name: If data.contact.name is present, create an h2 element with classes text-2xl font-bold text-white text-shadow-custom and set its textContent to data.contact.name. This element should only render if data.contact.name is provided.
-Additional Contact Details Section: Create a div with w-full text-left bg-[#444444] p-4 rounded-lg space-y-2.
-Include a helper function addDetail(iconClass, label, value) that creates a div with classes flex items-center gap-3 text-sm, an <i> icon with \${iconClass} text-gray-400, and a <span> with classes text-gray-200 and innerHTML as <strong>\${label}:</strong> \${value}.
-Use addDetail for data.contact.birthday (fas fa-birthday-cake), data.contact.email (fas fa-envelope), data.contact.phone (fas fa-phone), data.contact.address (fas fa-map-marker-alt), and data.contact.notes (fas fa-info-circle).
-This section should only be appended if it contains at least one detail (i.e., if any of the addDetail calls result in content).
-"Send a message" Button: Create a button with w-full bg-white text-black py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors. Set its textContent to 'Send a message'. This button should always render if data.contact is present.
-No Contact Message: If data.contact is not present, display a div with text-center text-gray-400 p-4 bg-[#333333] rounded-xl and text 'No contact information available.'`;
+          specificPrompt = `You are an expert frontend developer and I want you to generate me an html with this templeate I provided, before trying to generate the code please understand the data and you can remove the optional components if there data isn't availible in the data provided, be cautious about the data you include.
+when u do so because I don't want you to edit anything in the ui in the template has to be as it is. and please change all placeholder contents because that is your main job to substitute the contents"<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Details</title>
+    <!-- Link to Neue Haas Grotesk Display Pro font -->
+    <link href="https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro" rel="stylesheet">
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for font and avatar styling */
+        body {
+            font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+        }
+        /* Ensure contact-avatar img fills its container and covers the area */
+        .contact-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* Custom text shadow for prominent text */
+        .text-shadow-custom {
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+        }
+        /* Custom styling for text-based avatars */
+        .text-avatar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #555555;
+            color: #ffffff;
+            font-size: 2.5rem;
+            font-weight: bold;
+            /* text-transform: uppercase; (handled by content directly in static HTML) */
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border">
+
+    <!-- Main UI Container: Hardcoded static content -->
+    <div id="contact-card" class="w-full max-w-[450px] flex flex-col items-center text-center relative overflow-hidden bg-[#333333] rounded-[1.5rem] p-6 shadow-xl space-y-4">
+
+        <!-- Top Bar (Introductory Text with Icon) -->
+        <div class="flex items-start gap-3 w-full">
+            <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
+                <i class="fas fa-user"></i> <!-- Fallback icon -->
+            </div>
+            <div class="text-base leading-[140%] font-semibold text-white flex-grow text-left">
+                Contact information.
+            </div>
+        </div>
+
+        <!-- Circular Avatar -->
+        <div class="w-52 h-52 rounded-full overflow-hidden contact-avatar">
+            <!-- Example: Image Avatar -->
+            <img src="https://placehold.co/208x208/FFD700/000000?text=JD" alt="Contact Avatar" class="w-full h-full object-cover">
+            <!-- Example: Text Avatar (uncomment and remove img tag to use) -->
+            <!-- <div class="w-full h-full text-avatar rounded-full">JD</div> -->
+            <!-- Example: Placeholder if no avatar or name (uncomment and remove img/text-avatar to use) -->
+            <!-- <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAAAOVBMVEX///+hoaGZmZmenp75+fmmpqbX19e3t7e/v7/t7e3n5+epqanNzc3KysqSkpL8/Pzf39/z8/OwsLBPkmpzAAAC40lEQVR4nO3a6W6rMBCGYbywmmDC/V9sTSAUEiASWGKQ3udXK3EQ3xmPF0qSAAAAAAAAAAAAAAAAAAAAAAAAAAAu4xNvY7o2TZZHVZRXhklNXNmFWbxSKmIUZeoLw1ildBVLWehLw4TKNPHu9iBMNIswYZ72/szdJIU5TUiYUBFbF0V9bpmQEiZpU2WUco8zdxMSJmlDkn7NUY/keNsICePNEEaptDp+NyFhska9FcfvJiRMod9ZTHf8bkLCdGYK447fTUiYx1QZdf/KVI1R6RBm/3F2j19CwiT5WBqT7j1u25m83J67hYTx3oXaKKPTnWdNWhdOLDtzt5Aw4afMGZM+9upSvqYJkz+3LhATJrSDfdq95d+O87euty6TE2Z3F9MfDTI1zt9ma6DJCfPjwtAw0+ydbmyu7xImKfP/pUgX621zlzD+Me0R+jTZ6pH0LmGmhhnTrLbNLcL4pHJaLbjnyoxxizDJs/jIovTainSLML7+zBL+Wft9ncgwtprPVmFWXjbMuNp8b3wkhql0o+fnzapbyRJOcV8DTWCYUpt+KZl+/26YcaB9tY24MN6613ayP9cMw2ilYcZJ4LNtxIWx46HTuHEpqdK1Qfa6RH1sBMSFad/vaUz+GkXzbcxXabrl/llWGJ+Us//4vm22GmZsm9rLDZPYWR1MmoVtjN4aZK9LmsW2RlYYXzfzR+3K7YYZL1F2VhtZYapm+ajdTsMMdG5lhvHPMLSWafbr0l+haz9NAqLC/KzDam3+20ZSmOxIlvmbNkFhykNZ+raRN8zs7wbZMJ0GxITxu6vjj9qMb2vEhDnWMAPjhhlNSphyd6X/WZrh77pCwnh3Jsu7bYSEOdEwY236tzUywrTN2Y+zdOeFVMam7jSVCQnzLCOoJITR8T43vTiM7Q+U0bhrP2v04XilY+kngivDJHkalTvx5c15ZRbVpVmiO/VZJAAAAAAAAAAAAAAAAAAAAAAAAABc4A+lUzEyY9gMcgAAAABJRU5ErkJggg==" alt="Placeholder Avatar" class="w-full h-full object-cover"> -->
+        </div>
+
+        <!--optional(if it not exist omit in ui) Contact Name -->
+        <h2 class="text-2xl font-bold text-white text-shadow-custom">Jane Doe</h2>
+
+        <!--optional(if it not exist omit in ui) Additional Contact Details Section -->
+        <div class="w-full text-left bg-[#444444] p-4 rounded-lg space-y-2">
+            <!-- Birthday Detail -->
+            <div class="flex items-center gap-3 text-sm">
+                <i class="fas fa-birthday-cake text-gray-400"></i>
+                <span class="text-gray-200"><strong>Birthday:</strong> January 1, 1990</span>
+            </div>
+            <!-- Email Detail -->
+            <div class="flex items-center gap-3 text-sm">
+                <i class="fas fa-envelope text-gray-400"></i>
+                <span class="text-gray-200"><strong>Email:</strong> jane.doe@example.com</span>
+            </div>
+            <!-- Phone Detail -->
+            <div class="flex items-center gap-3 text-sm">
+                <i class="fas fa-phone text-gray-400"></i>
+                <span class="text-gray-200"><strong>Phone:</strong> +1 (555) 123-4567</span>
+            </div>
+            <!-- Address Detail -->
+            <div class="flex items-center gap-3 text-sm">
+                <i class="fas fa-map-marker-alt text-gray-400"></i>
+                <span class="text-gray-200"><strong>Address:</strong> 123 Main St, Anytown, USA 12345</span>
+            </div>
+            <!-- Notes Detail -->
+            <div class="flex items-center gap-3 text-sm">
+                <i class="fas fa-info-circle text-gray-400"></i>
+                <span class="text-gray-200"><strong>Notes:</strong> Met at the annual tech conference.</span>
+            </div>
+        </div>
+
+        <!-- "Send a message" Button -->
+        <button class="w-full bg-white text-black py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors">
+            Send a message
+        </button>
+
+        <!-- To test "No contact information available." message, replace the entire content above with this div: -->
+        <!-- <div class="text-center text-gray-400 p-4 bg-[#333333] rounded-xl">No contact information available.</div> -->
+
+    </div>
+
+</body>
+</html>
+"`;
           break;
         case "web_search_hospitality":
-          specificPrompt = "";
+          specificPrompt = `
+          IMPORTANT: Use only the actual data provided in the API response. Do not use any static, sample, or placeholder data from this prompt. Every field in the UI must come from the real API response make the response match with the ui. If a field is missing, omit that field and on current cond replace static data with the response and use real image of the Restaurant and hotels and don't change any ui style just understand the response and make show the content in ui and also when you ask for resturant please use Restaurant ui part , if you ask for hotels you should use hotels ui.
+          IMPORTANT: Use actual and real image of Restaurant or hotel if it fail use placeholder image 
+          "Generate a complete HTML page for a UI that can display either 'Restaurant Details' or 'Hotel Listings, or Hotel Detail with list of image', using Tailwind CSS for styling. The UI should be capable of displaying both a single restaurant entry and a list of hotel entries.
+
+HTML Structure:
+
+    Standard HTML5 boilerplate with meta charset and viewport.
+
+    title should be 'Restaurant & Hotel Details Sample'.
+
+    Link to import the 'Neue Haas Grotesk Display Pro' font from https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro.
+
+    Link to Font Awesome for icons (utensils, star, clock, bed, globe, map-marker, phone, dumbbell, eye, wrench, info-circle) from https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css.
+
+    Include the Tailwind CSS CDN script from https://cdn.tailwindcss.com.
+
+CSS Styling (within <style> tags):
+
+    Apply font-family: "Neue Haas Grotesk Display Pro", Arial, sans-serif; to the body.
+
+    Ensure .restaurant-image img and .hotel-image img have width: 100%; height: 100%; object-fit: cover; border-radius: 1rem;.
+
+    Add a custom class .text-shadow-custom for text-shadow: 1px 1px 3px rgba(0,0,0,0.7);.
+
+Body Layout (using Tailwind classes):
+
+    body should be flex justify-center items-start  m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border.
+
+Main UI Container (id="main-content-container"):
+
+    A div with container w-full max-w-[450px] flex flex-col gap-4 p-5 rounded-[1.5rem] bg-white/10 shadow-xl.
+
+    This div will contain either the restaurant or hotel content.
+
+Content Sections (Static HTML, commented out to switch between views):
+
+1. Restaurant Details Sample or (list of Restaurant):
+
+    Top Bar (Introductory Text with Icon):
+
+        Structure: A div with flex items-start gap-3 mb-2.
+
+        Icon div: w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white text-xl font-bold flex-shrink-0. Inside, a Font Awesome icon (i tag) like fas fa-utensils.
+
+        Text div: text-lg font-bold text-white leading-tight flex-grow.e,g( Set its textContent to 'put response match to this ', this is for sample for you to understandable like this for other placeholder value).
+
+    Restaurant Image Card:
+
+        Structure: A div with restaurant-image card bg-[#333333] rounded-xl p-0 overflow-hidden relative h-56.
+
+       optional img (if no image omit the image and bottom button in ui): w-full h-full object-cover rounded-xl. Use a sample image URL when you get an error to load the image  (e.g., https://i.ibb.co/0pzY3nWB/placeholder-Hotels.png, if the actual image url is not provide or have error use this placeholder image).
+
+        Optional Rating Overlay: An absolute div with top-4 left-4 bg-black bg-opacity-50 text-white text-sm font-semibold py-1 px-3 rounded-full flex items-center gap-1. Inside, a Font Awesome star icon (fas fa-star) with text-yellow-400 and a span for the rating (e.g., '4.7').
+
+    Restaurant Details Card:
+
+        Structure: A div with card bg-white/10 rounded-xl p-4 flex flex-col gap-2.
+
+        Name and Distance div: flex justify-between items-center.
+
+            Name div: text-xl font-bold text-white (e.g., 'The Gastronome Grill' this is for sample for you to understandable like this for other placeholder value).
+
+            Distance div: text-sm text-gray-400 (e.g., '2.5 mi' this is for smaple for you to understandable like this for other placeholder value).
+
+        Food Type and Price Range div: text-base text-gray-400 flex items-center gap-2.
+
+            Font Awesome icon (i tag) (e.g., fas fa-burger).
+
+            span for food type and price range (e.g., 'Modern American • $$$$').
+
+        Open Status and Closing Time div: text-base flex items-center gap-2.
+
+            Font Awesome clock icon (fas fa-clock) with text-gray-400.
+
+            span for open/closed status: font-semibold. Apply text-green-400 if open, else text-red-400 (e.g., 'Open').
+
+            span for closing time: text-gray-400 (e.g., '• 10:00 PM').
+
+    Book A Table Button:
+
+        Structure: A button element. always white background and black text color
+
+        Styling: bg-[#FFFFFF] text-black py-3 px-6 border-none rounded-xl cursor-pointer text-base font-bold text-center transition-colors duration-300 w-[calc(100%-2rem)] self-center mt-2 hover:bg-gray-200. Set its textContent to 'Book A Table'.
+
+2. Hotel Listing Sample:
+
+    Top Bar (Introductory Text with Icon):
+
+        Structure: A div with flex items-start gap-3 mb-2.
+
+        Icon div: w-10 h-10 rounded-full bg-[#333333] flex items-center justify-center text-white text-xl font-bold flex-shrink-0. Inside, a Font Awesome icon (i tag) like fas fa-hotel.
+
+        Text div: text-lg font-bold text-white leading-tight flex-grow. Set its textContent to 'use the real api respose data that match with this.'.
+
+    Hotel Cards (List):
+
+        Create two sample hotel cards. For each hotel:
+
+            Structure: A div with card bg-[#333333] rounded-xl p-4 flex flex-col gap-3.
+
+            Optional  Hotel Image(if the no image omit in ui): A div with hotel-image rounded-xl overflow-hidden h-40. Inside, an img with w-full h-full object-cover. (e.g., https://i.ibb.co/0pzY3nWB/placeholder-Hotels.png, if the actual image url is not provide or have error use this placeholder image).
+
+            Location, Rating, Amenities Row: A div with flex justify-between items-center text-sm.
+
+                Left side div: flex items-center gap-2.
+
+                    Location span: text-gray-400 (e.g., 'New York').
+
+                    Star Rating span: flex items-center text-yellow-400. Render 5 Font Awesome star icons (fas fa-star), with text-gray-600 for unfilled stars based on a sample rating (e.g., 4.5).
+
+                    Numerical Rating span: text-white font-semibold (e.g., '4.5').
+
+                Right side div: flex items-center gap-2.
+
+                    For each amenity, create a div with w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-white text-sm. Inside, a Font Awesome icon (i tag) (e.g., fas fa-wifi, fas fa-dumbbell, fas fa-spa, fas fa-parking).
+
+            Hotel Name: A div with text-xl font-bold text-white (e.g., 'Grand Hyatt', 'The Cozy Inn',  as placeholder, please change it in real data as soon as you get the data).
+
+            Price: A div with text-base text-gray-400 (e.g., 'from $350 p/night as placeholder, please change it in real data as soon as you get the data').
+
+            Action Buttons Row: A div with flex justify-between items-center mt-2.
+
+                For each action, create an a tag (link) with flex items-center gap-2 bg-gray-700 text-white py-2 px-4 rounded-full text-sm font-semibold transition-colors duration-200 hover:bg-gray-600.
+
+                    Font Awesome icon (i tag) (e.g., fas fa-web, fas fa-phone, fas fa-map-marker-alt).
+
+                    span for action text (e.g., 'website','Direction', 'Call'). Set href to '#' or a sample tel: link.
+
+    Main Action Button (for hotel listing):
+
+        Structure: A button element.
+
+        Styling: bg-[#FFFFFF] text-black py-3 px-6 border-none rounded-xl cursor-pointer text-base font-bold text-center transition-colors duration-300 w-[calc(100%-2rem)] self-center mt-2 hover:bg-gray-200. Set its textContent to 'Explore More Hotels'.
+
+Instructions for switching views:
+
+    The generated HTML should contain both the restaurant and hotel sections.
+
+    One section should be commented out by default (e.g., the restaurant section) so that the other (e.g., hotel listing) is visible upon initial load. Users can uncomment the desired section and comment out the other to switch views."`;
           break;
         case "web_search_generic":
           specificPrompt = "";
