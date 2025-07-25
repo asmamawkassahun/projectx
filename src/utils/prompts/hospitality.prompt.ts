@@ -29,7 +29,7 @@ Body Layout (using Tailwind classes):
 
 Main UI Container (id="main-content-container"):
 
-    A div with container w-full max-w-[450px] flex flex-col gap-4 p-5 rounded-[1.5rem] bg-white/10 shadow-xl.
+    A div with container w-full max-w-full flex flex-col gap-4 p-5 rounded-[1.5rem] bg-white/10 shadow-xl.
 
     This div will contain either the restaurant or hotel content.
 

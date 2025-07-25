@@ -24,6 +24,7 @@ import { useCallback, useState } from "react";
 import { daySummaryPrompt } from "@/utils/prompts/daySummary";
 import { genericEventProcess } from "@/utils/prompts/genericEvent";
 import { productPrompt } from "@/utils/prompts/productDetailPrompt";
+import { defaultPrompt } from "@/utils/prompts/defaultPrompt";
 
 interface UIGenerationResult {
   success: boolean;
@@ -86,16 +87,16 @@ Avoid overly flat designs — always use soft shadows and borders for visual dep
 DESKTOP-OPTIMIZED DESIGN GUIDELINES:
 USE LARGER FONTS optimized for desktop: text-lg, text-xl, text-2xl
 APPLY GENEROUS SPACING: p-8, py-10, space-y-6
-CREATE WIDE LAYOUTS: full width usage with max-w-5xl, max-h-[90vh]
+CREATE WIDE LAYOUTS: full width usage with max-w-full,
 OPTIMIZE FOR DESKTOP SCREEN REAL ESTATE — no compression like mobile layouts
 USE DESKTOP LINE HEIGHTS: leading-relaxed, leading-loose
 CENTERED OVERLAY REQUIREMENTS:
 Generate a full HTML document with Tailwind CSS CDN
 Design the content as a centered overlay, NOT a full-screen app
 
-Constrain layout using max-w-4xl or max-w-5xl, and max-h-[90vh]
+Constrain layout using max-w-full or max-w-full, and 
 Ensure the main container is scrollable if content exceeds height
-Use rounded-[22px], bg-white/10, backdrop-blur-[40px], and p-6 for outer container
+Use rounded-[24px], bg-white/10, backdrop-blur-[40px], and p-6 for outer container
 NO large titles or headers — start directly with content
 Focus on compact, layered information design that feels like a high-quality modal overlay
 
@@ -108,7 +109,7 @@ Focus on compact, layered information design that feels like a high-quality moda
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Dynamic UI</title>
 </head>
-<body class="bg-transparent min-h-full w-full text-white p-0 m-0 overflow-x-hidden">
+<body class="bg-transparent h-full w-full text-white p-0 m-0 overflow-x-hidden">
     <div class="w-full h-full rounded-3xl shadow-2xl bg-white">
         <div class="p-6 space-y-4">
             <!-- Your content here with individual cards, light borders, emojis, and colors -->
@@ -167,7 +168,7 @@ export function useUIAgent(): UIAgentHookResult {
           specificPrompt = "";
           break;
         case "web_search_articles":
-          specificPrompt = articlesPrompt;
+          specificPrompt = defaultPrompt;
           break;
         case "web_search_products":
           specificPrompt = productPrompt;
@@ -235,80 +236,11 @@ export function useUIAgent(): UIAgentHookResult {
           break;
 
         case "web_search":
-          specificPrompt = `
-CONTEXT: Generate a beautiful ANSWER PRESENTATION interface (NOT search results)
-
-GOAL: Transform web search data into a compelling, informative answer display that directly addresses the user's question
-
-ANSWER-FOCUSED DESIGN APPROACH:
-- Present the ANSWER prominently, not search result listings
-- Create a knowledge dashboard that synthesizes information beautifully
-- Design like an intelligent information presentation, not a search engine
-- Focus on delivering insights and answers, not showing "where information came from"
-- Transform raw search data into a cohesive, beautiful answer experience
-- Think like presenting research findings or an expert summary
-
-BEAUTIFUL ANSWER PRESENTATION GUIDELINES:
-- Lead with the KEY ANSWER or main insights prominently displayed
-- Organize information into logical sections (overview, details, key points, etc.)
-- Use visual hierarchy to guide users through the answer
-- Create information cards that build upon each other
-- Present data as expert knowledge, not as "search results"
-- Use rich visual elements (emojis, icons, colors) to categorize information types
-- Design flows that tell a story with the information
-
-ANSWER PRESENTATION IDEAS:
-- Executive summary cards with key findings
-- Structured answer breakdowns with supporting details
-- Visual knowledge maps showing related concepts
-- Expert-style briefings with organized insights
-- Information timelines when relevant (for historical/chronological data)
-- Comparison cards for multiple perspectives or options
-- Rich fact cards with context and explanations
-- Solution-focused layouts for how-to or problem-solving queries
-
-NEVER SHOW:
-- Traditional search result lists with titles and snippets
-- "Source" or "Found on" style presentations
-- Numbered search result entries
-- URL displays or link-heavy interfaces
-- Search engine style layouts
-
-ALWAYS SHOW:
-- Direct answers to the user's question
-- Beautifully organized information
-- Synthesized insights and key takeaways
-- Visual information hierarchy
-- Expert-style knowledge presentation
-
-BE CREATIVE: Design an intelligent answer interface that makes users feel like they're getting expert knowledge, not search results!
-
-DATA TO RENDER:`;
+          specificPrompt = defaultPrompt;
           break;
 
         default:
-          specificPrompt = `
-CONTEXT: Generate a creative full-screen web app interface for function: ${functionName}
-
-GOAL: Create a beautiful, functional full-screen interface that best serves this specific function
-
-FULL-SCREEN WEB GUIDELINES:
-- Design for complete web app screen experience
-- Use appropriate typography and spacing for full-screen web readability
-- Create intuitive full-screen layouts that match the function's purpose
-- Ensure user-friendly and accessible interface design that utilizes the entire screen
-- Think like designing the main screen of a web app dedicated to this function
-
-FULL-SCREEN ADAPTIVE APPROACH:
-- Analyze the function purpose and data structure
-- Choose the most appropriate full-screen web layout and visual style
-- Create innovative UI patterns that enhance the user experience across the entire screen
-- Design an interface that feels like a complete native web app screen
-- Utilize the full screen real estate for optimal data presentation
-
-BE CREATIVE: Design a unique, beautiful full-screen interface that perfectly suits this function and works excellently as a complete web app screen.
-
-DATA TO RENDER:`;
+          specificPrompt = defaultPrompt;
           break;
       }
 

@@ -26,7 +26,7 @@ Apply the following utility classes to the body element for centering and founda
 Main UI Container (#match-stats-card)
 Create a div with the ID match-stats-card.
 
-Apply the following Tailwind classes and inline style for structural and aesthetic properties, ensuring a minimum width of 480px and no vertical scrolling: min-w-[480px] flex flex-col gap-4 rounded-[1.5rem] shadow-xl style="background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px);".
+Apply the following Tailwind classes and inline style for structural and aesthetic properties, ensuring a minimum width of w-full and no vertical scrolling: min-w-[480px] flex flex-col gap-4 rounded-[1.5rem] shadow-xl style="background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px);".
 
 Content Structure (within #match-stats-card)
 Player Header Section

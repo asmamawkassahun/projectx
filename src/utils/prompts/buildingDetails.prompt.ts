@@ -30,7 +30,7 @@ export const buildingDetailsPrompt = `You are an expert HTML developer. Your tas
             border-radius: 1.5rem;
             padding: 20px;
             width: 100%; /* Full width on small screens */
-            max-width: 400px; /* Max width for larger screens */
+            max-width: full; /* Max width for larger screens */
             color: #fff;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }

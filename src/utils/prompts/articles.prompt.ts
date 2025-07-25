@@ -13,7 +13,7 @@ Body Layout (using Tailwind classes):
 body should be flex justify-center items-center min-h-screen m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border.
 Main UI Container (id='profile-card'):
 A div with id="profile-card" that acts as the main container for the profile.
-It should have the classes: w-full max-w-[450px] flex flex-col gap-4 p-5 rounded-[1.5rem] bg-[#222222] shadow-xl max-h-[90vh] overflow-y-auto.
+It should have the classes: w-full flex flex-col gap-4 p-5 rounded-[1.5rem] bg-[#222222] shadow-xl.
 This div will be empty initially, as its content will be dynamically injected by JavaScript.
 JavaScript Logic (within <script> tags, at the end of body):
 renderProfileUI(data) Function:
@@ -62,7 +62,7 @@ Body Layout (using Tailwind classes):
 body should be flex justify-center items-center min-h-screen m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border.
 Main UI Container (id='match-stats-card'):
 A div with id="match-stats-card" that acts as the main container for the stats.
-It should have the classes: w-full max-w-[450px] flex flex-col gap-4 rounded-[1.5rem] bg-[#222222] shadow-xl max-h-[95vh] overflow-y-auto.
+It should have the classes: w-full flex flex-col gap-4 rounded-[1.5rem] bg-[#222222] shadow-xl max-h-[95vh] overflow-y-auto.
 This div will be empty initially, as its content will be dynamically injected by JavaScript.
 JavaScript Logic (within <script> tags, at the end of body):
 renderMatchStatsUI(data) Function:

@@ -32,7 +32,7 @@ when u do so because I don't want you to edit anything in the ui in the template
     <!-- Main UI Container -->
     <!-- This div will contain all the order tracking components. -->
     <!-- Its content would typically be dynamically injected by JavaScript based on data. -->
-    <div id="main-order-tracking-container" class="container w-full max-w-[450px] flex flex-col gap-4 p-6 rounded-[1.5rem] bg-[#222222] shadow-xl">
+    <div id="main-order-tracking-container" class="container w-full max-w-full flex flex-col gap-4 p-6 rounded-[1.5rem] bg-white/10 backdrop:blur-[40px] shadow-xl">
 
         <!-- Optional Notification (Example - would be dynamically added/removed) -->
         <!--
@@ -184,7 +184,7 @@ when u do so because I don't want you to edit anything in the ui in the template
     <!-- Main UI Container -->
     <!-- This div will contain all the order return tracking components. -->
     <!-- Its content would typically be dynamically injected by JavaScript based on data. -->
-    <div id="main-order-return-container" class="container w-full max-w-[450px] flex flex-col gap-4 p-5 rounded-[1.5rem] bg-[#222222] shadow-xl">
+    <div id="main-order-return-container" class="container w-full max-w-full flex flex-col gap-4 p-5 rounded-[1.5rem] bg-white/10 backdrop:blur-[40px] shadow-xl">
 
         <!-- Optional Notification (Example - would be dynamically added/removed) -->
         <!--
