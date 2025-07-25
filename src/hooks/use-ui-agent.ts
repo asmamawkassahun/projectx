@@ -43,7 +43,7 @@ interface UIAgentHookResult {
 
 const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "";
 const GEMINI_API_URL =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite-preview-06-17:generateContent";
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent";
 
 // UI Constitution - System prompt for consistent UI generation
 const UI_CONSTITUTION = `

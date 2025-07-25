@@ -198,27 +198,12 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
         );
 
         // If scenario is 'sport' or 'building_details', fetch the sample image and attach it
-        let fileAttachment: File | null = null;
-        if (scenario === "sport") {
-          try {
-            const imgResp = await fetch("prompt-images/sport-sample.png");
-            const imgBlob = await imgResp.blob();
-            fileAttachment = new File([imgBlob], "sport-sample.png", {
-              type: imgBlob.type || "image/png",
-            });
-          } catch (e) {
-            console.warn(
-              "Failed to fetch sport-sample.png for Gemini UI generation",
-              e
-            );
-          }
-        }
+        
 
         const uiResult = await generateUI(
           searchToolName,
           searchData,
-          `search_${scenario}_` + Date.now(),
-          fileAttachment
+          `search_${scenario}_` + Date.now()
         );
 
         if (uiResult.success && uiResult.generatedUI) {
@@ -505,7 +490,7 @@ DATA:\n${JSON.stringify(eventListData)}`;
           </button>
 
           {/* Generated UI content as the modal itself with hidden scrollbar */}
-          <div className="relative  overflow-y-auto scrollbar-hide rounded-[1.5rem] w-full h-full max-h-[75vh] max-w-[60vh] p-0 bg-transparent">
+          <div className="relative  overflow-y-auto scrollbar-hide rounded-[1.5rem] w-full h-full max-h-[80vh] max-w-[70vh] p-0 bg-transparent">
             <HTMLRenderer htmlContent={generatedHTML} />
           </div>
         </motion.div>
