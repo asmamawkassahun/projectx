@@ -2,6 +2,7 @@ export const hospitalityPrompt = `
           IMPORTANT: Use only the actual data provided in the API response. Do not use any static, sample, or placeholder data from this prompt. Every field in the UI must come from the real API response make the response match with the ui. If a field is missing, omit that field and on current cond replace static data with the response and use real image of the Restaurant and hotels and don't change any ui style just understand the response and make show the content in ui and also when you ask for resturant please use Restaurant ui part , if you ask for hotels you should use hotels ui.
           IMPORTANT: Use actual and real image of Restaurant or hotel if it fail use placeholder image 
           "Generate a complete HTML page for a UI that can display either 'Restaurant Details' or 'Hotel Listings, or Hotel Detail with list of image', using Tailwind CSS for styling. The UI should be capable of displaying both a single restaurant entry and a list of hotel entries.
+  IMPORTANT: Do not use vertical scrolling (do not use \`overflow-y-auto\` or similar) for the main content containers. The content should fit within the available height, and if it overflows, it should be clipped or extend the page, but not scroll within the modal/container.
 
 HTML Structure:
 
@@ -35,7 +36,7 @@ Main UI Container (id="main-content-container"):
 
 Content Sections (Static HTML, commented out to switch between views):
 
-1. Restaurant Details Sample or (list of Restaurant):
+1. Restaurant Details Sample or (list of Restaurant, no need vertically scrollable ):
 
     Top Bar (Introductory Text with Icon):
 
@@ -83,7 +84,7 @@ Content Sections (Static HTML, commented out to switch between views):
 
         Styling: bg-[#FFFFFF] text-black py-3 px-6 border-none rounded-xl cursor-pointer text-base font-bold text-center transition-colors duration-300 w-[calc(100%-2rem)] self-center mt-2 hover:bg-gray-200. Set its textContent to 'Book A Table'.
 
-2. Hotel Listing Sample:
+2. Hotel Listing Sample(no need vertically scrollable ):
 
     Top Bar (Introductory Text with Icon):
 
@@ -138,4 +139,3 @@ Instructions for switching views:
     The generated HTML should contain both the restaurant and hotel sections.
 
     One section should be commented out by default (e.g., the restaurant section) so that the other (e.g., hotel listing) is visible upon initial load. Users can uncomment the desired section and comment out the other to switch views."`;
-         

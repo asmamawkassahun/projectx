@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arsenal FC vs Chelsea FC - Match Stats</title>
+    <!-- Google Fonts - Inter -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .gradient-header {
+        background: linear-gradient(to right, #ef0107, #034694);
+      }
+      .stat-item-bg {
+        background-color: #333333;
+      }
+      .team-logo img,
+      .player-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body
+    class="flex justify-center items-center m-0 bg-[#1a1a1a] text-[#e0e0e0] box-border"
+  >
+    <!-- Main UI Container for Match Stats Card -->
+    <div
+      id="match-stats-card"
+      class="w-full max-w-full flex flex-col gap-4 rounded-[1.5rem] bg-white/10 shadow-xl"
+    >
+      <!-- Combined Header Section (Player and Match) -->
+      <div class="gradient-header rounded-t-[1.5rem]">
+        <!-- Player Header Section -->
+        <div class="flex items-center gap-3 p-5 pb-0">
+          <div
+            class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 player-avatar"
+          >
+            <img
+              src="https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt0116641e39a39942/60db6e36b8577e0f2f4c4069/Martin_Odegaard_Arsenal_2020-21.jpg"
+              alt="Martin Ødegaard Avatar"
+            />
+          </div>
+          <div class="flex flex-col">
+            <p class="text-white text-lg font-semibold">Martin Ødegaard</p>
+            <p class="text-gray-400 text-sm leading-tight">
+              Midfielder - Arsenal FC
+            </p>
+            <p class="text-gray-300 text-xs mt-1">
+              Man of the Match: Led Arsenal's midfield with 2 assists, 1 goal,
+              and a 92% pass accuracy.
+            </p>
+          </div>
+        </div>
+
+        <!-- Match Score Section -->
+        <div class="p-5 flex flex-col items-center justify-center">
+          <div
+            class="flex justify-between items-center w-full max-w-[300px] mb-4"
+          >
+            <!-- Home Team Section -->
+            <div class="flex flex-col items-center gap-2">
+              <div
+                class="w-16 h-16 rounded-full overflow-hidden bg-white flex items-center justify-center team-logo"
+              >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Arsenal_FC.svg/1200px-Arsenal_FC.svg.png"
+                  alt="Arsenal FC Logo"
+                />
+              </div>
+              <p class="text-white text-sm font-medium">Arsenal FC</p>
+            </div>
+
+            <!-- Score and Status Section -->
+            <div class="flex flex-col items-center">
+              <p class="text-white text-5xl font-bold">5 - 0</p>
+              <p class="text-gray-300 text-sm font-medium">
+                Full-time (23/04/2024)
+              </p>
+            </div>
+
+            <!-- Away Team Section -->
+            <div class="flex flex-col items-center gap-2">
+              <div
+                class="w-16 h-16 rounded-full overflow-hidden bg-white flex items-center justify-center team-logo"
+              >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Chelsea_FC.svg/1200px-Chelsea_FC.svg.png"
+                  alt="Chelsea FC Logo"
+                />
+              </div>
+              <p class="text-white text-sm font-medium">Chelsea FC</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics List Section -->
+      <div class="flex flex-col gap-3 py-5 pt-0">
+        <div
+          class="stat-item-bg rounded-xl p-4 flex justify-between items-center"
+        >
+          <p class="text-gray-300 text-base">Possession</p>
+          <p class="text-white text-base font-semibold">
+            Arsenal 44% - Chelsea 56%
+          </p>
+        </div>
+        <div
+          class="stat-item-bg rounded-xl p-4 flex justify-between items-center"
+        >
+          <p class="text-gray-300 text-base">Shots</p>
+          <p class="text-white text-base font-semibold">
+            Arsenal 27 - Chelsea 7
+          </p>
+        </div>
+        <div
+          class="stat-item-bg rounded-xl p-4 flex justify-between items-center"
+        >
+          <p class="text-gray-300 text-base">Shots on Target</p>
+          <p class="text-white text-base font-semibold">
+            Arsenal 10 - Chelsea 1
+          </p>
+        </div>
+        <div
+          class="stat-item-bg rounded-xl p-4 flex justify-between items-center"
+        >
+          <p class="text-gray-300 text-base">Total Passes</p>
+          <p class="text-white text-base font-semibold">
+            Arsenal 497 - Chelsea 630
+          </p>
+        </div>
+        <div
+          class="stat-item-bg rounded-xl p-4 flex justify-between items-center"
+        >
+          <p class="text-gray-300 text-base">Fouls</p>
+          <p class="text-white text-base font-semibold">
+            Arsenal 12 - Chelsea 11
+          </p>
+        </div>
+        <div
+          class="stat-item-bg rounded-xl p-4 flex justify-between items-center"
+        >
+          <p class="text-gray-300 text-base">Corners</p>
+          <p class="text-white text-base font-semibold">
+            Arsenal 4 - Chelsea 2
+          </p>
+        </div>
+      </div>
+
+      <!-- Call to Action Button -->
+      <div class="p-5 pt-0">
+        <button
+          onclick="window.open('https://www.sportinglife.com/football/live/161704/arsenal-vs-chelsea/stats', '_blank')"
+          class="w-full bg-white text-black py-3 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors shadow-lg"
+        >
+          View Full Match Report
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

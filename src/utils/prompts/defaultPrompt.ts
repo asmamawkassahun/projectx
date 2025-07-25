@@ -1,5 +1,6 @@
 export const defaultPrompt = `
 You are an expert frontend developer. Generate an HTML UI using the following universal design rules, which must be applied to all components:
+  IMPORTANT: Do not use vertical scrolling (do not use \`overflow-y-auto\` or similar) for the main content containers. The content should fit within the available height, and if it overflows, it should be clipped or extend the page, but not scroll within the modal/container.
 
 **1. Button Design**
 - Background: White (\`bg-white\` or \`bg-[#FFFFFF]\`)
