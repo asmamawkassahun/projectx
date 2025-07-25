@@ -56,7 +56,7 @@ when u do so because I don't want you to edit anything in the ui in the template
     <!-- Main Multi-Purpose UI Container -->
     <!-- This container will hold all the different UI scenarios, with each scenario commented out -->
     <!-- to represent conditional rendering without JavaScript. -->
-    <div id="main-multi-purpose-container" class="container w-full max-w-full flex flex-col gap-4 p-6 rounded-[1.5rem] bg-white/10 backdrop:blur-[40px] shadow-xl main-container-common">
+    <div id="main-multi-purpose-container" class="container w-full max-w-full flex flex-col gap-4 rounded-[1.5rem] bg-white/10 backdrop:blur-[40px] shadow-xl main-container-common">
 
         <!-- ==================================================================================================== -->
         <!-- SCENARIO: CONNECT AN ACCOUNT (from prompt-2.pdf, Page 1) -->

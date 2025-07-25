@@ -47,7 +47,7 @@ when u do so because I don't want you to edit anything in the ui in the template
     <!-- Main Cancel Meeting Container -->
     <!-- This div is the primary container for the cancel meeting information. -->
     <!-- All content is statically rendered here. -->
-    <div id="main-cancel-meeting-container" class="p-6 rounded-[1.5rem] bg-[#333333] shadow-lg shadow-black/30 w-full max-w-full flex flex-col gap-4">
+    <div id="main-cancel-meeting-container" class="rounded-[1.5rem] bg-[#333333] shadow-lg shadow-black/30 w-full max-w-full flex flex-col gap-4">
 
         <!-- 1. Top Summary Section -->
         <!-- Condition: Renders if cancelMeetingData.summaryText is present. -->

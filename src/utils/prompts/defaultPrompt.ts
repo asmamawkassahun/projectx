@@ -70,7 +70,7 @@ You are an expert frontend developer. Generate an HTML UI using the following un
 
 **10. Example Card/Container**
 \`\`\`html
-<div class="w-full max-w-full mx-auto flex flex-col gap-4 p-5 rounded-[1.5rem] bg-white/10 shadow-xl">
+<div class="w-full max-w-full mx-auto flex flex-col gap-4 rounded-[1.5rem] bg-white/10 shadow-xl">
   <!-- Content here -->
 </div>
 \`\`\`

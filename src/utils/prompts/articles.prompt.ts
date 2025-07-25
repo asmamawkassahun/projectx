@@ -10,10 +10,10 @@ Apply font-family: 'Neue Haas Grotesk Display Pro', sans-serif; to the body.
 Ensure .profile-avatar img has width: 100%; height: 100%; object-fit: cover;. (Note: border-radius: 50%; is intentionally not applied here to allow for square avatars as per the image).
 Add custom styling for .text-avatar to display: flex; align-items: center; justify-content: center; background-color: #555555; color: #ffffff; font-size: 1.5rem; font-weight: bold; border-radius: 50%;.
 Body Layout (using Tailwind classes):
-body should be flex justify-center items-center min-h-screen m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border.
+body should be flex justify-center items-center m-0 bg-[#1a1a1a] text-[#e0e0e0] box-border.
 Main UI Container (id='profile-card'):
 A div with id="profile-card" that acts as the main container for the profile.
-It should have the classes: w-full flex flex-col gap-4 p-5 rounded-[1.5rem] bg-[#222222] shadow-xl.
+It should have the classes: w-full flex flex-col gap-4 rounded-[1.5rem] bg-[#222222] shadow-xl.
 This div will be empty initially, as its content will be dynamically injected by JavaScript.
 JavaScript Logic (within <script> tags, at the end of body):
 renderProfileUI(data) Function:

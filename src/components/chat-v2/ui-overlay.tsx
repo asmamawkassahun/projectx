@@ -489,7 +489,7 @@ DATA:\n${JSON.stringify(eventListData)}`;
           </button>
 
           {/* Generated UI content as the modal itself with hidden scrollbar */}
-          <div className="relative  overflow-y-auto scrollbar-hide rounded-[1.5rem] w-full h-full max-h-[80vh] flex items-center justify-center mx-auto max-w-[60vw] p-0 bg-transparent">
+          <div className="relative  overflow-y-auto scrollbar-hide rounded-[1.5rem] max-h-[80vh] flex justify-center mx-auto max-w-[60vw] p-0">
             <HTMLRenderer htmlContent={generatedHTML} />
           </div>
         </motion.div>

@@ -142,7 +142,7 @@ when u do so because I don't want you to edit anything in the ui in the template
     <!-- Main Day Summary Container -->
     <!-- This div acts as the primary container for all day summary information. -->
     <!-- It's styled with Tailwind CSS for dark theme, rounded corners, shadow, and mobile responsiveness. -->
-    <div id="daySummaryCard" class="main-day-summary-container p-6 rounded-[1.5rem] bg-[#333333] shadow-lg shadow-black/30 w-full max-w-full flex flex-col gap-4">
+    <div id="daySummaryCard" class="main-day-summary-container rounded-[1.5rem] bg-[#333333] shadow-lg shadow-black/30 w-full max-w-full flex flex-col gap-4">
 
         <!-- 1. Top Reschedule Summary Section -->
         <!-- This section renders if rescheduleData.rescheduleSummaryText is present. -->

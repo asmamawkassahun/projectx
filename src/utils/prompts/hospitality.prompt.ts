@@ -25,11 +25,11 @@ CSS Styling (within <style> tags):
 
 Body Layout (using Tailwind classes):
 
-    body should be flex justify-center items-start  m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border.
+    body should be flex justify-center items-start  m-0  bg-[#1a1a1a] text-[#e0e0e0] box-border.
 
 Main UI Container (id="main-content-container"):
 
-    A div with container w-full max-w-full flex flex-col gap-4 p-5 rounded-[1.5rem] bg-white/10 shadow-xl.
+    A div with container w-full max-w-full flex flex-col gap-4 rounded-[1.5rem] bg-white/10 shadow-xl.
 
     This div will contain either the restaurant or hotel content.
 

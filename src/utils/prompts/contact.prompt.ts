@@ -42,7 +42,7 @@ when u do so because I don't want you to edit anything in the ui in the template
 <body class="flex justify-center items-center m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border">
 
     <!-- Main UI Container: Hardcoded static content -->
-    <div id="contact-card" class="w-full max-w-full flex flex-col items-center text-center relative overflow-hidden bg-[#333333] rounded-[1.5rem] p-6 shadow-xl space-y-4">
+    <div id="contact-card" class="w-full max-w-full flex flex-col items-center text-center relative overflow-hidden bg-[#333333] rounded-[1.5rem] shadow-xl space-y-4">
 
         <!-- Top Bar (Introductory Text with Icon) -->
         <div class="flex items-start gap-3 w-full">
