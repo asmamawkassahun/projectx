@@ -8,7 +8,7 @@ import { useUIAgent } from "@/hooks/use-ui-agent";
 
 const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "";
 const GEMINI_API_URL =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite-preview-06-17:generateContent";
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent";
 
 // Simple HTML renderer component for displaying generated UI
 const HTMLRenderer = ({ htmlContent }: { htmlContent: string }) => {
@@ -197,13 +197,12 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
           `🎨 UIOverlay: Sending search data to UI agent for processing (scenario: ${scenario})...`
         );
 
-        // If scenario is 'sport' or 'building_details', fetch the sample image and attach it
-        
+       
 
         const uiResult = await generateUI(
           searchToolName,
           searchData,
-          `search_${scenario}_` + Date.now()
+          `search_${scenario}_` + Date.now(),
         );
 
         if (uiResult.success && uiResult.generatedUI) {
@@ -490,7 +489,7 @@ DATA:\n${JSON.stringify(eventListData)}`;
           </button>
 
           {/* Generated UI content as the modal itself with hidden scrollbar */}
-          <div className="relative  overflow-y-auto scrollbar-hide rounded-[1.5rem] w-full h-full max-h-[80vh] max-w-[70vh] p-0 bg-transparent">
+          <div className="relative  overflow-y-auto scrollbar-hide rounded-[1.5rem] max-h-[80vh] flex justify-center mx-auto max-w-[60vw] p-0">
             <HTMLRenderer htmlContent={generatedHTML} />
           </div>
         </motion.div>

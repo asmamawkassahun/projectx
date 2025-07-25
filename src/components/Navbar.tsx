@@ -7,6 +7,7 @@ import UnionLogo from "./chat-v2/union-logo";
 import { BooksIcon } from "./icons/BooksIcon";
 import { LayersIcon } from "./icons/LayersIcon";
 import { useTheme } from "next-themes";
+import { ThemeToggle } from "./common_components/ThemeToggle";
 
 const Navbar = () => {
   const router = useRouter();
@@ -61,6 +62,7 @@ const Navbar = () => {
           >
             <MessageSquarePlus size={20} />
           </Button> */}
+          <ThemeToggle />
           <Button
             onClick={handleNewChat}
             variant="primary"

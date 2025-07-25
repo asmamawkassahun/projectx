@@ -35,10 +35,10 @@ when u do so because I don't want you to edit anything in the ui in the template
         }
     </style>
 </head>
-<body class="flex justify-center items-center m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border">
+<body class="flex justify-center items-center m-0 bg-[#1a1a1a] text-[#e0e0e0] box-border">
 
     <!-- Main UI Container: Hardcoded static content -->
-    <div id="profile-card" class="w-full max-w-[450px] flex flex-col gap-4 p-5 rounded-[1.5rem] bg-white/10 shadow-xl">
+    <div id="profile-card" class="w-full max-w-full flex flex-col gap-4 rounded-[1.5rem] bg-white/10 shadow-xl">
 
         <!-- Profile Header Section -->
         <div class="bg-white/10 rounded-xl p-0 flex items-start gap-4">

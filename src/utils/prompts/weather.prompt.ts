@@ -48,7 +48,7 @@ when u do so because I don't want you to edit anything in the ui in the template
     <!-- Main container for the weather card -->
     <!-- The max-w-md and mx-auto classes are now directly on the weather-card -->
     <div
-      class="weather-card w-full max-w-md mx-auto p-6 rounded-[1.5rem] shadow-lg text-white">
+      class="weather-card w-full max-w-md mx-auto rounded-[1.5rem] shadow-lg text-white">
       <!-- Top section: City, Temp, and Image -->
       <div class="flex justify-between items-start">
         <div>

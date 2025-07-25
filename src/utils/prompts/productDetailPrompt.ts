@@ -42,9 +42,9 @@ IMPORTANT: use exact image of product , if you don't get it don't show that part
         }
     </style>
 </head>
-<body class="flex justify-center items-start min-h-screen m-0 p-5 bg-[#1a1a1a] text-[#e0e0e0] box-border">
+<body class="flex justify-center items-start m-0 bg-[#1a1a1a] text-[#e0e0e0] box-border">
 
-    <div id="main-product-container" class="w-full max-w-[450px] flex flex-col gap-4 p-5 rounded-[1.5rem] bg-[#222222] shadow-xl">
+    <div id="main-product-container" class="w-full max-w-full flex flex-col gap-4 p-5 rounded-[1.5rem] bg-white/10 shadow-xl">
 
         <div class="text-lg font-bold text-white mb-2 leading-tight">
             {{header_intro_text}}

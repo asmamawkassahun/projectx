@@ -20,7 +20,6 @@ export const buildingDetailsPrompt = `You are an expert HTML developer. Your tas
             min-height: 100vh;
             margin: 0;
             box-sizing: border-box;
-            padding: 20px; /* Add some padding for smaller screens */
         }
 
         /* Main Container Card */
@@ -28,9 +27,8 @@ export const buildingDetailsPrompt = `You are an expert HTML developer. Your tas
             background-color: rgba(255, 255, 255, 0.1); /* White with 10% opacity */
             backdrop-filter: blur(10px); /* Blur effect */
             border-radius: 1.5rem;
-            padding: 20px;
             width: 100%; /* Full width on small screens */
-            max-width: 400px; /* Max width for larger screens */
+            max-width: full; /* Max width for larger screens */
             color: #fff;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
