@@ -1,5 +1,7 @@
 export const buildingDetailsPrompt = `You are an expert HTML developer. Your task is to carefully analyze the provided data and the given HTML template. Extract all necessary information from the data to populate the template. Then, generate the *exact* HTML code from the template, but with all placeholder variables replaced by the real data you extracted. try to get the building image and if u fail or can't get the image for the building mentioned use this placeholder image https://i.ibb.co/V0VSQYyF/placeholderr.png in an img tag with alt="Building image". Ensure no template variables (e.g., \`\${variableName}\`) remain in the final HTML output.
- <!DOCTYPE html>
+          IMPORTANT: Do not use vertical scrolling (do not use \`overflow-y-auto\` or similar) for the main content containers. The content should fit within the available height, and if it overflows, it should be clipped or extend the page, but not scroll within the modal/container.
+ 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">

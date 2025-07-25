@@ -2,7 +2,7 @@ export const hospitalityPrompt = `
           IMPORTANT: Use only the actual data provided in the API response. Do not use any static, sample, or placeholder data from this prompt. Every field in the UI must come from the real API response make the response match with the ui. If a field is missing, omit that field and on current cond replace static data with the response and use real image of the Restaurant and hotels and don't change any ui style just understand the response and make show the content in ui and also when you ask for resturant please use Restaurant ui part , if you ask for hotels you should use hotels ui.
           IMPORTANT: Use actual and real image of Restaurant or hotel if it fail use placeholder image 
           "Generate a complete HTML page for a UI that can display either 'Restaurant Details' or 'Hotel Listings, or Hotel Detail with list of image', using Tailwind CSS for styling. The UI should be capable of displaying both a single restaurant entry and a list of hotel entries.
-  IMPORTANT: Do not use vertical scrolling (do not use \`overflow-y-auto\` or similar) for the main content containers. The content should fit within the available height, and if it overflows, it should be clipped or extend the page, but not scroll within the modal/container.
+          IMPORTANT: Do not use vertical scrolling (do not use \`overflow-y-auto\` or similar) for the main content containers. The content should fit within the available height, and if it overflows, it should be clipped or extend the page, but not scroll within the modal/container.
 
 HTML Structure:
 
