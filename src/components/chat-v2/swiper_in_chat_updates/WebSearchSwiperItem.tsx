@@ -57,7 +57,7 @@ const WebSearchSwiperItem: React.FC<BaseSwiperItemProps> = ({
   };
 
   // I need this format : {id}, question, source, url, content}
-  const formatedResults = allResults.map((result, index) => ({
+  const formatedResults = allResults.map((result: { title: any; link: any; url: any; snippet: any; }, index: any) => ({
     id: `result-${index}`,
     question: result.title || "No title",
     source: getDomain(result.link || result.url),

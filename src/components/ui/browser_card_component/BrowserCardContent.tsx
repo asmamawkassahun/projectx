@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Globe, Maximize2, Minimize2 } from "lucide-react";
-import type { Recipe } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 interface BrowserCardContentProps {
