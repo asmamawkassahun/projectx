@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
+  transpilePackages: ['framer-motion'],
   // Enable hot reload in development
   ...(process.env.NODE_ENV === "development" && {
     webpack: (config, { dev, isServer }) => {

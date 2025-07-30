@@ -12,7 +12,8 @@ A thin horizontal line with a color of rgba(255, 255, 255, 0.1) and vertical mar
 
 Email List (Dynamic Component)
 
-The email list should be dynamically generated. For each email, the following data points should be used to render the component: sender name, sender initials, a sender-specific hex color for the avatar background, email subject, an optional snippet of the email body, an optional relative timestamp (e.g., \"Yesterday\"), an optional specific time (e.g., \"3:31 PM\"), and an optional boolean indicating whether a reply/forward icon should be shown. If an optional component's data is not provided, that component should not be rendered.
+The email list should be dynamically generated. For each email, the following data points should be used to render the component: sender name, sender initials, a sender-specific hex color for the avatar background, email subject, an optional snippet of the email body, an optional relative timestamp (e.g., \"Yesterday\"), an optional
+ specific time (e.g., \"3:31 PM\"), and an optional boolean indicating whether a reply/forward icon should be shown. If an optional component's data is not provided, that component should not be rendered.
 
 For each email, render an email item with the following structure:
 
