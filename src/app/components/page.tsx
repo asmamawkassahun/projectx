@@ -101,38 +101,38 @@ const page = () => {
 
 
   const unreadEmailData = [
-      {
-          senderName: "Anisha Singh",
-          senderInitials: "AS",
-          avatar: "/placeholder.svg?height=48&width=48&text=AS",
-          subject: "Project Sync: Status Update",
-          snippet: "Hey Jaffar, what are you doing for your birthday? Got any plans this weekend?",
-          relativeTimestamp: "Yesterday",
-          specificTime: "3:31 PM",
-          showReplyIcon: true,
-      },
-      {
-          senderName: "Carlota Zajac",
-          senderInitials: "CZ",
-          avatar: "/placeholder.svg?height=48&width=48&text=CZ",
-          subject: "Latest roadmap for CoStar 2.0",
-          snippet: "Hey Jaffar, what are you doing for your birthday? Got any plans this weekend?",
-          relativeTimestamp: "Yesterday",
-          specificTime: "2:12 PM",
-          showReplyIcon: true,
-      },
-      {
-          senderName: "Felipe López",
-          senderInitials: "FL",
-          avatar: "/placeholder.svg?height=48&width=48&text=FL",
-          subject: "How are you doing?",
-          snippet: "Hey Jaffar, what are you doing for your birthday? Got any plans this weekend?",
-          relativeTimestamp: "Yesterday",
-          specificTime: "6:48 PM",
-          showReplyIcon: true,
-      },
-  
-  
+    {
+      senderName: "Anisha Singh",
+      senderInitials: "AS",
+      avatar: "/placeholder.svg?height=48&width=48&text=AS",
+      subject: "Project Sync: Status Update",
+      snippet: "Hey Jaffar, what are you doing for your birthday? Got any plans this weekend?",
+      relativeTimestamp: "Yesterday",
+      specificTime: "3:31 PM",
+      showReplyIcon: true,
+    },
+    {
+      senderName: "Carlota Zajac",
+      senderInitials: "CZ",
+      avatar: "/placeholder.svg?height=48&width=48&text=CZ",
+      subject: "Latest roadmap for CoStar 2.0",
+      snippet: "Hey Jaffar, what are you doing for your birthday? Got any plans this weekend?",
+      relativeTimestamp: "Yesterday",
+      specificTime: "2:12 PM",
+      showReplyIcon: true,
+    },
+    {
+      senderName: "Felipe López",
+      senderInitials: "FL",
+      avatar: "/placeholder.svg?height=48&width=48&text=FL",
+      subject: "How are you doing?",
+      snippet: "Hey Jaffar, what are you doing for your birthday? Got any plans this weekend?",
+      relativeTimestamp: "Yesterday",
+      specificTime: "6:48 PM",
+      showReplyIcon: true,
+    },
+
+
   ]
 
 
@@ -413,19 +413,25 @@ const page = () => {
       </div>
       <div className="flex flex-col  w-full ">
 
-        <Article personalDetailData={personalDetailData} sportsDetailData={sportsDetailData} buildingDetailData={buildingDetailData} f1DetailData={f1DetailData} cryptoDetailData={cryptoDetailData} />
+        <Article
+          personalDetailData={personalDetailData}
+          sportsDetailData={sportsDetailData}
+          buildingDetailData={buildingDetailData}
+          f1DetailData={f1DetailData}
+          cryptoDetailData={cryptoDetailData}
+        />
 
-        <Email 
-          showConnect={false}
+        <Email
+          showConnect={true}
           showLastEmail={true}
           showUnread={true}
           showSummary={true}
           lastEmailData={emailData}
           connectEmailData={connectEmailData}
-          unreadEmailData = {unreadEmailData}
+          unreadEmailData={unreadEmailData}
           summarizeEmailData={summarizeEmailData}
           sendEmailData={sendEmailData}
-        /> 
+        />
         <Weather
           temperature={72}
           location="Singapore"
@@ -435,7 +441,7 @@ const page = () => {
           unit="F"
           month="April"
           forecast={forecastData}
-          />
+        />
         <HotelsCardLoading />
         <FlightCardWithLoading />
         <MapCardLoading />

@@ -66,45 +66,57 @@ export default function EmailList({ emails }: EmailListProps) {
           {/* Email List */}
           <div className="space-y-6">
             {emails.map((email, index) => (
-              <div key={index} className="flex items-start gap-4 relative">
-                {/* Avatar */}
-                <img
-                  src={email.avatar || "/placeholder.svg"}
-                  alt={email.senderName}
-                  className="w-12 h-12 rounded-full object-cover flex-shrink-0"
-                />
+              <div key={index}>
+                <div className="flex items-start gap-4 relative">
+                  {/* Avatar */}
+                  <img
+                    src={email.avatar || "/placeholder.svg"}
+                    alt={email.senderName}
+                    className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                  />
 
-                {/* Email Details */}
-                <div className="flex-1 min-w-0">
-                  {/* Sender Name */}
-                  <div className="bg-white/10 text-white text-sm font-medium px-3 py-1 rounded-[0.5rem] inline-block mb-2">
-                    {email.senderName}
+                  {/* Email Details */}
+                  <div className="flex-1 min-w-0">
+                    {/* Sender Name */}
+                    <div className="bg-white/10 text-white text-sm font-medium px-3 py-1 rounded-[0.5rem] inline-block mb-2">
+                      {email.senderName}
+                    </div>
+
+                    {/* Subject */}
+                    <h2 className="text-white text-lg font-bold mb-2 leading-tight">{email.subject}</h2>
+
+                    {/* Email Snippet - Only render if snippet exists */}
+                    {email.snippet && <p className="text-gray-300 text-sm mb-3 leading-relaxed">{email.snippet}</p>}
+
+                    {/* Status/Timestamp - Only render if timestamp data exists */}
+                    {(email.relativeTimestamp || email.specificTime) && (
+                      <div className="flex items-center text-sm text-gray-400">
+                        <DoubleCheckmarkIcon />
+                        <span>
+                          Received: {email.relativeTimestamp}
+                          {email.relativeTimestamp && email.specificTime && ", "}
+                          {email.specificTime}
+                        </span>
+                        
+                      </div>
+                      
+                    )}
+                    
+                    
                   </div>
+                  
 
-                  {/* Subject */}
-                  <h2 className="text-white text-lg font-bold mb-2 leading-tight">{email.subject}</h2>
-
-                  {/* Email Snippet - Only render if snippet exists */}
-                  {email.snippet && <p className="text-gray-300 text-sm mb-3 leading-relaxed">{email.snippet}</p>}
-
-                  {/* Status/Timestamp - Only render if timestamp data exists */}
-                  {(email.relativeTimestamp || email.specificTime) && (
-                    <div className="flex items-center text-sm text-gray-400">
-                      <DoubleCheckmarkIcon />
-                      <span>
-                        Received: {email.relativeTimestamp}
-                        {email.relativeTimestamp && email.specificTime && ", "}
-                        {email.specificTime}
-                      </span>
+                  {/* Reply Icon - Only render if showReplyIcon is true */}
+                  {email.showReplyIcon && (
+                    <div className="flex-shrink-0">
+                      <ReplyIcon />
                     </div>
                   )}
                 </div>
-
-                {/* Reply Icon - Only render if showReplyIcon is true */}
-                {email.showReplyIcon && (
-                  <div className="flex-shrink-0">
-                    <ReplyIcon />
-                  </div>
+                
+                {/* Separator - Add separator between emails except for the last one */}
+                {index < emails.length - 1 && (
+                  <div className="w-full h-px bg-gray-600 mt-6" />
                 )}
               </div>
             ))}
@@ -112,9 +124,9 @@ export default function EmailList({ emails }: EmailListProps) {
         </div>
 
         {/* Bottom label */}
-        <div className="text-center mt-4">
+        {/* <div className="text-center mt-4">
           <span className="bg-purple-600 text-white text-xs px-3 py-1 rounded">360 x 590 Hug</span>
-        </div>
+        </div> */}
       </div>
     </div>
   )

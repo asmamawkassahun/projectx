@@ -17,12 +17,12 @@ export default function Component({ emailData }: EmailProps) {
     return (
 
       <div className="p-4 pb-8 text-white/10 bg-background backdrop-blur-[1.25rem]">
-        <div className="max-w-md mx-auto pt-8 bg-[#1C1C1C] rounded-xl">
+        <div className="max-w-md mx-auto pt-8 rounded-xl">
           <h1 className="text-2xl font-semibold mb-8 text-foreground pl-20">Connect an account</h1>
 
-          <div className="space-y-6 p-4 mx-20 mb-16">
+          <div className="space-y-6 p-4  mb-16 w-full">
 
-            <Card className="bg-gray-800 border-gray-700">
+            <Card className="bg-white/10 ">
               <CardContent className="flex flex-col p-6 text-center space-y-6">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center">

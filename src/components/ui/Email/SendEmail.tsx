@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import  Button  from "@/components/ui/Button"
+import Button from "@/components/ui/Button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
 import { MapPin, Plus, FileText, Diamond } from "lucide-react"
@@ -55,7 +55,7 @@ interface EmailComposerProps {
 }
 
 export default function SendEmail({
-  title ,
+  title,
   componentLabel,
   recipients = [],
   message,
@@ -114,71 +114,59 @@ export default function SendEmail({
 
       <div className="p-6 space-y-6">
         {/* Component Label */}
-        {componentLabel && (
-          <div className="space-y-2">
-            <div className="text-purple-400 text-sm font-medium">Component</div>
-            <div className="flex items-center gap-2 text-white">
-              <Diamond className="w-4 h-4 text-purple-400" />
-              <span>{componentLabel}</span>
-            </div>
-          </div>
-        )}
 
         {/* Recipients */}
         {recipients.length > 0 && (
-          <Card className="bg-gray-800 border-gray-700">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="bg-gray-700 p-2 rounded">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                  </svg>
-                </div>
-                <div className="flex flex-wrap gap-2 flex-1">
-                  {visibleRecipients.map((recipient) => (
-                    <button
-                      key={recipient.id}
-                      onClick={() => toggleRecipient(recipient.id)}
-                      className={`px-3 py-1 rounded-full text-sm transition-colors ${
-                        selectedRecipients.includes(recipient.id)
-                          ? "bg-blue-600 text-white"
-                          : "bg-gray-700 text-gray-300 hover:bg-gray-600"
-                      }`}
-                    >
-                      {recipient.name}
-                    </button>
-                  ))}
-                  {hiddenRecipientsCount > 0 && (
-                    <span className="px-3 py-1 rounded-full text-sm bg-gray-700 text-gray-300">
-                      +{hiddenRecipientsCount}
-                    </span>
-                  )}
-                  {onAddRecipient && (
-                    <button
-                      onClick={onAddRecipient}
-                      className="w-8 h-8 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center transition-colors"
-                    >
-                      <Plus className="w-4 h-4" />
-                    </button>
-                  )}
-                </div>
+          <div>
+            <div className="flex items-center gap-2 mb-4 ">
+              <div className="bg-gray-700 p-2 rounded">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
               </div>
+              <div className="flex flex-wrap gap-2 flex-1">
+                {visibleRecipients.map((recipient) => (
+                  <button
+                    key={recipient.id}
+                    onClick={() => toggleRecipient(recipient.id)}
+                    className={`px-3 py-1 rounded-full text-sm transition-colors ${selectedRecipients.includes(recipient.id)
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                      }`}
+                  >
+                    {recipient.name}
+                  </button>
+                ))}
+                {hiddenRecipientsCount > 0 && (
+                  <span className="px-3 py-1 rounded-full text-sm bg-gray-700 text-gray-300">
+                    +{hiddenRecipientsCount}
+                  </span>
+                )}
+                {onAddRecipient && (
+                  <button
+                    onClick={onAddRecipient}
+                    className="w-8 h-8 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center transition-colors"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+            </div>
 
-              {/* Message Preview */}
-              {message && (
-                <div className="space-y-2">
-                  <h3 className="font-semibold text-white">{message.subject}</h3>
-                  <p className="text-gray-400 text-sm">{message.preview}</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+            {/* Message Preview */}
+            {message && (
+              <div className="space-y-2">
+                <h3 className="font-semibold text-white">{message.subject}</h3>
+                <p className="text-gray-400 text-sm">{message.preview}</p>
+              </div>
+            )}
+          </div>
         )}
 
         {/* Event Details */}
         {event && (
-          <Card className="bg-gray-800 border-gray-700">
+          <Card className="bg-white/10 border-gray-700">
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="font-semibold text-white">{event.title}</h3>
@@ -255,7 +243,7 @@ export default function SendEmail({
                       </div>
                     </div>
                   )}
-                  
+
                   {/* Directions Button */}
                   <button
                     className="absolute top-3 right-3 bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full hover:bg-white/30 transition-all duration-200 hover:scale-105 active:scale-95"

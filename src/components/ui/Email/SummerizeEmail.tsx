@@ -82,11 +82,11 @@ export default function SummarizeEmail({
                 {/* Recipient Tag for second message */}
                 {message.sender && (
                   <div className="flex items-center gap-2 mb-2">
-                    <Avatar className="w-6 h-6">
+                    {/* <Avatar className="w-6 h-6">
                       <AvatarImage src={message.avatar} alt="Recipient" />
                       <AvatarFallback className="bg-purple-500 text-white text-xs">{message.fallback}</AvatarFallback>
-                    </Avatar>
-                    <div className="bg-gray-600 text-white text-xs px-2 py-1 rounded-full">
+                    </Avatar> */}
+                    <div className="bg-white/10 text-white text-xs px-2 py-1 rounded-full">
                       {message.sender}
                     </div>
                   </div>
@@ -117,15 +117,16 @@ export default function SummarizeEmail({
 
       {/* Event Card */}
       {event && (
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center gap-3 mb-6 bg-white/10 rounded-lg p-4">
+          
+          <div className="flex-1 p-4">
+            <div className="text-white text-sm font-medium">{event.title}</div>
+            <div className="text-gray-400 text-xs">{event.date} • {event.time}</div>
+          </div>
           <Avatar className="w-8 h-8">
             <AvatarImage src={event.avatar} alt={event.title} />
             <AvatarFallback className="bg-blue-500 text-white text-xs">C</AvatarFallback>
           </Avatar>
-          <div className="flex-1">
-            <div className="text-white text-sm font-medium">{event.title}</div>
-            <div className="text-gray-400 text-xs">{event.date} • {event.time}</div>
-          </div>
         </div>
       )}
 

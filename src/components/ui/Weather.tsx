@@ -336,9 +336,9 @@ const Weather = ({
   // Full layout with month and forecast - responsive image positioning
   if (month && forecast) {
     return (
-      <div className="w-full max-w-md mx-auto rounded-xl dark:bg-background dark:text-foreground text-white bg-white/10 backdrop-blur-[2.5rem] p-4 sm:p-6 dark:">
+      <div className="w-full max-w-md mx-auto rounded-xl dark:bg-white/10 dark:text-foreground text-white bg-white/10 backdrop-blur-[2.5rem] p-4 mt-10 sm:p-6 dark">
         {/* Main weather section */}
-        <div className="flex flex-row justify-between items-center mb-6">
+        <div className="flex flex-row justify-between items-center   mb-6">
           {/* Weather icon - always on the right */}
           <div className="w-full max-w-[10rem] sm:max-w-[12rem] h-[8rem] sm:h-[10rem] mx-auto sm:mx-0 order-2">
             <img
@@ -386,7 +386,7 @@ const Weather = ({
         </div>
 
         {/* Month and forecast section */}
-        <div className="mt-6 dark:bg-background dark:text-foreground">
+        <div className="mt-6  dark:text-foreground">
           {/* Month */}
           <div className="mb-4 sm:mb-6 text-center sm:text-left">
             <h4 className="text-lg sm:text-xl font-medium text-gray-300">{month}</h4>

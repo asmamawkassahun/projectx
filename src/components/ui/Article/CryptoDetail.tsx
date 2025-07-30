@@ -65,7 +65,7 @@ export default function CryptoDetail({
 
 
       {/* Trading Info Card */}
-      <div className="bg-white/10 rounded-lg p-4 mb-4 flex items-start gap-3">
+      <div className=" rounded-lg p-4 mb-4 flex items-start gap-3">
         <Avatar className="w-8 h-8 flex-shrink-0">
           <AvatarImage src="/bitcoin-logo.png" alt="Bitcoin logo" />
           <AvatarFallback className="bg-orange-500 text-white text-xs font-bold">

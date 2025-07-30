@@ -38,7 +38,7 @@ export default function BuildingDetail({
   callToAction,
   variant = "component-details"
 }: BuildingDetailProps) {
-  
+
   const handleCallToAction = () => {
     if (callToAction?.link) {
       window.open(callToAction.link, "_blank")
@@ -73,9 +73,9 @@ export default function BuildingDetail({
       {/* Building Image */}
       {imageUrl && (
         <div className="w-full h-48 mb-6 rounded-lg overflow-hidden">
-          <img 
-            src={imageUrl} 
-            alt={buildingName} 
+          <img
+            src={imageUrl}
+            alt={buildingName}
             className="w-full h-full object-cover"
           />
         </div>
@@ -111,7 +111,7 @@ export default function BuildingDetail({
 
       {/* Call to Action */}
       {callToAction && (
-        <Button 
+        <Button
           onClick={handleCallToAction}
           className="w-full bg-white text-black py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors"
         >
@@ -173,7 +173,7 @@ export default function BuildingDetail({
 
       {/* Call to Action */}
       {callToAction && (
-        <Button 
+        <Button
           onClick={handleCallToAction}
           className="w-full bg-white text-black py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors"
         >
@@ -199,9 +199,9 @@ export default function BuildingDetail({
       {/* Building Image */}
       {imageUrl && (
         <div className="w-full h-48 mb-6 rounded-lg overflow-hidden">
-          <img 
-            src={imageUrl} 
-            alt={buildingName} 
+          <img
+            src={imageUrl}
+            alt={buildingName}
             className="w-full h-full object-cover"
           />
         </div>
@@ -209,7 +209,7 @@ export default function BuildingDetail({
 
       {/* Call to Action */}
       {callToAction && (
-        <Button 
+        <Button
           onClick={handleCallToAction}
           className="w-full bg-white text-black py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors"
         >
@@ -235,9 +235,9 @@ export default function BuildingDetail({
       {/* Building Image */}
       {imageUrl && (
         <div className="w-full h-48 mb-6 rounded-lg overflow-hidden">
-          <img 
-            src={imageUrl} 
-            alt={buildingName} 
+          <img
+            src={imageUrl}
+            alt={buildingName}
             className="w-full h-full object-cover"
           />
         </div>
@@ -257,7 +257,7 @@ export default function BuildingDetail({
 
       {/* Call to Action */}
       {callToAction && (
-        <Button 
+        <Button
           onClick={handleCallToAction}
           className="w-full bg-white text-black py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors"
         >
@@ -290,9 +290,9 @@ export default function BuildingDetail({
       {/* Building Image */}
       {imageUrl && (
         <div className="w-full h-48 mb-6 rounded-lg overflow-hidden">
-          <img 
-            src={imageUrl} 
-            alt={buildingName} 
+          <img
+            src={imageUrl}
+            alt={buildingName}
             className="w-full h-full object-cover"
           />
         </div>
@@ -316,7 +316,7 @@ export default function BuildingDetail({
 
       {/* Call to Action */}
       {callToAction && (
-        <Button 
+        <Button
           onClick={handleCallToAction}
           className="w-full bg-white text-black py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors"
         >
@@ -344,12 +344,12 @@ export default function BuildingDetail({
       {/* Large Building Image with Statistics Overlay */}
       {imageUrl && (
         <div className="relative w-full h-64 mb-6 rounded-lg overflow-hidden">
-          <img 
-            src={imageUrl} 
-            alt={buildingName} 
+          <img
+            src={imageUrl}
+            alt={buildingName}
             className="w-full h-full object-cover"
           />
-          
+
           {/* Statistics Overlay */}
           <div className="absolute bottom-0 left-0 right-0 bg-black/60 p-4">
             <div className="text-center">
@@ -371,7 +371,7 @@ export default function BuildingDetail({
 
       {/* Call to Action */}
       {callToAction && (
-        <Button 
+        <Button
           onClick={handleCallToAction}
           className="w-full bg-white text-black py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors"
         >
