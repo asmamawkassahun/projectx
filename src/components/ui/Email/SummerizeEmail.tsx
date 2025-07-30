@@ -57,7 +57,7 @@ export default function SummarizeEmail({
   }
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen p-6 pb-8 max-w-md mx-auto rounded-xl">
+    <div className="bg-white/10 text-white min-h-screen p-6 pb-8 max-w-md mx-auto rounded-xl">
       {/* Top Summary Bar */}
       {summary && (
         <div className="mb-6">
@@ -182,7 +182,7 @@ export default function SummarizeEmail({
         <div className="mb-6">
           <div className="text-gray-400 text-sm mb-3">Attachments</div>
           {attachments.map((attachment, index) => (
-            <div key={index} className="flex items-center gap-3 bg-gray-800 rounded-lg p-4">
+            <div key={index} className="flex items-center gap-3 bg-white/10 rounded-lg p-4">
               {attachment.icon || <FileText className="w-6 h-6 text-gray-400" />}
               <span className="text-white text-sm font-medium">{attachment.name}</span>
             </div>

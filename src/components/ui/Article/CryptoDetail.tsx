@@ -55,7 +55,7 @@ export default function CryptoDetail({
   const tradingDescription = `${cryptoName} is currently trading around $117,700, with intraday swings between ${priceRange}.`
 
   const renderComponentDetails = () => (
-    <div className="bg-gray-900 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
+    <div className="bg-white/10 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-3">Crypto Details</h1>
@@ -65,7 +65,7 @@ export default function CryptoDetail({
 
 
       {/* Trading Info Card */}
-      <div className="bg-gray-800 rounded-lg p-4 mb-4 flex items-start gap-3">
+      <div className="bg-white/10 rounded-lg p-4 mb-4 flex items-start gap-3">
         <Avatar className="w-8 h-8 flex-shrink-0">
           <AvatarImage src="/bitcoin-logo.png" alt="Bitcoin logo" />
           <AvatarFallback className="bg-orange-500 text-white text-xs font-bold">
@@ -78,7 +78,7 @@ export default function CryptoDetail({
       </div>
 
       {/* Price & Chart Card */}
-      <div className="bg-gray-800 rounded-lg p-4 mb-4">
+      <div className="bg-white/10 rounded-lg p-4 mb-4">
         <div className="flex justify-between items-start mb-4">
           <div>
             <h3 className="text-white font-semibold text-lg">{cryptoName} (BTC)</h3>
@@ -119,7 +119,7 @@ export default function CryptoDetail({
       {infoSections.length > 0 && (
         <div className="space-y-3 mb-4">
           {infoSections.map((info, index) => (
-            <div key={index} className="bg-gray-800 rounded-lg p-4">
+            <div key={index} className="bg-white/10 rounded-lg p-4">
               <h4 className="text-white font-semibold text-sm mb-1">{info.title}</h4>
               <p className="text-gray-300 text-sm">{info.content}</p>
             </div>
@@ -140,7 +140,7 @@ export default function CryptoDetail({
   )
 
   const renderMinimal = () => (
-    <div className="bg-gray-900 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
+    <div className="bg-white/10 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-3">Crypto Details</h1>
@@ -150,7 +150,7 @@ export default function CryptoDetail({
 
 
       {/* Trading Info Card */}
-      <div className="bg-gray-800 rounded-lg p-4 flex items-start gap-3">
+      <div className="bg-white/10 rounded-lg p-4 flex items-start gap-3">
         <Avatar className="w-8 h-8 flex-shrink-0">
           <AvatarImage src="/bitcoin-logo.png" alt="Bitcoin logo" />
           <AvatarFallback className="bg-orange-500 text-white text-xs font-bold">
@@ -165,7 +165,7 @@ export default function CryptoDetail({
   )
 
   const renderCTA = () => (
-    <div className="bg-gray-900 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
+    <div className="bg-white/10 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-3">Crypto Details</h1>
@@ -182,7 +182,7 @@ export default function CryptoDetail({
       </div>
 
       {/* Trading Info Card */}
-      <div className="bg-gray-800 rounded-lg p-4 mb-4 flex items-start gap-3">
+      <div className="bg-white/10 rounded-lg p-4 mb-4 flex items-start gap-3">
         <Avatar className="w-8 h-8 flex-shrink-0">
           <AvatarImage src="/bitcoin-logo.png" alt="Bitcoin logo" />
           <AvatarFallback className="bg-orange-500 text-white text-xs font-bold">
@@ -207,7 +207,7 @@ export default function CryptoDetail({
   )
 
   const renderChartCTA = () => (
-    <div className="bg-gray-900 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
+    <div className="bg-white/10 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-3">Crypto Details</h1>
@@ -217,7 +217,7 @@ export default function CryptoDetail({
 
 
       {/* Trading Info Card */}
-      <div className="bg-gray-800 rounded-lg p-4 mb-4 flex items-start gap-3">
+      <div className="bg-white/10 rounded-lg p-4 mb-4 flex items-start gap-3">
         <Avatar className="w-8 h-8 flex-shrink-0">
           <AvatarImage src="/bitcoin-logo.png" alt="Bitcoin logo" />
           <AvatarFallback className="bg-orange-500 text-white text-xs font-bold">
@@ -230,7 +230,7 @@ export default function CryptoDetail({
       </div>
 
       {/* Price & Chart Card */}
-      <div className="bg-gray-800 rounded-lg p-4 mb-4">
+      <div className="bg-white/10 rounded-lg p-4 mb-4">
         <div className="flex justify-between items-start mb-4">
           <div>
             <h3 className="text-white font-semibold text-lg">{cryptoName} (BTC)</h3>
@@ -290,7 +290,7 @@ export default function CryptoDetail({
   )
 
   const renderChartInfo = () => (
-    <div className="bg-gray-900 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
+    <div className="bg-white/10 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-3">Crypto Details</h1>
@@ -300,7 +300,7 @@ export default function CryptoDetail({
 
 
       {/* Trading Info Card */}
-      <div className="bg-gray-800 rounded-lg p-4 mb-4 flex items-start gap-3">
+      <div className="bg-white/10 rounded-lg p-4 mb-4 flex items-start gap-3">
         <Avatar className="w-8 h-8 flex-shrink-0">
           <AvatarImage src="/bitcoin-logo.png" alt="Bitcoin logo" />
           <AvatarFallback className="bg-orange-500 text-white text-xs font-bold">
@@ -313,7 +313,7 @@ export default function CryptoDetail({
       </div>
 
       {/* Price & Chart Card */}
-      <div className="bg-gray-800 rounded-lg p-4 mb-4">
+      <div className="bg-white/10 rounded-lg p-4 mb-4">
         <div className="flex justify-between items-start mb-4">
           <div>
             <h3 className="text-white font-semibold text-lg">{cryptoName} (BTC)</h3>
@@ -354,7 +354,7 @@ export default function CryptoDetail({
       {infoSections.length > 0 && (
         <div className="space-y-3 mb-4">
           {infoSections.map((info, index) => (
-            <div key={index} className="bg-gray-800 rounded-lg p-4">
+            <div key={index} className="bg-white/10 rounded-lg p-4">
               <h4 className="text-white font-semibold text-sm mb-1">{info.title}</h4>
               <p className="text-gray-300 text-sm">{info.content}</p>
             </div>
@@ -375,7 +375,7 @@ export default function CryptoDetail({
   )
 
   const renderArticles = () => (
-    <div className="bg-gray-900 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
+    <div className="bg-white/10 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-3">Crypto Details</h1>
@@ -385,7 +385,7 @@ export default function CryptoDetail({
 
 
       {/* Trading Info Card */}
-      <div className="bg-gray-800 rounded-lg p-4 mb-4 flex items-start gap-3">
+      <div className="bg-white/10 rounded-lg p-4 mb-4 flex items-start gap-3">
         <Avatar className="w-8 h-8 flex-shrink-0">
           <AvatarImage src="/bitcoin-logo.png" alt="Bitcoin logo" />
           <AvatarFallback className="bg-orange-500 text-white text-xs font-bold">

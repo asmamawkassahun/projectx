@@ -84,14 +84,12 @@ export default function SportsDetail({
   }
 
   const renderFullDetails = () => (
-    <div className="bg-gray-900 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
+    <div className="bg-white/10 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-3">Sports Details</h1>
         <div className="h-0.5 bg-white w-full"></div>
       </div>
-
-
 
       {/* Player Info Header */}
       {player && (
@@ -105,7 +103,8 @@ export default function SportsDetail({
           <div className="flex flex-col">
             <p className="text-white text-lg font-semibold">{player.name}</p>
             <p className="text-gray-400 text-sm leading-tight">
-              played for {player.minutesPlayed} minutes in his last match against {player.opponent}, and ran a total of {player.distanceRan}
+              played for {player.minutesPlayed} minutes in his last match
+              against {player.opponent}, and ran a total of {player.distanceRan}
             </p>
           </div>
         </div>
@@ -120,7 +119,9 @@ export default function SportsDetail({
               <div className="w-16 h-16 rounded-full overflow-hidden bg-white flex items-center justify-center">
                 {renderTeamLogo(match.homeTeam)}
               </div>
-              <p className="text-white text-sm font-medium">{match.homeTeam.name}</p>
+              <p className="text-white text-sm font-medium">
+                {match.homeTeam.name}
+              </p>
             </div>
 
             {/* Score and Status */}
@@ -128,7 +129,9 @@ export default function SportsDetail({
               <p className="text-white text-5xl font-bold">
                 {match.homeTeam.score} - {match.awayTeam.score}
               </p>
-              <p className="text-gray-300 text-sm font-medium">{match.status}</p>
+              <p className="text-gray-300 text-sm font-medium">
+                {match.status}
+              </p>
             </div>
 
             {/* Away Team */}
@@ -136,7 +139,9 @@ export default function SportsDetail({
               <div className="w-16 h-16 rounded-full overflow-hidden bg-white flex items-center justify-center">
                 {renderTeamLogo(match.awayTeam)}
               </div>
-              <p className="text-white text-sm font-medium">{match.awayTeam.name}</p>
+              <p className="text-white text-sm font-medium">
+                {match.awayTeam.name}
+              </p>
             </div>
           </div>
         </div>
@@ -146,7 +151,10 @@ export default function SportsDetail({
       {stats.length > 0 && (
         <div className="flex flex-col gap-3 mb-6">
           {stats.map((stat, index) => (
-            <div key={index} className="bg-gray-800 rounded-xl p-4 flex justify-between items-center">
+            <div
+              key={index}
+              className="bg-white/10 rounded-xl p-4 flex justify-between items-center"
+            >
               <p className="text-gray-300 text-base">{stat.label}</p>
               <p className="text-white text-base font-semibold">{stat.value}</p>
             </div>
@@ -156,7 +164,7 @@ export default function SportsDetail({
 
       {/* Call to Action */}
       {callToAction && (
-        <Button 
+        <Button
           onClick={handleCallToAction}
           className="w-full bg-white text-black py-3 px-6 rounded-full font-bold hover:bg-gray-200 transition-colors shadow-lg"
         >
@@ -164,7 +172,7 @@ export default function SportsDetail({
         </Button>
       )}
     </div>
-  )
+  );
 
   const renderMinimal = () => (
     <div className="bg-gray-900 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">

@@ -48,7 +48,7 @@ export default function BuildingDetail({
   const fullDescription = `${buildingName} ${description} ${location}`
 
   const renderComponentDetails = () => (
-    <div className="bg-gray-900 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
+    <div className="bg-white/10 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-3">Building Details</h1>

@@ -52,7 +52,7 @@ export default function EmailList({ emails }: EmailListProps) {
 
         {/* Main content with purple border */}
         <div
-          className=" rounded-lg p-6 bg-gray-900 "
+          className=" rounded-lg p-6 bg-white/10 "
           style={{
             fontFamily: "'Inter', sans-serif",
           }}
@@ -77,7 +77,7 @@ export default function EmailList({ emails }: EmailListProps) {
                 {/* Email Details */}
                 <div className="flex-1 min-w-0">
                   {/* Sender Name */}
-                  <div className="bg-gray-600 text-white text-sm font-medium px-3 py-1 rounded-full inline-block mb-2">
+                  <div className="bg-white/10 text-white text-sm font-medium px-3 py-1 rounded-[0.5rem] inline-block mb-2">
                     {email.senderName}
                   </div>
 

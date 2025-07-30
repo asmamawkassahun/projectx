@@ -106,7 +106,7 @@ export default function SendEmail({
   const hiddenRecipientsCount = Math.max(0, recipients.length - (maxVisibleRecipients || recipients.length))
 
   return (
-    <div className="w-full max-w-md mx-auto bg-gray-900 text-white min-h-screen pb-8 rounded-xl">
+    <div className="w-full max-w-md mx-auto bg-white/10 text-white min-h-screen pb-8 rounded-xl">
       {/* Header */}
       <div className="p-6 border-b border-gray-700">
         <h1 className="text-2xl font-bold">{title}</h1>
