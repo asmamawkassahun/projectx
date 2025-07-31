@@ -414,6 +414,11 @@ const page = () => {
       <div className="flex flex-col  w-full ">
 
         <Article
+          showPersonalDetail={true}
+          showSportsDetail={false}
+          showBuildingDetail={false}
+          showF1Detail={false}
+          showCryptoDetail={false}
           personalDetailData={personalDetailData}
           sportsDetailData={sportsDetailData}
           buildingDetailData={buildingDetailData}

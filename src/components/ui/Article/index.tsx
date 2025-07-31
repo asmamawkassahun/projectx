@@ -120,6 +120,11 @@ interface CryptoDetailData {
 }
 
 interface ArticleProps {
+  showPersonalDetail?: boolean
+  showSportsDetail?: boolean
+  showBuildingDetail?: boolean
+  showF1Detail?: boolean
+  showCryptoDetail?: boolean
   personalDetailData?: PersonalDetailData
   sportsDetailData?: SportsDetailData
   buildingDetailData?: BuildingDetailData
@@ -127,14 +132,25 @@ interface ArticleProps {
   cryptoDetailData?: CryptoDetailData
 }
 
-export default function Article({ personalDetailData, sportsDetailData, buildingDetailData, f1DetailData, cryptoDetailData }: ArticleProps) {
+export default function Article({ 
+  showPersonalDetail = false,
+  showSportsDetail = false,
+  showBuildingDetail = false,
+  showF1Detail = false,
+  showCryptoDetail = false,
+  personalDetailData, 
+  sportsDetailData, 
+  buildingDetailData, 
+  f1DetailData, 
+  cryptoDetailData 
+}: ArticleProps) {
   return (
     <div className="space-y-8">
-      {personalDetailData && <PersonalDetail {...personalDetailData} />}
-      {sportsDetailData && <SportsDetail {...sportsDetailData} />}
-      {buildingDetailData && <BuildingDetail {...buildingDetailData} />}
-      {f1DetailData && <F1Detail {...f1DetailData} />}
-      {cryptoDetailData && <CryptoDetail {...cryptoDetailData} />}
+      {showPersonalDetail && personalDetailData && <PersonalDetail {...personalDetailData} />}
+      {showSportsDetail && sportsDetailData && <SportsDetail {...sportsDetailData} />}
+      {showBuildingDetail && buildingDetailData && <BuildingDetail {...buildingDetailData} />}
+      {showF1Detail && f1DetailData && <F1Detail {...f1DetailData} />}
+      {showCryptoDetail && cryptoDetailData && <CryptoDetail {...cryptoDetailData} />}
     </div>
   )
 }

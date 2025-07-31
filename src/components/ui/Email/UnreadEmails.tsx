@@ -68,49 +68,49 @@ export default function EmailList({ emails }: EmailListProps) {
             {emails.map((email, index) => (
               <div key={index}>
                 <div className="flex items-start gap-4 relative">
-                  {/* Avatar */}
-                  <img
-                    src={email.avatar || "/placeholder.svg"}
-                    alt={email.senderName}
-                    className="w-12 h-12 rounded-full object-cover flex-shrink-0"
-                  />
+                {/* Avatar */}
+                <img
+                  src={email.avatar || "/placeholder.svg"}
+                  alt={email.senderName}
+                  className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                />
 
-                  {/* Email Details */}
-                  <div className="flex-1 min-w-0">
-                    {/* Sender Name */}
-                    <div className="bg-white/10 text-white text-sm font-medium px-3 py-1 rounded-[0.5rem] inline-block mb-2">
-                      {email.senderName}
-                    </div>
-
-                    {/* Subject */}
-                    <h2 className="text-white text-lg font-bold mb-2 leading-tight">{email.subject}</h2>
-
-                    {/* Email Snippet - Only render if snippet exists */}
-                    {email.snippet && <p className="text-gray-300 text-sm mb-3 leading-relaxed">{email.snippet}</p>}
-
-                    {/* Status/Timestamp - Only render if timestamp data exists */}
-                    {(email.relativeTimestamp || email.specificTime) && (
-                      <div className="flex items-center text-sm text-gray-400">
-                        <DoubleCheckmarkIcon />
-                        <span>
-                          Received: {email.relativeTimestamp}
-                          {email.relativeTimestamp && email.specificTime && ", "}
-                          {email.specificTime}
-                        </span>
-                        
-                      </div>
-                      
-                    )}
-                    
-                    
+                {/* Email Details */}
+                <div className="flex-1 min-w-0">
+                  {/* Sender Name */}
+                  <div className="bg-white/10 text-white text-sm font-medium px-3 py-1 rounded-[0.5rem] inline-block mb-2">
+                    {email.senderName}
                   </div>
-                  
 
-                  {/* Reply Icon - Only render if showReplyIcon is true */}
-                  {email.showReplyIcon && (
-                    <div className="flex-shrink-0">
-                      <ReplyIcon />
+                  {/* Subject */}
+                  <h2 className="text-white text-lg font-bold mb-2 leading-tight">{email.subject}</h2>
+
+                  {/* Email Snippet - Only render if snippet exists */}
+                  {email.snippet && <p className="text-gray-300 text-sm mb-3 leading-relaxed">{email.snippet}</p>}
+
+                  {/* Status/Timestamp - Only render if timestamp data exists */}
+                  {(email.relativeTimestamp || email.specificTime) && (
+                    <div className="flex items-center text-sm text-gray-400">
+                      <DoubleCheckmarkIcon />
+                      <span>
+                        Received: {email.relativeTimestamp}
+                        {email.relativeTimestamp && email.specificTime && ", "}
+                        {email.specificTime}
+                      </span>
+                      
                     </div>
+                    
+                  )}
+                  
+                  
+                </div>
+                
+
+                {/* Reply Icon - Only render if showReplyIcon is true */}
+                {email.showReplyIcon && (
+                  <div className="flex-shrink-0">
+                    <ReplyIcon />
+                  </div>
                   )}
                 </div>
                 
