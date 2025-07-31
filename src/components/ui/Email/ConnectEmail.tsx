@@ -16,7 +16,7 @@ export default function Component({ emailData }: EmailProps) {
   if (emailData && emailData.action && emailData.photo) {
     return (
 
-      <div className="p-4 pb-8 text-white/10 bg-background backdrop-blur-[1.25rem]">
+      <div className="p-4  text-white/10 bg-background backdrop-blur-[1.25rem]">
         <div className="max-w-md mx-auto pt-8 rounded-xl">
           <h1 className="text-2xl font-semibold mb-8 text-foreground pl-20">Connect an account</h1>
 
