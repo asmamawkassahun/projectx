@@ -98,7 +98,7 @@ export default function CryptoDetail({
               className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
                 selectedTimeRange === range
                   ? "bg-white text-black"
-                  : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                  : " text-gray-300 hover:bg-gray-600"
               }`}
             >
               {range}

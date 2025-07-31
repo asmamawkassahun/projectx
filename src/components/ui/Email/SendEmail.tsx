@@ -119,7 +119,7 @@ export default function SendEmail({
         {recipients.length > 0 && (
           <div>
             <div className="flex items-center gap-2 mb-4 ">
-              <div className="bg-gray-700 p-2 rounded">
+              <div className="bg-white/10 p-2 rounded">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                   <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
@@ -132,21 +132,21 @@ export default function SendEmail({
                     onClick={() => toggleRecipient(recipient.id)}
                     className={`px-3 py-1 rounded-full text-sm transition-colors ${selectedRecipients.includes(recipient.id)
                         ? "bg-blue-600 text-white"
-                        : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                        : "bg-white/10 text-gray-300 hover:bg-gray-600"
                       }`}
                   >
                     {recipient.name}
                   </button>
                 ))}
                 {hiddenRecipientsCount > 0 && (
-                  <span className="px-3 py-1 rounded-full text-sm bg-gray-700 text-gray-300">
+                  <span className="px-3 py-1 rounded-full text-sm bbg-white/10 text-gray-300">
                     +{hiddenRecipientsCount}
                   </span>
                 )}
                 {onAddRecipient && (
                   <button
                     onClick={onAddRecipient}
-                    className="w-8 h-8 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center transition-colors"
+                    className="w-8 h-8 rounded-full bg-white/10 hover:bg-gray-600 flex items-center justify-center transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                   </button>
@@ -166,19 +166,19 @@ export default function SendEmail({
 
         {/* Event Details */}
         {event && (
-          <Card className="bg-white/10 border-gray-700">
+          <Card className="bg-white/10 ">
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="font-semibold text-white">{event.title}</h3>
                 <div className="flex items-center">
                   {event.participants.slice(0, 3).map((participant, index) => (
-                    <Avatar key={participant.id} className="w-6 h-6 -ml-1 border-2 border-gray-800">
+                    <Avatar key={participant.id} className="w-6 h-6 -ml-1 ">
                       <AvatarImage src={participant.avatar || "/placeholder.svg"} alt={participant.name} />
                       <AvatarFallback className="text-xs bg-gray-600">{participant.initials}</AvatarFallback>
                     </Avatar>
                   ))}
                   {event.additionalCount && event.additionalCount > 0 && (
-                    <div className="w-6 h-6 -ml-1 bg-gray-600 rounded-full flex items-center justify-center text-xs border-2 border-gray-800">
+                    <div className="w-6 h-6 -ml-1 bg-gray-600 rounded-full flex items-center justify-center text-xs ">
                       +{event.additionalCount}
                     </div>
                   )}
@@ -194,7 +194,7 @@ export default function SendEmail({
         {/* Interactive Location */}
         {location && (
           <div>
-            <Card className="bg-gray-800 border-gray-700 overflow-hidden cursor-pointer">
+            <Card className="bg-white/10 overflow-hidden cursor-pointer">
               <CardContent className="p-0">
                 <div
                   onClick={handleMapClick}
@@ -265,7 +265,7 @@ export default function SendEmail({
           <div className="space-y-3">
             <h3 className="text-gray-400 font-medium">Attachments</h3>
             {attachments.map((attachment) => (
-              <Card key={attachment.id} className="bg-gray-800 border-gray-700">
+              <Card key={attachment.id} className="bg-white/10">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
                     <div className="bg-gray-700 p-2 rounded">

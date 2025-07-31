@@ -86,11 +86,11 @@ export default function SportsDetail({
   const renderFullDetails = () => (
     <div className="bg-white/10 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
       {/* Header */}
+      
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-3">Sports Details</h1>
         <div className="h-0.5 bg-white w-full"></div>
       </div>
-
       {/* Player Info Header */}
       {player && (
         <div className="flex items-center gap-3 mb-6">

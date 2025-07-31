@@ -73,7 +73,7 @@ export default function PersonalDetail({
   }
 
   const renderComponentDetails = () => (
-    <div className="bg-white/10 text-white min-h-screen p-6 max-w-md mx-auto rounded-xl">
+    <div className="dark:bg-[#1a1a1a] bg-black/10 dark:text-white text-black min-h-screen p-6 max-w-md mx-auto rounded-xl">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-3">Person Details</h1>
